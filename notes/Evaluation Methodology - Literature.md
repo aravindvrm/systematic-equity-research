@@ -8,7 +8,7 @@ literature **cannot** help with — nobody publishes a live edge. Methodology is
 the part it documents thoroughly, for free, and has for decades. I spent two
 days rediscovering, badly and late, results that are named and published.
 
-Related: [[Methodology Audit]], [[State of Play]], [[Strategy Spec v1]]
+Related: [[Methodology Audit]], the working state notes (unpublished), [[Strategy Spec v1]]
 
 ---
 

@@ -57,3 +57,6 @@ logs/
 ._*
 .Spotlight-V100
 .Trashes
+
+# Working notes, kept local and deliberately unpublished
+notes/State of Play.md

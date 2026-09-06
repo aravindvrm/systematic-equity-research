@@ -4,7 +4,7 @@ Prompted by a simple question: *if this is all so exhaustive, how do any retail
 algo traders exist?* The answer turned out to involve an error in how every
 result in this project had been judged.
 
-Related: [[State of Play]], [[Strategy Spec v1]], [[Fundamental Law of Active Management]]
+Related: the working state notes (unpublished), [[Strategy Spec v1]], [[Fundamental Law of Active Management]]
 
 ---
 
