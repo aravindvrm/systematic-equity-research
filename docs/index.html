@@ -92,6 +92,21 @@ header{border-bottom:1px solid var(--rule-strong);padding:72px 0 0}
   border-top:1px solid var(--rule);
 }
 
+/* ---------- source link ---------- */
+.srclink{
+  display:inline-flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  align-self:flex-start;text-decoration:none;color:var(--accent);
+  border:1px solid var(--rule-strong);background:var(--raised);
+  padding:11px 16px;transition:border-color .15s ease,background .15s ease;
+}
+.srclink:hover,.srclink:focus-visible{border-color:var(--accent);background:var(--accent-soft)}
+.srclink:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.srclink-label{font-weight:600;font-size:.92rem}
+.srclink-detail{
+  font-family:"IBM Plex Mono",monospace;font-size:.76rem;color:var(--muted);
+}
+.srclink-arrow{font-size:.92rem;margin-left:-4px}
+
 /* ---------- headline figures ---------- */
 .figures{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
@@ -235,6 +250,13 @@ footer p{max-width:var(--measure);margin-bottom:10px}
     <h1>A Measured Ceiling</h1>
     <p class="sub">Twelve signal families, thirty-eight strategies, and the arithmetic that
       explains why none of them worked &mdash; plus the two things that did.</p>
+
+    <a class="srclink" href="https://github.com/aravindvrm/systematic-equity-research">
+      <span class="srclink-label">View the source</span>
+      <span class="srclink-detail">github.com/aravindvrm/systematic-equity-research</span>
+      <span class="srclink-arrow" aria-hidden="true">&rarr;</span>
+    </a>
+
     <div class="byline">
       <span>Universe: 211 US large caps</span>
       <span>Sample: 2005&ndash;2026</span>
