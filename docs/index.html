@@ -29,7 +29,10 @@
    The accent CANNOT simply invert: #79C0FF measures 1.89:1 on white, which is
    unreadable. The light theme uses its own darker blue from the same family. */
 :root{
-  --paper:#0A0D12; --raised:#121821; --sunk:#06080C;
+  /* On a near-black ground a 'sunk' surface cannot be darker -- there is
+     nowhere to go, and the band disappears. On dark, recessed reads as
+     marginally LIGHTER plus a rule; on light it stays darker. */
+  --paper:#0A0D12; --raised:#161D27; --sunk:#11161E;
   --ink:#F2F6FA; --body:#C6D2DE; --muted:#8D9BAB; --faint:#7A8593;
   --rule:#1F2732; --rule-strong:#2E3945;
   --accent:#79C0FF; --accent-soft:#0E1E2C;
