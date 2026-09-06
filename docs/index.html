@@ -122,6 +122,12 @@ em{font-style:italic}
 code,.mono{font-family:"IBM Plex Mono",monospace;font-size:.88em;font-variant-numeric:tabular-nums}
 code{background:var(--sunk);padding:1px 5px;border-radius:3px;color:var(--ink)}
 
+.formula{
+  font-family:"IBM Plex Mono",monospace;font-size:1.05rem;color:var(--ink);
+  background:var(--sunk);border:1px solid var(--rule);
+  padding:14px 18px;text-align:center;letter-spacing:.02em;
+}
+
 /* ---------- pull statement ---------- */
 .pull{
   border-left:3px solid var(--accent);padding:4px 0 4px 22px;
@@ -250,12 +256,30 @@ footer p{max-width:var(--measure);margin-bottom:10px}
     <p class="pull">The gap between what this universe offers and what a long-only book requires
       is arithmetic, not luck &mdash; and no amount of additional price-derived signal can close it.</p>
 
-    <p>Three numbers carry the argument. A synthetic forecast injected through the actual risk
-      stack needs an information coefficient near <code>0.036</code> to beat holding everything.
-      The best stable feature available from free price data measures <code>0.012</code>. And
-      because those features correlate with one another at &rho;&nbsp;=&nbsp;0.234, combining
-      arbitrarily many of them converges to <code>0.0223</code> &mdash; roughly 60% of the
-      requirement, approached asymptotically and never crossed.</p>
+    <p>The organising framework is the Fundamental Law of Active Management (Grinold, 1989),
+      extended for real-world constraints by Clarke, de&nbsp;Silva &amp; Thorley (2002):</p>
+
+    <p class="formula">IR &nbsp;&asymp;&nbsp; IC &nbsp;&times;&nbsp; &radic;BR &nbsp;&times;&nbsp; TC</p>
+
+    <p>Skill per bet (<strong>IC</strong>), independent bets per year (<strong>BR</strong>), and
+      the <strong>transfer coefficient</strong> &mdash; the fraction of a forecast that survives
+      the constraints under which it is actually implemented. A long-only book runs a TC of
+      roughly 0.5&ndash;0.6, because it can overweight without limit but can only underweight to
+      zero. <strong>Half the achievable information ratio is forfeited before any signal question
+      is asked.</strong></p>
+
+    <p>The threshold used throughout this study is not derived from that identity, however. It is
+      <em>measured</em>: synthetic forecasts of known IC were injected through the actual risk
+      stack &mdash; the real universe, weighting, volatility target, costs and rebalance schedule
+      &mdash; and the break-even read off directly. That captures the true transfer coefficient of
+      this specific implementation rather than assuming a textbook value. The Law explains the
+      result; it does not produce it.</p>
+
+    <p>Three numbers follow. Beating a no-signal book requires an information coefficient near
+      <code>0.036</code>. The best stable feature available from free price data measures
+      <code>0.012</code>. And because those features correlate with one another at
+      &rho;&nbsp;=&nbsp;0.234, combining arbitrarily many of them converges to <code>0.0223</code>
+      &mdash; roughly 60% of the requirement, approached asymptotically and never crossed.</p>
 
     <p>The remainder of this document covers the methodology that made those numbers
       trustworthy, four claims that were retracted along the way, and the two strategies that
@@ -340,8 +364,12 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       a documented 3&ndash;6% &mdash; not a weakened effect but an absent one. <strong>Book-to-market</strong>
       was the strongest single measurement in the project at IC <code>0.0448</code>, and still
       landed at the 85th percentile. And the <strong>7-signal composite ranked below its own
-      components</strong>, because averaging z-scores of signals correlated at 0.97 averages one
-      signal with itself and adds noise from the rest.</p>
+      components</strong>. Averaging z-scores of signals correlated at 0.97 averages one signal
+      with itself while adding the others' noise &mdash; and in the terms above, correlated
+      signals contribute no <strong>independent bets</strong>. Measured directly: eight signals
+      with a mean pairwise IC correlation of 0.234 amount to an effective breadth of
+      <strong>3.03</strong>, not eight. The denominator of &radic;BR barely moves while the noise
+      floor rises, so the blend lands below its own inputs.</p>
 
     <h3 style="margin-top:14px">Non-linear methods</h3>
 
@@ -379,9 +407,12 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 
     <p>Its top features are all volatility and liquidity measures, and its predictions correlate
       <code>&minus;0.472</code> with low-volatility: it bets on high volatility, which won over
-      2009&ndash;2026 and is the reverse of the documented effect. That is a well-fitted
-      description of one regime rather than an edge, and it still produces a worse portfolio than
-      holding everything.</p>
+      2009&ndash;2026 and is the reverse of the documented effect. The relationship it learned is
+      <strong>non-stationary</strong>: it held over one monetary regime and carries the opposite
+      sign in the long-run literature, so nothing in the training data tells the model which
+      regime it is in. A flexible learner will fit whichever sign the sample happens to contain.
+      That is a well-specified description of 2009&ndash;2026 rather than an edge, and it still
+      produces a worse portfolio than holding everything.</p>
   </div>
 </section>
 
