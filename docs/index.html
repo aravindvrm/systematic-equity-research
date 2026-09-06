@@ -161,20 +161,6 @@ tr.dim td{color:var(--faint)}
 .pair dt{font-weight:600;color:var(--ink);font-size:.94rem}
 .pair dd{margin:0;font-size:.94rem;color:var(--body)}
 
-/* ---------- paths ---------- */
-.paths{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.path{border:1px solid var(--rule);background:var(--raised);padding:20px;display:flex;flex-direction:column;gap:9px}
-.path.lead{border-color:var(--accent);border-width:1px 1px 1px 3px}
-.path h3{font-size:1rem}
-.path .verdict{
-  font-family:"IBM Plex Mono",monospace;font-size:.68rem;font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;
-}
-.path .verdict.go{color:var(--pass)}
-.path .verdict.hold{color:var(--muted)}
-.path .verdict.stop{color:var(--null)}
-.path p{font-size:.9rem;color:var(--body)}
-
 /* ---------- references ---------- */
 .refs{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start}
 .refgroup h3{
@@ -336,6 +322,46 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       landed at the 85th percentile. And the <strong>7-signal composite ranked below its own
       components</strong>, because averaging z-scores of signals correlated at 0.97 averages one
       signal with itself and adds noise from the rest.</p>
+
+    <h3 style="margin-top:14px">Non-linear methods</h3>
+
+    <p>That composite failure is direct evidence the <em>combination</em> method was destroying
+      information, which makes non-linear models the best-motivated variant to test. Gu, Kelly
+      &amp; Xiu report roughly a doubling of out-of-sample R&sup2; over linear methods on
+      comparable characteristic sets. Walk-forward across 35 features, training on everything
+      before year <em>Y</em>&minus;1 and predicting <em>Y</em>:</p>
+
+    <div class="tscroll">
+      <table>
+        <caption>Out-of-sample IC, annual walk-forward, monthly non-overlapping observations</caption>
+        <thead><tr><th>Model</th><th>OOS IC</th><th><em>t</em></th><th>Portfolio Sharpe</th><th>Cond. percentile</th></tr></thead>
+        <tbody>
+          <tr><td>Equal-weight composite</td><td>&mdash;</td><td>&mdash;</td><td>1.00</td><td>52%</td></tr>
+          <tr><td>Ridge (linear)</td><td>0.0186</td><td>1.26</td><td>0.83</td><td class="v-null">18%</td></tr>
+          <tr><td>Gradient boosting</td><td>0.0200</td><td>1.51</td><td>0.89</td><td>72%</td></tr>
+          <tr><td>Random forest</td><td>0.0240</td><td>1.69</td><td>0.92</td><td>88%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Trees beat linear by <strong>29%, not the 2&times; reported</strong>. Note that
+      <strong>ridge finished last</strong>, below equal-weighting &mdash; so the story is not
+      "fitting beats not fitting"; ridge overfits and generalises poorly while trees regularise.</p>
+
+    <p>The random forest was the only model to survive a full stress battery: 18 of 18
+      hyperparameter configurations positive with a tight spread, seed-to-seed variation of 5%,
+      feature-importance rank correlation of 0.864 year over year, and a label-shuffle null
+      topping out at IC 0.0045 against its 0.0308. It is genuinely finding structure.</p>
+
+    <p class="pull">What it found was a regime-specific <em>inversion</em> of the low-volatility
+      anomaly &mdash; a relationship that held over one sample and has the opposite sign in the
+      documented literature.</p>
+
+    <p>Its top features are all volatility and liquidity measures, and its predictions correlate
+      <code>&minus;0.472</code> with low-volatility: it bets on high volatility, which won over
+      2009&ndash;2026 and is the reverse of the documented effect. That is a well-fitted
+      description of one regime rather than an edge, and it still produces a worse portfolio than
+      holding everything.</p>
   </div>
 </section>
 
@@ -493,44 +519,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 </section>
 
 <section>
-  <div class="shead"><span class="snum">07</span><h2>Paths forward</h2></div>
-  <div class="flow">
-    <div class="paths">
-      <div class="path lead">
-        <span class="verdict go">Continue &mdash; no cost</span>
-        <h3>Single-name options</h3>
-        <p>The collector runs daily and the history is unrecoverable if stopped. Genuinely
-          orthogonal information, and the one place where the analysis machinery would apply to
-          new data rather than re-mining old. Testable in roughly a year.</p>
-      </div>
-      <div class="path lead">
-        <span class="verdict go">Already working</span>
-        <h3>The wheel, instrumented</h3>
-        <p>Premium harvesting rather than alpha, cash-account compatible, and already profitable
-          by hand. The open questions &mdash; strike selection, roll rules, entry on IV rank &mdash;
-          are tractable optimisation of something that works, not a search for something absent.</p>
-      </div>
-      <div class="path">
-        <span class="verdict hold">Conditional on account size</span>
-        <h3>Trend following</h3>
-        <p>The one result that cleared a null decisively, and the honest reason to consider a
-          margin account. Standalone Sharpe is only 0.40 &mdash; held for the negative correlation,
-          not the return. Buying it in ETF form may beat implementing it.</p>
-      </div>
-      <div class="path">
-        <span class="verdict stop">Closed</span>
-        <h3>Cross-sectional alpha</h3>
-        <p>The ceiling is arithmetic. More price features converge to 0.0223 against a requirement
-          of 0.036. Non-linear methods add 29%, not the 2&times; the literature reports, and the
-          best model was found to be learning a regime-specific inversion of the low-volatility
-          anomaly.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="shead"><span class="snum">08</span><h2>What the work produced</h2></div>
+  <div class="shead"><span class="snum">07</span><h2>What the work produced</h2></div>
   <div class="flow">
     <p>No tradeable signal. Two things of durable value instead.</p>
 
@@ -554,7 +543,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 </section>
 
 <section>
-  <div class="shead"><span class="snum">09</span><h2>References</h2></div>
+  <div class="shead"><span class="snum">08</span><h2>References</h2></div>
   <div class="flow">
     <p>Works this study relied on, grouped by the role they played rather than
       alphabetically &mdash; the grouping is itself part of the argument, since the
