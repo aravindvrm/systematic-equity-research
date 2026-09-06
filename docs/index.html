@@ -3,40 +3,57 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0A0D12">
 <meta name="description" content="Twelve signal families, thirty-eight strategies, and the arithmetic that explains why none of them worked.">
-<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}</style>
+<style>html{color-scheme:dark light}body{margin:0}img{max-width:100%}</style>
 <title>A Measured Ceiling</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 
 <style>
+/* DARK-FIRST. The base :root carries the dark palette; light is the variant.
+   Every contrast ratio below was computed against its own ground, not guessed.
+
+   dark, on --paper #0A0D12       light, on --paper #FBFCFD
+     ink      17.92:1               ink      17.54:1
+     body     12.67:1               body     11.83:1
+     muted     6.87:1               muted     5.83:1
+     faint     5.19:1               faint     4.52:1
+     accent   10.00:1               accent    5.71:1
+     null      8.50:1               null      5.75:1
+     pass     12.15:1               pass      6.27:1
+   All clear WCAG AA for small text (4.5:1).
+
+   The accent CANNOT simply invert: #79C0FF measures 1.89:1 on white, which is
+   unreadable. The light theme uses its own darker blue from the same family. */
 :root{
-  --paper:#FAFBFC; --raised:#FFFFFF; --sunk:#F1F4F7;
-  --ink:#131820; --body:#2C3742; --muted:#5C6874; --faint:#8894A2;
-  --rule:#DDE3EA; --rule-strong:#C3CDD8;
-  --accent:#1F4E79; --accent-soft:#E8EFF6;
-  --null:#B03A2E; --null-soft:#FBEDEB;
-  --pass:#2D6A4F; --pass-soft:#E9F2ED;
+  --paper:#0A0D12; --raised:#121821; --sunk:#06080C;
+  --ink:#F2F6FA; --body:#C6D2DE; --muted:#8D9BAB; --faint:#7A8593;
+  --rule:#1F2732; --rule-strong:#2E3945;
+  --accent:#79C0FF; --accent-soft:#0E1E2C;
+  --null:#FF8A7A; --null-soft:#24120F;
+  --pass:#7EE0A8; --pass-soft:#0C2016;
   --measure:68ch;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0D1218; --raised:#141B23; --sunk:#101820;
-    --ink:#EEF2F6; --body:#C6D0DA; --muted:#8D9AA8; --faint:#63707E;
-    --rule:#232D38; --rule-strong:#33404D;
-    --accent:#7FB3DE; --accent-soft:#16232F;
-    --null:#E08578; --null-soft:#2A1917;
-    --pass:#7BBE9C; --pass-soft:#14231B;
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --paper:#FBFCFD; --raised:#FFFFFF; --sunk:#F0F3F6;
+    --ink:#101720; --body:#2B3742; --muted:#58656F; --faint:#6A7681;
+    --rule:#DFE5EB; --rule-strong:#C4CED8;
+    --accent:#1668A8; --accent-soft:#E7F1FA;
+    --null:#B33A2B; --null-soft:#FBEDEB;
+    --pass:#1F6B4A; --pass-soft:#E8F2ED;
   }
 }
-:root[data-theme="dark"]{
-  --paper:#0D1218; --raised:#141B23; --sunk:#101820;
-  --ink:#EEF2F6; --body:#C6D0DA; --muted:#8D9AA8; --faint:#63707E;
-  --rule:#232D38; --rule-strong:#33404D;
-  --accent:#7FB3DE; --accent-soft:#16232F;
-  --null:#E08578; --null-soft:#2A1917;
-  --pass:#7BBE9C; --pass-soft:#14231B;
+:root[data-theme="light"]{
+  --paper:#FBFCFD; --raised:#FFFFFF; --sunk:#F0F3F6;
+  --ink:#101720; --body:#2B3742; --muted:#58656F; --faint:#6A7681;
+  --rule:#DFE5EB; --rule-strong:#C4CED8;
+  --accent:#1668A8; --accent-soft:#E7F1FA;
+  --null:#B33A2B; --null-soft:#FBEDEB;
+  --pass:#1F6B4A; --pass-soft:#E8F2ED;
 }
 
 *{box-sizing:border-box}
