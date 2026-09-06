@@ -38,9 +38,9 @@ A signal containing **nothing** clears the conventional `|t| > 2` bar comfortabl
 
 Every significance test I had run was uncalibrated. Not wrong in its arithmetic — uncalibrated. I was comparing my results against a threshold from a textbook rather than against what my own machinery produced from noise.
 
-## Where the phantom alpha comes from
+## Where I thought the phantom alpha came from
 
-The cause turned out to be a single line in my portfolio construction that I had never thought of as a modelling choice: **volatility targeting.**
+The cause looked like a single line in my portfolio construction that I had never thought of as a modelling choice: **volatility targeting.**
 
 The rule is unremarkable. Estimate the portfolio's trailing volatility, and if it exceeds your target, scale the whole book down. Almost every systematic strategy does something like it. It is risk management, not forecasting.
 
@@ -61,20 +61,48 @@ Half the 2008 loss avoided, by a strategy that knows nothing. Run that through a
 
 None of this is new. Ferson and Schadt described the bias in 1996 and proposed a conditional model to correct it. I rediscovered it by accident, thirty years late, and only because I had run the null.
 
-And the conditional correction only partially helps: a single linear interaction term cannot absorb a rule that is non-linear and capped. The floor barely moved, from 2.75 to 2.77.
+It is also not the answer.
 
-## The confirmation
+## Where it actually comes from
 
-One more result convinced me the diagnosis was right. I re-ran the null floor on 2015–2026 instead of 2005–2026 — same universe, same everything, just a later start.
+Someone reviewing this work asked the obvious question I had never asked: what does the floor look like with the overlay *switched off*? Same universe, same ranking, same weighting, same schedule, same costs — two hundred null draws in each arm.
+
+```
+Alpha-t null floor, identical stack, 200 draws per arm
+
+  with 10% volatility target      +2.66
+  no overlay at all               +2.94
+```
+
+Taking the overlay away makes the floor *worse*. Whatever was manufacturing the phantom alpha, it was not the thing I had spent the project blaming — and the thing I was blaming had been quietly reducing it.
+
+So I stripped everything out. No selection, no overlay, no forecast: hold every name in the universe and see what a factor model says.
+
+```
+FF6 alpha, holding everything, predicting nothing
+
+  whole universe, equal weight     +4.53%   t = +5.79
+  SPY, same window                 -0.40%   t = -1.77
+```
+
+There it is. My universe is the index membership of *today*, carried back to 2005. The companies that went bankrupt and dropped out are not in it. A portfolio holding all of them and forecasting nothing beats a six-factor model by four and a half points a year, while the actual market over the same window returns a negative alpha. That gap is survivorship bias.
+
+It had been sitting in my caveats section the whole time — listed as a limitation, the way everyone lists it, rather than measured as an effect. Any long book drawn from this universe inherits it in proportion to how much market exposure it carries. Volatility targeting cuts that exposure, taking beta from 0.90 to 0.48, which is exactly why removing the overlay raises the floor.
+
+I had the right mechanism and the wrong cause. Ferson-Schadt is real, it is present in this data, and it is second-order.
+
+## The part I got right for the wrong reason
+
+I had already re-run the null floor on 2015–2026 instead of 2005–2026 — same universe, same everything, just a later start.
 
 ```
   2005-2026 window    null floor  t = 2.75
   2015-2026 window    null floor  t = 0.77
 ```
 
-Remove the 2008 crash and the phantom alpha largely disappears, because there is no longer a crisis for the overlay to dodge.
+I read that as confirmation: remove the 2008 crash and the overlay has no crisis left to dodge. The simpler reading, which I did not consider, is that one decade of survivor drift compounds into less than two decades of it.
 
-Which yields a rule I now treat as non-negotiable: **the null floor must be recalibrated for every sample window.** A floor computed on one period does not transfer to another.
+The rule it yields survives either way: **the null floor must be recalibrated for every sample window.** A floor computed on one period does not transfer to another. I just had the wrong reason for believing it.
 
 ## What it cost me
 
@@ -91,6 +119,10 @@ A claim that small caps fail because a 12× spread penalty cancels their larger 
 And a turnover accounting bug I announced had "tilted every comparison in the project" — before measuring it. Measured impact: 5.8 basis points a year, 0.003 Sharpe. Immaterial.
 
 The pattern in all four is the same: **I reported a result at the point it became interesting rather than the point it became controlled.**
+
+There is a fifth, and it is the one that should worry you most, because it did not stay in the notebook. The volatility-targeting explanation above — the mechanism section of this essay, the centrepiece of the companion paper — was published, and stood, and was wrong. It survived every control I had. What caught it was a control I did not own: someone asked what the floor did with the overlay removed, and the answer went the wrong way.
+
+The lesson is not that I should have been more careful. I was careful, in every direction I knew to be careful in. It is that **a calibration procedure only covers the choices you thought to vary.** Mine varied the signal and held the universe fixed, so it could never have found a defect in the universe. That is not a flaw you patch; it is a permanent property of controls, and the only remedy is other people.
 
 ## The final tally
 
