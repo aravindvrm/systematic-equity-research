@@ -80,7 +80,7 @@ Which yields a rule I now treat as non-negotiable: **the null floor must be reca
 
 Being specific about this, because the general claim is easy and the particulars are the evidence.
 
-The null floor invalidated **four conclusions I had already reached and stated confidently**:
+The null floor invalidated **four conclusions I had already reached and believed**. None had been published — catching them is what the floor is for — but I had stopped questioning all four:
 
 A pairwise relative-value signal that survived every structural check — monotone response to a mechanism-motivated filter, sector-neutral, coherent horizon profile, t = 2.45. Extending the sample from seven years to twenty dropped it to 1.28, where a real effect predicts 4.1.
 
@@ -113,7 +113,7 @@ The other half of this is a test suite, and it is deliberately not a code-covera
 
 **Lookahead, with its own control.** One test sets portfolio weights from the return *into* bar *t* — information you only possess once *t* has closed. A naive engine captures every up-move and posts an absurd Sharpe, so the test fails loudly if the one-bar lag is ever removed. It is paired with a second test using a genuine one-bar-ahead forecast, which must still win big. Together they prove the first test fails for the right reason: the engine rejects future information, not signal.
 
-**Phantom alpha.** A test builds a synthetic market with volatility clustering, runs a zero-information sleeve that merely de-risks when volatility rises, and asserts it *still* beats its own beta-matched control. That test pins the exact illusion that produced two of the four retractions above.
+**Phantom alpha.** A test builds a synthetic market with volatility clustering, runs a zero-information sleeve that merely de-risks when volatility rises, and asserts it *still* beats its own beta-matched control. That test pins the exact illusion behind two of the four reversals above.
 
 **De-risking is not skill.** A "strategy" that is simply 60% of the benchmark plus cash must score approximately zero genuine gain — *while still raising naive standalone Sharpe*. The second clause is the whole point.
 

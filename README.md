@@ -105,8 +105,8 @@ signal.
 [`test_random_signals_produce_fake_alpha_through_a_vol_targeted_stack`](tests/test_evaluation.py)
 builds a core with volatility clustering, runs a **zero-information** sleeve that
 merely de-risks when volatility rises, and asserts it *still* beats its own
-beta-matched control. It pins the exact illusion that produced two retracted
-conclusions in this project.
+beta-matched control. It pins the exact illusion behind two conclusions the
+controls overturned in this project.
 
 **De-risking is not skill.** `test_pure_de_risking_shows_no_genuine_gain` asserts
 that a sleeve which is simply 60% of the core plus cash scores ≈ 0 genuine gain

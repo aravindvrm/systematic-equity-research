@@ -434,12 +434,15 @@ footer p{max-width:var(--measure);margin-bottom:10px}
     <p class="scope"><strong>What this does and does not show.</strong> The reachable set from
       the position above is empty, and the arithmetic says why. It does not show that markets are
       efficient, that cross-sectional signal does not exist, or that the funds harvesting it are
-      wrong. Shorting, leverage, paid data, a wider or less liquid universe, and a shorter holding
-      period are all outside this study, and each is a live route that the constraints here
-      foreclose. The result is a boundary on one position, not a claim about the market.</p>
+      wrong. Relaxing the cash constraint was tested rather than assumed, twice: a dollar-neutral
+      long/short book on the strongest signal, which failed, and long/short trend, which is the one
+      result in the project that cleared and is reported in section&nbsp;05. Paid data, a wider or
+      less liquid universe, and shorter holding periods are genuinely untested, and each is a live
+      route these constraints foreclose. The result is a boundary on one position, not a claim
+      about the market.</p>
 
     <p>The remainder of this document covers the methodology that made those numbers
-      trustworthy, four claims that were retracted along the way, and the two strategies that
+      trustworthy, four conclusions the controls overturned, and the two strategies that
       did survive scrutiny &mdash; neither of which is alpha.</p>
   </div>
 </section>
@@ -608,10 +611,12 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 </section>
 
 <section>
-  <div class="shead"><span class="snum">04</span><h2>Retractions</h2></div>
+  <div class="shead"><span class="snum">04</span><h2>What the controls overturned</h2></div>
   <div class="flow">
-    <p>Four conclusions were stated with confidence and later overturned by a control that should
-      have run first. They are recorded because the pattern &mdash; announcing a finding at the
+    <p>Four conclusions were reached and held with confidence during the work, then overturned by
+      a control that should have run first. None of them was ever published &mdash; the calibration
+      caught all four before this document existed, which is what the calibration is for. They are
+      recorded because the pattern that produced them &mdash; treating a finding as settled at the
       point it became interesting rather than the point it became controlled &mdash; is the most
       transferable lesson here.</p>
 
@@ -755,7 +760,16 @@ footer p{max-width:var(--measure);margin-bottom:10px}
         more to diversification than any forecast recovers.</dd></div>
       <div class="pair"><dt>Long-only</dt><dd>Costs roughly half the achievable information ratio
         (Clarke, de&nbsp;Silva &amp; Thorley). Applied to trend, it removes precisely the crisis
-        alpha the strategy is held for.</dd></div>
+        alpha the strategy is held for. For the cross-section, though, it is
+        <em>not</em> the binding constraint: lifting it does not help. A dollar-neutral long/short
+        book on the strongest signal, carrying general-collateral borrow at 50bp and no rebate on
+        short proceeds &mdash; the conservative retail case &mdash; scored Sharpe
+        <code>0.735</code> against a null maximum of <code>0.738</code>, so it too fails against
+        its own recalibrated floor. It also came out with a market beta of <code>0.53</code>
+        rather than zero: because the model's edge is a volatility tilt, the long leg holds
+        higher-beta names than the short leg, and the &ldquo;neutral&rdquo; book is largely a beta
+        bet wearing a hedge. Shorting relieves the transfer coefficient; it does not manufacture
+        the information coefficient that is actually missing.</dd></div>
       <div class="pair"><dt>Construction</dt><dd>Truncating a ranking at the top 30% was the worst
         sizing rule tested &mdash; discarding magnitude and two thirds of the diversification at
         once. It was nonetheless the default for every test in this project until the last day.</dd></div>
@@ -787,7 +801,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       (<a class="srcref" href="https://github.com/aravindvrm/systematic-equity-research/blob/main/tests/test_evaluation.py">tests/</a>). One constructs a zero-information
       volatility-timing sleeve &mdash; a sub-portfolio blended into a larger one &mdash; and
       asserts it still beats a naive beta-matched control &mdash;
-      pinning the exact illusion that produced two retracted conclusions.</p>
+      pinning the exact illusion that produced two of those overturned conclusions.</p>
 
     <p class="pull">The literature cannot give you signals. It can stop you believing in ones you
       do not have &mdash; which, on this evidence, is the more valuable of the two.</p>
