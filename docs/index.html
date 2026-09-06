@@ -312,6 +312,39 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       &rho;&nbsp;=&nbsp;0.234, combining arbitrarily many of them converges to <code>0.0223</code>
       &mdash; roughly 60% of the requirement, approached asymptotically and never crossed.</p>
 
+<div class="chart-frame">
+  <svg viewBox="0 0 640 250" width="100%" height="250" role="img"
+       aria-label="Combined information coefficient as signals are added. The curve rises from 0.0108 with one signal and flattens at 0.0223, never reaching the 0.036 required to break even.">
+    <text x="0" y="12" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--faint)" letter-spacing="1.2">COMBINED IC AS SIGNALS ARE ADDED, AT THE MEASURED CORRELATION</text>
+    <line x1="58" y1="206.0" x2="496" y2="206.0" stroke="var(--rule-strong)" stroke-width="1" fill="none"/>
+    <line x1="58" y1="34" x2="58" y2="206.0" stroke="var(--rule-strong)" stroke-width="1" fill="none"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--faint)">
+      <text x="50" y="37.0" text-anchor="end">0.04</text>
+      <text x="50" y="80.0" text-anchor="end">0.03</text>
+      <text x="50" y="123.0" text-anchor="end">0.02</text>
+      <text x="50" y="166.0" text-anchor="end">0.01</text>
+      <text x="58.0" y="222.0" text-anchor="middle">1</text>
+      <text x="162.2" y="222.0" text-anchor="middle">25</text>
+      <text x="270.8" y="222.0" text-anchor="middle">50</text>
+      <text x="379.4" y="222.0" text-anchor="middle">75</text>
+      <text x="488.0" y="222.0" text-anchor="middle">100</text>
+      <text x="273.0" y="238.0" text-anchor="middle" fill="var(--muted)">number of signals combined</text>
+    </g>
+    <line x1="58" y1="51.2" x2="496" y2="51.2" stroke="var(--null)" stroke-width="1.5" stroke-dasharray="5 3" fill="none"/>
+    <text x="502" y="48.2" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="var(--null)" font-weight="600">required 0.036</text>
+    <text x="502" y="62.2" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="var(--muted)">to beat holding all</text>
+    <line x1="58" y1="110.0" x2="496" y2="110.0" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 3" fill="none"/>
+    <text x="502" y="107.0" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="var(--ink)" font-weight="600">ceiling 0.0223</text>
+    <text x="502" y="121.0" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">k &#8594; &#8734;</text>
+    <polyline points="58.0,159.6 62.3,146.9 66.7,139.6 71.0,134.8 75.4,131.4 79.7,128.8 84.1,126.8 88.4,125.1 92.7,123.8 97.1,122.7 101.4,121.7 105.8,120.9 110.1,120.2 114.5,119.6 118.8,119.0 123.2,118.5 127.5,118.1 131.8,117.7 136.2,117.3 140.5,117.0 144.9,116.7 149.2,116.4 153.6,116.2 157.9,115.9 162.2,115.7 166.6,115.5 170.9,115.3 175.3,115.2 179.6,115.0 184.0,114.8 188.3,114.7 192.6,114.6 197.0,114.4 201.3,114.3 205.7,114.2 210.0,114.1 214.4,114.0 218.7,113.9 223.1,113.8 227.4,113.7 231.7,113.6 236.1,113.5 240.4,113.5 244.8,113.4 249.1,113.3 253.5,113.2 257.8,113.2 262.1,113.1 266.5,113.1 270.8,113.0 275.2,112.9 279.5,112.9 283.9,112.8 288.2,112.8 292.5,112.7 296.9,112.7 301.2,112.6 305.6,112.6 309.9,112.6 314.3,112.5 318.6,112.5 322.9,112.4 327.3,112.4 331.6,112.4 336.0,112.3 340.3,112.3 344.7,112.3 349.0,112.2 353.4,112.2 357.7,112.2 362.0,112.1 366.4,112.1 370.7,112.1 375.1,112.1 379.4,112.0 383.8,112.0 388.1,112.0 392.4,112.0 396.8,111.9 401.1,111.9 405.5,111.9 409.8,111.9 414.2,111.8 418.5,111.8 422.8,111.8 427.2,111.8 431.5,111.8 435.9,111.7 440.2,111.7 444.6,111.7 448.9,111.7 453.3,111.7 457.6,111.6 461.9,111.6 466.3,111.6 470.6,111.6 475.0,111.6 479.3,111.6 483.7,111.5 488.0,111.5" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <circle cx="88.4" cy="125.1" r="3.5" fill="var(--accent)"/>
+    <text x="97.4" y="139.1" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="var(--muted)">8 signals tested &#8594; 0.0188</text>
+  </svg>
+  <p class="chart-note">Eight price signals correlate at &rho;&nbsp;=&nbsp;0.234, so they contribute an
+    effective breadth of 3.03 rather than 8. Adding arbitrarily many more converges to 0.0223 &mdash;
+    the gap to 0.036 cannot be closed from within this feature space.</p>
+</div>
+
     <p>The remainder of this document covers the methodology that made those numbers
       trustworthy, four claims that were retracted along the way, and the two strategies that
       did survive scrutiny &mdash; neither of which is alpha.</p>
@@ -343,6 +376,34 @@ footer p{max-width:var(--measure);margin-bottom:10px}
     <p>A signal with <em>no information whatsoever</em> clears the conventional
       <code>|t| &gt; 2</code> bar comfortably, and reaches the Harvey-Liu-Zhu
       <code>|t| &gt; 3</code> threshold about one time in twenty.</p>
+
+<div class="chart-frame">
+  <svg viewBox="0 0 640 250" width="100%" height="250" role="img"
+       aria-label="Drawdown of the same zero-information portfolio with and without volatility targeting. The targeted version falls 20 percent at its worst; the untargeted version falls 37.9 percent.">
+    <text x="0" y="12" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--faint)" letter-spacing="1.2">DRAWDOWN &#8212; SAME ZERO-INFORMATION SIGNAL, WITH AND WITHOUT VOL TARGETING</text>
+    <rect x="113.6" y="30" width="28.6" height="174.0" fill="var(--sunk)"/>
+    <text x="127.9" y="42.0" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--faint)" text-anchor="middle">2008</text>
+    <line x1="58" y1="30.0" x2="504" y2="30.0" stroke="var(--rule-strong)" stroke-width="1" fill="none"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--faint)">
+      <text x="50" y="33.0" text-anchor="end">0%</text>
+      <text x="50" y="82.7" text-anchor="end">-10%</text>
+      <text x="50" y="132.4" text-anchor="end">-20%</text>
+      <text x="50" y="182.1" text-anchor="end">-30%</text>
+      <text x="118.6" y="222.0" text-anchor="middle">2008</text><text x="199.5" y="222.0" text-anchor="middle">2012</text><text x="280.4" y="222.0" text-anchor="middle">2016</text><text x="361.2" y="222.0" text-anchor="middle">2020</text><text x="442.1" y="222.0" text-anchor="middle">2024</text>
+    </g>
+    <polyline points="58.0,30.0 59.7,30.0 61.4,30.0 63.1,38.1 64.7,30.0 66.4,30.0 68.1,30.0 69.8,43.1 71.5,36.0 73.2,38.8 74.8,30.0 76.5,30.0 78.2,30.0 79.9,30.0 81.6,30.0 83.3,30.0 85.0,34.6 86.6,32.6 88.3,34.9 90.0,30.0 91.7,30.0 93.4,30.0 95.1,30.0 96.7,30.0 98.4,30.0 100.1,34.5 101.8,30.0 103.5,30.0 105.2,30.0 106.9,34.2 108.5,50.4 110.2,43.4 111.9,30.0 113.6,30.0 115.3,40.2 117.0,40.0 118.6,66.5 120.3,71.2 122.0,71.2 123.7,50.3 125.4,37.8 127.1,71.6 128.8,68.7 130.4,60.4 132.1,96.3 133.8,154.0 135.5,165.9 137.2,144.8 138.9,163.9 140.5,194.2 142.2,166.5 143.9,129.1 145.6,112.3 147.3,111.2 149.0,92.2 150.7,80.3 152.3,66.2 154.0,71.3 155.7,46.5 157.4,31.2 159.1,48.8 160.8,35.1 162.4,30.0 164.1,30.0 165.8,55.1 167.5,70.1 169.2,45.6 170.9,50.3 172.6,30.0 174.2,30.0 175.9,30.0 177.6,30.0 179.3,30.0 181.0,30.0 182.7,30.0 184.3,30.0 186.0,30.0 187.7,38.6 189.4,48.3 191.1,64.9 192.8,93.4 194.5,47.2 196.1,48.4 197.8,39.1 199.5,30.0 201.2,30.0 202.9,30.0 204.6,30.0 206.2,46.7 207.9,30.0 209.6,30.0 211.3,30.0 213.0,30.0 214.7,35.7 216.4,33.7 218.0,30.0 219.7,30.0 221.4,30.0 223.1,30.0 224.8,30.0 226.5,30.0 228.1,41.0 229.8,30.0 231.5,43.6 233.2,30.0 234.9,30.0 236.6,30.0 238.3,30.0 239.9,35.4 241.6,30.0 243.3,30.0 245.0,30.0 246.7,30.0 248.4,30.0 250.0,36.1 251.7,30.0 253.4,38.7 255.1,30.0 256.8,30.0 258.5,30.0 260.2,30.7 261.8,30.0 263.5,35.5 265.2,34.4 266.9,30.0 268.6,40.2 270.3,33.6 271.9,61.4 273.6,69.9 275.3,30.8 277.0,30.6 278.7,34.0 280.4,51.4 282.1,48.6 283.7,30.0 285.4,30.0 287.1,30.0 288.8,30.0 290.5,30.0 292.2,30.0 293.8,30.0 295.5,37.8 297.2,30.0 298.9,30.0 300.6,30.0 302.3,30.0 304.0,30.0 305.6,30.0 307.3,30.0 309.0,30.0 310.7,30.0 312.4,30.0 314.1,30.0 315.7,30.0 317.4,30.0 319.1,30.0 320.8,30.0 322.5,49.9 324.2,55.3 325.9,56.1 327.5,47.4 329.2,38.5 330.9,30.0 332.6,30.0 334.3,30.0 336.0,62.9 337.6,49.0 339.3,86.7 341.0,45.0 342.7,30.4 344.4,30.0 346.1,30.0 347.8,47.4 349.4,30.0 351.1,30.0 352.8,30.0 354.5,30.0 356.2,30.0 357.9,30.0 359.5,30.0 361.2,31.5 362.9,59.3 364.6,97.5 366.3,43.4 368.0,30.0 369.7,30.0 371.3,30.0 373.0,30.0 374.7,38.0 376.4,54.1 378.1,30.0 379.8,30.0 381.4,32.2 383.1,30.0 384.8,30.0 386.5,30.0 388.2,30.0 389.9,30.2 391.6,30.0 393.2,30.0 394.9,46.4 396.6,30.0 398.3,34.6 400.0,30.0 401.7,41.7 403.3,47.0 405.0,30.0 406.7,58.9 408.4,58.2 410.1,88.0 411.8,68.2 413.5,81.0 415.1,122.6 416.8,84.1 418.5,50.0 420.2,68.4 421.9,51.7 423.6,66.7 425.2,61.9 426.9,53.3 428.6,72.3 430.3,50.6 432.0,35.1 433.7,44.6 435.4,68.0 437.0,75.6 438.7,47.0 440.4,30.0 442.1,30.0 443.8,30.0 445.5,30.0 447.1,47.7 448.8,37.0 450.5,37.3 452.2,30.0 453.9,30.0 455.6,30.0 457.3,34.3 458.9,30.0 460.6,57.5 462.3,44.7 464.0,40.5 465.7,48.0 467.4,55.1 469.0,40.5 470.7,32.9 472.4,30.0 474.1,30.0 475.8,30.0 477.5,35.5 479.2,30.0 480.8,31.2 482.5,30.0 484.2,30.0 485.9,51.1 487.6,38.5 489.3,47.5 490.9,46.6 492.6,39.7 494.3,30.0 496.0,32.0" fill="none" stroke="var(--null)" stroke-width="1.6"/>
+    <polyline points="58.0,30.0 59.7,30.0 61.4,30.0 63.1,38.1 64.7,30.0 66.4,30.0 68.1,30.0 69.8,43.1 71.5,36.0 73.2,38.8 74.8,30.0 76.5,30.0 78.2,30.0 79.9,30.0 81.6,30.0 83.3,30.0 85.0,34.6 86.6,32.6 88.3,34.9 90.0,30.0 91.7,30.0 93.4,30.0 95.1,30.0 96.7,30.0 98.4,30.0 100.1,34.5 101.8,30.0 103.5,30.0 105.2,30.0 106.9,33.2 108.5,49.5 110.2,43.3 111.9,33.1 113.6,30.0 115.3,36.2 117.0,35.9 118.6,54.6 120.3,57.9 122.0,57.5 123.7,44.4 125.4,37.9 127.1,59.5 128.8,56.3 130.4,50.6 132.1,71.4 133.8,98.3 135.5,100.9 137.2,95.8 138.9,100.3 140.5,110.1 142.2,96.8 143.9,83.3 145.6,77.8 147.3,77.7 149.0,63.5 150.7,55.4 152.3,45.8 154.0,49.1 155.7,31.3 157.4,30.0 159.1,44.1 160.8,34.1 162.4,30.0 164.1,30.0 165.8,50.3 167.5,62.3 169.2,48.4 170.9,51.4 172.6,35.7 174.2,30.0 175.9,30.0 177.6,30.0 179.3,30.0 181.0,30.0 182.7,30.0 184.3,30.0 186.0,30.0 187.7,39.2 189.4,46.4 191.1,63.4 192.8,76.9 194.5,62.3 196.1,62.3 197.8,58.4 199.5,48.0 201.2,41.2 202.9,33.6 204.6,30.0 206.2,46.7 207.9,30.0 209.6,30.0 211.3,30.0 213.0,30.0 214.7,35.9 216.4,33.9 218.0,30.0 219.7,30.0 221.4,30.0 223.1,30.0 224.8,30.0 226.5,30.0 228.1,39.5 229.8,30.0 231.5,40.5 233.2,30.0 234.9,30.0 236.6,30.0 238.3,30.0 239.9,35.4 241.6,30.0 243.3,30.0 245.0,30.0 246.7,30.0 248.4,30.0 250.0,36.1 251.7,30.0 253.4,38.7 255.1,30.0 256.8,30.0 258.5,30.0 260.2,30.5 261.8,30.0 263.5,36.3 265.2,35.5 266.9,30.0 268.6,40.2 270.3,33.6 271.9,61.4 273.6,66.0 275.3,44.5 277.0,44.3 278.7,46.6 280.4,59.7 282.1,60.6 283.7,40.3 285.4,39.0 287.1,31.3 288.8,30.0 290.5,30.0 292.2,30.0 293.8,30.0 295.5,37.8 297.2,30.0 298.9,30.0 300.6,30.0 302.3,30.0 304.0,30.0 305.6,30.0 307.3,30.0 309.0,30.0 310.7,30.0 312.4,30.0 314.1,30.0 315.7,30.0 317.4,30.0 319.1,30.0 320.8,30.0 322.5,49.9 324.2,54.3 325.9,54.7 327.5,47.7 329.2,39.9 330.9,30.0 332.6,30.0 334.3,30.0 336.0,62.9 337.6,49.4 339.3,76.6 341.0,52.4 342.7,44.5 344.4,40.2 346.1,30.0 347.8,47.4 349.4,30.0 351.1,30.0 352.8,30.0 354.5,30.0 356.2,30.0 357.9,30.0 359.5,30.0 361.2,31.5 362.9,59.3 364.6,87.7 366.3,66.5 368.0,62.4 369.7,63.6 371.3,53.4 373.0,44.0 374.7,49.7 376.4,64.1 378.1,30.0 379.8,30.0 381.4,32.0 383.1,30.0 384.8,30.0 386.5,30.0 388.2,30.0 389.9,30.2 391.6,30.0 393.2,30.0 394.9,46.4 396.6,30.0 398.3,34.7 400.0,30.0 401.7,41.7 403.3,46.0 405.0,32.4 406.7,52.5 408.4,54.8 410.1,70.4 411.8,61.1 413.5,68.8 415.1,97.6 416.8,76.3 418.5,60.5 420.2,68.5 421.9,60.8 423.6,69.8 425.2,66.1 426.9,59.5 428.6,75.1 430.3,55.0 432.0,39.7 433.7,49.0 435.4,72.3 437.0,79.7 438.7,54.0 440.4,38.4 442.1,37.0 443.8,30.0 445.5,30.0 447.1,47.7 448.8,37.0 450.5,37.3 452.2,30.0 453.9,30.0 455.6,30.0 457.3,34.0 458.9,30.0 460.6,57.5 462.3,44.7 464.0,40.5 465.7,47.9 467.4,58.5 469.0,51.6 470.7,48.2 472.4,46.4 474.1,37.0 475.8,30.0 477.5,35.5 479.2,30.0 480.8,31.2 482.5,30.0 484.2,30.0 485.9,51.1 487.6,38.5 489.3,47.6 490.9,46.6 492.6,39.7 494.3,30.0 496.0,32.0" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
+    <text x="510" y="222.4" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="var(--null)" font-weight="600">untargeted</text>
+    <text x="510" y="236.4" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">worst &#8722;37.9%</text>
+    <text x="510" y="123.4" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="var(--accent)" font-weight="600">vol-targeted</text>
+    <text x="510" y="137.4" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">worst &#8722;20.0%</text>
+  </svg>
+  <p class="chart-note">Neither book forecasts anything &mdash; both hold a randomly chosen 30% of the
+    universe. The only difference is the volatility-targeting overlay, which cuts exposure as
+    volatility rises and so avoids roughly half the 2008 loss. A constant-beta factor model cannot
+    represent that timing, and reads the difference as alpha. This is the entire source of the
+    <em>t</em>&nbsp;=&nbsp;2.75 null floor.</p>
+</div>
 
     <p>The mechanism is the volatility-targeting overlay. It cuts market exposure when trailing
       volatility rises &mdash; which is when the benchmark crashes &mdash; giving the book a
