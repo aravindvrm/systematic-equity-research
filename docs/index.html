@@ -318,8 +318,8 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 <div class="figures">
   <div class="fig"><div class="n">0.036</div><div class="l">Information coefficient required to break even</div></div>
   <div class="fig"><div class="n">0.012</div><div class="l">Achievable on free price data</div></div>
-  <div class="fig"><div class="n bad">0.0223</div><div class="l">Hard ceiling from correlation structure</div></div>
-  <div class="fig"><div class="n bad">0 / 38</div><div class="l">Strategies clearing a calibrated null</div></div>
+  <div class="fig"><div class="n bad">0.0223</div><div class="l">Asymptote at the measured signal correlation</div></div>
+  <div class="fig"><div class="n bad">0 / 38</div><div class="l">Clearing their pipeline-specific null</div></div>
 </div>
 
 <div class="wide">
@@ -360,8 +360,10 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       <div class="pair"><dt>No-signal book</dt><dd>The benchmark used throughout. It holds the
         <em>entire</em> universe &mdash; no ranking, no selection, no forecast &mdash; and is run
         through the identical construction as every strategy tested: inverse-volatility weights, a
-        10% volatility target, monthly rebalancing, the same costs. It is what a signal has to beat
-        to be worth having, and all thirty-eight lost to it.</dd></div>
+        10% volatility target, monthly rebalancing, the same costs. The volatility target only ever
+        <em>cuts</em> exposure &mdash; the scaling factor is capped at 1.0, so the book never borrows
+        and stays implementable in a cash account. It is what a signal has to beat to be worth
+        having, and all thirty-eight lost to it.</dd></div>
       <div class="pair"><dt>Information coefficient</dt><dd>The cross-sectional correlation between
         a forecast and the return that follows it &mdash; skill per bet, on a &minus;1 to +1 scale.
         Because it is a correlation, its square is the share of return variance the forecast
@@ -397,9 +399,18 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 
     <p>Three numbers follow. Beating a no-signal book requires an information coefficient near
       <code>0.036</code>. The best stable feature available from free price data measures
-      <code>0.012</code>. And because those features correlate with one another at
-      &rho;&nbsp;=&nbsp;0.234, combining arbitrarily many of them converges to <code>0.0223</code>
-      &mdash; roughly 60% of the requirement, approached asymptotically and never crossed.</p>
+      <code>0.012</code>, and the eight tested average <code>0.0108</code>. Because those features
+      correlate with one another at &rho;&nbsp;=&nbsp;0.234, combining arbitrarily many of them
+      converges on <code>0.0108 / &radic;0.234 = 0.0223</code> &mdash; roughly 60% of the
+      requirement, approached asymptotically and never crossed.</p>
+
+    <p class="scope">The asymptote is computed from the <em>mean</em> individual IC across the eight
+      signals, not the best one, since it describes what a large combination of comparable signals
+      converges to rather than what the strongest single signal achieves. It also assumes the
+      idealised equicorrelation case &mdash; equally skilled signals sharing one pairwise
+      correlation. That is a simplification of the measured covariance structure, so read
+      <code>0.0223</code> as the asymptote implied by the average signal and the average
+      correlation, not as a bound derived from the full covariance matrix.</p>
 
 <div class="chart-frame">
   <svg viewBox="0 0 640 250" width="100%" height="250" role="img"
@@ -430,8 +441,9 @@ footer p{max-width:var(--measure);margin-bottom:10px}
     <text x="97.4" y="139.1" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="var(--muted)">8 signals tested &#8594; 0.0188</text>
   </svg>
   <p class="chart-note">Eight price signals correlate at &rho;&nbsp;=&nbsp;0.234, so they contribute an
-    effective breadth of 3.03 rather than 8. Adding arbitrarily many more converges to 0.0223 &mdash;
-    the gap to 0.036 cannot be closed from within this feature space.</p>
+    effective breadth of 3.03 rather than 8. At their mean individual IC of 0.0108, adding
+    arbitrarily many more converges to 0.0108&nbsp;/&nbsp;&radic;0.234 = 0.0223 &mdash; the gap to
+    0.036 does not close from within this feature space.</p>
 </div>
 
     <p class="scope"><strong>What this does and does not show.</strong> The reachable set from
@@ -458,7 +470,8 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 
     <p>The answer invalidated every prior conclusion. Forty random signals, routed through the
       identical construction &mdash; same universe, same top-30% selection, same inverse-volatility
-      weighting, same 10% volatility target, same costs &mdash; produced this:</p>
+      weighting, same 10% volatility target capped at 1.0&times; exposure, same costs &mdash;
+      produced this:</p>
 
     <div class="tscroll">
       <table>
@@ -581,6 +594,18 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       a best-signal 92.5th, so it outscores every one of them. R&sup2; against Fama-French runs 0.66&ndash;0.75 for most rows &mdash; two
       thirds to three quarters of everything built here is factor exposure purchasable in an ETF.</p>
 
+    <p class="scope"><strong>What this null is calibrated against.</strong> Each strategy is scored
+      against random signals routed through <em>its own</em> construction, so the control covers
+      pipeline-induced alpha: the weighting, the volatility overlay, the truncation, the costs. It
+      does not cover the search that produced the thirty-eight. The crude family-wise check is the
+      chance expectation above &mdash; 5% of 38 is 1.9, and two cleared unconditionally &mdash;
+      but a proper research-process null would randomise, re-run the entire battery, take the best
+      result, and repeat until the distribution of that maximum is known (White, 2000; Hansen,
+      2005). That has not been run here, and it is the outstanding control on this document.
+      Its absence cuts in a known direction: a family-wise correction raises the bar, so it can
+      only reduce the count of strategies clearing it, never raise it. The
+      <code>0 / 38</code> stands; what it would tighten is the reading of the two near-misses.</p>
+
     <p>Notable individual outcomes. <strong>Post-earnings announcement drift</strong>, the most
       replicated anomaly in finance, produced a 60-day decile spread &mdash; the return gap between
       the top and bottom tenth of stocks ranked on it &mdash; of <code>0.06%</code> against the
@@ -623,7 +648,8 @@ footer p{max-width:var(--measure);margin-bottom:10px}
     <p>The random forest was the only model to survive a full stress battery: 18 of 18
       hyperparameter configurations positive with a tight spread, seed-to-seed variation of 5%,
       feature-importance rank correlation of 0.864 year over year, and a label-shuffle null
-      topping out at IC 0.0045 against its 0.0308. It is genuinely finding structure.</p>
+      topping out at IC 0.0045 against its 0.0308. That is reproducible structure within the
+      sample &mdash; not noise, and not yet evidence of anything persistent.</p>
 
     <p class="pull">What it found was a regime-specific <em>inversion</em> of the low-volatility
       anomaly &mdash; a relationship that held over one sample and has the opposite sign in the
