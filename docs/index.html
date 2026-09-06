@@ -109,6 +109,21 @@ header{border-bottom:1px solid var(--rule-strong);padding:72px 0 0}
   overflow-wrap:anywhere;
 }
 
+.author{
+  display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
+  font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--muted);
+  margin:0;
+}
+.author a{
+  color:var(--ink);font-weight:500;text-decoration:none;
+  border-bottom:1px solid var(--rule-strong);transition:border-color .15s ease;
+}
+.author a:hover,.author a:focus-visible{border-bottom-color:var(--accent)}
+.author a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+/* separators are generated on the segment that FOLLOWS them, so a dot can
+   never be left dangling at the end of a wrapped line */
+.author > * + *::before{content:"\00B7";color:var(--faint);margin-right:9px}
+
 .companion{font-size:.9rem;color:var(--muted)}
 .companion a{border-bottom:1px solid var(--rule-strong);text-decoration:none}
 .companion a:hover,.companion a:focus-visible{border-bottom-color:var(--accent)}
@@ -264,6 +279,12 @@ footer p{max-width:var(--measure);margin-bottom:10px}
     <h1>A Measured Ceiling</h1>
     <p class="sub">Twelve signal families, thirty-eight strategies, and the arithmetic that
       explains why none of them worked &mdash; plus the two things that did.</p>
+
+    <p class="author">
+      <a href="https://aravindvrm.github.io/">aravindvrm</a>
+      <span>September 2026</span>
+      <span>written with Claude, re-run under the controls in &sect;02</span>
+    </p>
 
     <a class="srclink" href="https://github.com/aravindvrm/systematic-equity-research">
       <span class="srclink-label">View the source&nbsp;<span aria-hidden="true">&rarr;</span></span>

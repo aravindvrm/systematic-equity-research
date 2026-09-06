@@ -56,6 +56,22 @@ header{padding:76px 0 0;border-bottom:1px solid var(--rule-strong);margin-bottom
 .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.7rem;font-weight:500;
   letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
 .eyebrow a{text-decoration:none;border-bottom:1px solid var(--rule-strong)}
+
+.author{
+  display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
+  font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--muted);
+  margin:0;
+}
+.author a{
+  color:var(--ink);font-weight:500;text-decoration:none;
+  border-bottom:1px solid var(--rule-strong);transition:border-color .15s ease;
+}
+.author a:hover,.author a:focus-visible{border-bottom-color:var(--accent)}
+.author a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+/* separators are generated on the segment that FOLLOWS them, so a dot can
+   never be left dangling at the end of a wrapped line */
+.author > * + *::before{content:"\00B7";color:var(--faint);margin-right:9px}
+header .author{margin-top:14px}
 .standfirst{font-family:Spectral,Georgia,serif;font-size:1.22rem;line-height:1.45;
   color:var(--ink);border-left:3px solid var(--accent);padding:2px 0 2px 20px;margin:26px 0 34px}
 header .pad{padding-bottom:30px}
@@ -67,8 +83,13 @@ footer{margin:44px 0 80px;padding-top:22px;border-top:1px solid var(--rule);
 <div class="wrap">
   <header>
     <div class="pad">
-      <p class="eyebrow"><a href="https://aravindvrm.github.io/">aravindvrm</a> &nbsp;/&nbsp; essay</p>
+      <p class="eyebrow">Essay</p>
       <h1>What Does Nothing Score?</h1>
+      <p class="author">
+        <a href="https://aravindvrm.github.io/">aravindvrm</a>
+        <span>September 2026</span>
+        <span>written with Claude; conclusions and errors are mine</span>
+      </p>
     </div>
   </header>
 <p class="standfirst">Every backtesting library verifies that your code runs. None of them tell you what a worthless strategy scores in your pipeline. That number is often large.</p>
