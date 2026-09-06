@@ -143,4 +143,4 @@ The uncomfortable part is that the null floor takes about ten minutes to run. I 
 
 ---
 
-*The framework, the tests, and the full negative result are [on GitHub](https://github.com/aravindvrm/systematic-equity-research). The research writeup is [here](https://aravindvrm.github.io/systematic-equity-research/). Analysis code and drafting were produced in collaboration with Claude (Anthropic); conclusions and errors are mine.*
+*The framework, the tests, and the full negative result are [on GitHub](https://github.com/aravindvrm/systematic-equity-research). The whitepaper is [here](https://aravindvrm.github.io/systematic-equity-research/). Analysis code and drafting were produced in collaboration with Claude (Anthropic); conclusions and errors are mine.*
