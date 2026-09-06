@@ -364,9 +364,12 @@ footer p{max-width:var(--measure);margin-bottom:10px}
         to be worth having, and all thirty-eight lost to it.</dd></div>
       <div class="pair"><dt>Information coefficient</dt><dd>The cross-sectional correlation between
         a forecast and the return that follows it &mdash; skill per bet, on a &minus;1 to +1 scale.
-        Real numbers are small: skilled institutional managers sustain roughly
-        <code>0.03</code>&ndash;<code>0.05</code>, and anything near <code>0.10</code> held over
-        decades would be exceptional. The three headline figures are all on this scale.</dd></div>
+        Because it is a correlation, its square is the share of return variance the forecast
+        explains, which is what makes the scale so unintuitive: the <code>0.036</code> required
+        here accounts for <strong>0.13%</strong> of the cross-sectional variance in what happens
+        next, and the <code>0.012</code> available accounts for <strong>0.014%</strong>. Almost
+        all of the variation is unforecastable, and the entire question is whether the sliver
+        that is not covers its own costs. The three headline figures are all on this scale.</dd></div>
       <div class="pair"><dt>Cash account</dt><dd>A retail brokerage account with no margin: no
         shorting, no leverage, settled funds only. It is the constraint this study was conducted
         under, and it is binding &mdash; it forces every book to be long-only, and it rules out the
@@ -580,8 +583,9 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 
     <p>Notable individual outcomes. <strong>Post-earnings announcement drift</strong>, the most
       replicated anomaly in finance, produced a 60-day decile spread &mdash; the return gap between
-      the top and bottom tenth of stocks ranked on it &mdash; of <code>0.06%</code> against
-      a documented 3&ndash;6% &mdash; not a weakened effect but an absent one. <strong>Book-to-market</strong>
+      the top and bottom tenth of stocks ranked on it &mdash; of <code>0.06%</code> against the
+      <code>4.2%</code> Bernard &amp; Thomas (1989) report over that same sixty-day window
+      &mdash; not a weakened effect but an absent one. <strong>Book-to-market</strong>
       was the strongest single measurement in the project at IC <code>0.0448</code>, and still
       landed at the 85th percentile. And the <strong>7-signal composite ranked below its own
       components</strong>. Averaging z-scores of signals correlated at 0.97 averages one signal
@@ -897,6 +901,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
         <h3>Anomalies tested</h3>
         <ol start="15">
           <li>Ball, R. &amp; Brown, P. (1968). An empirical evaluation of accounting income numbers. <em>Journal of Accounting Research</em>. <span class="reftag">PEAD</span></li>
+          <li>Bernard, V. &amp; Thomas, J. (1989). Post-earnings-announcement drift: delayed price response or risk premium? <em>Journal of Accounting Research</em> 27, 1&ndash;36. <span class="reftag">PEAD magnitude</span></li>
           <li>Jegadeesh, N. &amp; Titman, S. (1993). Returns to buying winners and selling losers. <em>Journal of Finance</em>. <span class="reftag">momentum</span></li>
           <li>Sloan, R. (1996). Do stock prices fully reflect information in accruals and cash flows? <em>The Accounting Review</em>. <span class="reftag">not testable here</span></li>
           <li>Hou, K. (2007). Industry information diffusion and the lead-lag effect in stock returns. <em>Review of Financial Studies</em>.</li>
