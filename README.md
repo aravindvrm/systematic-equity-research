@@ -9,7 +9,7 @@ no-signal portfolio ranked first of the thirty-eight.** The useful output is not
 the strategies — it is the calibration procedure that made that conclusion
 trustworthy, and the arithmetic that explains it.
 
-📄 **[Read the writeup →](https://claude.ai/code/artifact/8ed9548e-4bc9-4f2a-983d-0375d3546214)**
+📄 **[Read the writeup →](https://aravindvrm.github.io/systematic-equity-research/)**
 
 ---
 

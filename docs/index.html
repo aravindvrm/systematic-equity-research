@@ -175,6 +175,26 @@ tr.dim td{color:var(--faint)}
 .path .verdict.stop{color:var(--null)}
 .path p{font-size:.9rem;color:var(--body)}
 
+/* ---------- references ---------- */
+.refs{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start}
+.refgroup h3{
+  font-family:"IBM Plex Sans",sans-serif;font-size:.7rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  padding-bottom:9px;margin-bottom:11px;border-bottom:1px solid var(--rule-strong);
+}
+.refgroup ol{margin:0;padding-left:1.6em;display:flex;flex-direction:column;gap:9px}
+.refgroup li{font-size:.83rem;line-height:1.45;color:var(--body);padding-left:2px}
+.refgroup li::marker{font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--faint)}
+.reftag{
+  display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.62rem;
+  letter-spacing:.05em;color:var(--muted);background:var(--sunk);
+  border:1px solid var(--rule);padding:0 5px;border-radius:2px;white-space:nowrap;
+}
+.refnote{
+  font-size:.83rem;color:var(--muted);border-top:1px solid var(--rule);
+  padding-top:16px;max-width:none;
+}
+
 footer{padding:44px 0 72px;color:var(--faint);font-size:.82rem}
 footer p{max-width:var(--measure);margin-bottom:10px}
 
@@ -530,6 +550,107 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 
     <p class="pull">The literature cannot give you signals. It can stop you believing in ones you
       do not have &mdash; which, on this evidence, is the more valuable of the two.</p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">09</span><h2>References</h2></div>
+  <div class="flow">
+    <p>Works this study relied on, grouped by the role they played rather than
+      alphabetically &mdash; the grouping is itself part of the argument, since the
+      evaluation literature and the anomaly literature are separate bodies of work
+      and consulting only the second is what produced most of the wasted effort here.</p>
+
+    <div class="refs">
+      <div class="refgroup">
+        <h3>Evaluation and inference</h3>
+        <ol>
+          <li>Grinold, R. (1989). The fundamental law of active management. <em>Journal of Portfolio Management</em>.</li>
+          <li>Clarke, R., de Silva, H. &amp; Thorley, S. (2002). Portfolio constraints and the fundamental law of active management. <em>Financial Analysts Journal</em>.</li>
+          <li>Ferson, W. &amp; Schadt, R. (1996). Measuring fund strategy and performance in changing economic conditions. <em>Journal of Finance</em>.</li>
+          <li>Harvey, C., Liu, Y. &amp; Zhu, H. (2016). &hellip;and the cross-section of expected returns. <em>Review of Financial Studies</em>.</li>
+          <li>White, H. (2000). A reality check for data snooping. <em>Econometrica</em>.</li>
+          <li>Hansen, P. (2005). A test for superior predictive ability. <em>Journal of Business &amp; Economic Statistics</em>.</li>
+          <li>Bailey, D. &amp; L&oacute;pez de Prado, M. (2014). The deflated Sharpe ratio. <em>Journal of Portfolio Management</em>.</li>
+          <li>Bailey, D., Borwein, J., L&oacute;pez de Prado, M. &amp; Zhu, Q. (2014). The probability of backtest overfitting. <em>Journal of Computational Finance</em>.</li>
+          <li>L&oacute;pez de Prado, M. (2018). <em>Advances in Financial Machine Learning</em>. Wiley.</li>
+          <li>Newey, W. &amp; West, K. (1987). A simple, positive semi-definite, heteroskedasticity and autocorrelation consistent covariance matrix. <em>Econometrica</em>.</li>
+        </ol>
+      </div>
+
+      <div class="refgroup">
+        <h3>Factor models</h3>
+        <ol start="11">
+          <li>Fama, E. &amp; French, K. (1993). Common risk factors in the returns on stocks and bonds. <em>Journal of Financial Economics</em>.</li>
+          <li>Carhart, M. (1997). On persistence in mutual fund performance. <em>Journal of Finance</em>.</li>
+          <li>Fama, E. &amp; French, K. (2015). A five-factor asset pricing model. <em>Journal of Financial Economics</em>.</li>
+          <li>Gu, S., Kelly, B. &amp; Xiu, D. (2020). Empirical asset pricing via machine learning. <em>Review of Financial Studies</em>.</li>
+        </ol>
+      </div>
+
+      <div class="refgroup">
+        <h3>Anomalies tested</h3>
+        <ol start="15">
+          <li>Ball, R. &amp; Brown, P. (1968). An empirical evaluation of accounting income numbers. <em>Journal of Accounting Research</em>. <span class="reftag">PEAD</span></li>
+          <li>Jegadeesh, N. &amp; Titman, S. (1993). Returns to buying winners and selling losers. <em>Journal of Finance</em>. <span class="reftag">momentum</span></li>
+          <li>Sloan, R. (1996). Do stock prices fully reflect information in accruals and cash flows? <em>The Accounting Review</em>. <span class="reftag">not testable here</span></li>
+          <li>Hou, K. (2007). Industry information diffusion and the lead-lag effect in stock returns. <em>Review of Financial Studies</em>.</li>
+          <li>Cooper, M., Gulen, H. &amp; Schill, M. (2008). Asset growth and the cross-section of stock returns. <em>Journal of Finance</em>.</li>
+          <li>Pontiff, J. &amp; Woodgate, A. (2008). Share issuance and cross-sectional returns. <em>Journal of Finance</em>.</li>
+          <li>Cremers, M. &amp; Weinbaum, D. (2010). Deviations from put-call parity and stock return predictability. <em>Journal of Financial and Quantitative Analysis</em>.</li>
+          <li>Xing, Y., Zhang, X. &amp; Zhao, R. (2010). What does the individual option volatility smirk tell us about future equity returns? <em>Journal of Financial and Quantitative Analysis</em>.</li>
+          <li>Novy-Marx, R. (2013). The other side of value: the gross profitability premium. <em>Journal of Financial Economics</em>.</li>
+          <li>Anton, M. &amp; Polk, C. (2014). Connected stocks. <em>Journal of Finance</em>. <span class="reftag">13F common ownership</span></li>
+          <li>Cohen, L., Malloy, C. &amp; Nguyen, Q. (2020). Lazy prices. <em>Journal of Finance</em>. <span class="reftag">filing-text similarity</span></li>
+        </ol>
+      </div>
+
+      <div class="refgroup">
+        <h3>Decay and replication</h3>
+        <ol start="26">
+          <li>Chordia, T., Subrahmanyam, A. &amp; Tong, Q. (2014). Have capital market anomalies attenuated in the recent era of high liquidity and trading activity? <em>Journal of Accounting and Economics</em>.</li>
+          <li>McLean, R. &amp; Pontiff, J. (2016). Does academic research destroy stock return predictability? <em>Journal of Finance</em>.</li>
+          <li>Hou, K., Xue, C. &amp; Zhang, L. (2020). Replicating anomalies. <em>Review of Financial Studies</em>.</li>
+          <li>Chen, A. &amp; Zimmermann, T. (2022). Open source cross-sectional asset pricing. <em>Critical Finance Review</em>. Dataset: <span class="mono">openassetpricing.com</span></li>
+        </ol>
+      </div>
+
+      <div class="refgroup">
+        <h3>Risk premia</h3>
+        <ol start="30">
+          <li>Cochrane, J. (2011). Discount rates. <em>Journal of Finance</em>. AFA presidential address.</li>
+          <li>Ilmanen, A. (2011). <em>Expected Returns: An Investor's Guide to Harvesting Market Rewards</em>. Wiley.</li>
+          <li>Moskowitz, T., Ooi, Y. &amp; Pedersen, L. (2012). Time series momentum. <em>Journal of Financial Economics</em>.</li>
+          <li>Frazzini, A. &amp; Pedersen, L. (2014). Betting against beta. <em>Journal of Financial Economics</em>.</li>
+          <li>Moreira, A. &amp; Muir, T. (2017). Volatility-managed portfolios. <em>Journal of Finance</em>.</li>
+          <li>Koijen, R., Moskowitz, T., Pedersen, L. &amp; Vrugt, E. (2018). Carry. <em>Journal of Financial Economics</em>.</li>
+          <li>Roncalli, T. Alternative risk premia: what do we know? Working paper.</li>
+        </ol>
+      </div>
+
+      <div class="refgroup">
+        <h3>Microstructure and estimation</h3>
+        <ol start="37">
+          <li>Andersen, T., Bollerslev, T., Diebold, F. &amp; Labys, P. (2003). Modeling and forecasting realized volatility. <em>Econometrica</em>.</li>
+          <li>Garman, M. &amp; Klass, M. (1980). On the estimation of security price volatilities from historical data. <em>Journal of Business</em>.</li>
+          <li>Corwin, S. &amp; Schultz, P. (2012). A simple way to estimate bid-ask spreads from daily high and low prices. <em>Journal of Finance</em>.</li>
+          <li>Abdi, F. &amp; Ranaldo, A. (2017). A simple estimation of bid-ask spreads from daily close, high, and low prices. <em>Review of Financial Studies</em>.</li>
+        </ol>
+      </div>
+
+      <div class="refgroup">
+        <h3>Retail outcomes</h3>
+        <ol start="41">
+          <li>Barber, B. &amp; Odean, T. (2000). Trading is hazardous to your wealth. <em>Journal of Finance</em>.</li>
+          <li>Chague, F., De-Losso, R. &amp; Giovannetti, B. Day trading for a living? Working paper.</li>
+        </ol>
+      </div>
+    </div>
+
+    <p class="refnote">Data sources: SEC DERA structured datasets (Forms 4, 13F, Financial
+      Statement Data Sets), SEC EDGAR full-text filings, the Kenneth R. French Data
+      Library, CBOE strategy benchmark indices, and Yahoo Finance via
+      <span class="mono">yfinance</span>. All free and publicly available.</p>
   </div>
 </section>
 
