@@ -4,7 +4,7 @@ A modular harness for ingesting financial data, building cross-sectional signals
 and — the part most backtesting code omits — **establishing whether a result is
 distinguishable from noise.**
 
-Twelve signal families were tested across 38 strategies on 211 US large caps over
+Twelve signal families were tested across 38 strategies on 199 US large caps over
 2005–2026. None beat a random signal routed through the same pipeline, and a
 no-signal portfolio outscored all thirty-eight. That negative result is
 documented in the whitepaper; this repository is the machinery that produced it and
