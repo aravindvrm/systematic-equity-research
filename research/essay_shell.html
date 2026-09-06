@@ -10,24 +10,24 @@
 <title>What Does Nothing Score?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cactus+Classical+Serif&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 :root{
   --paper:#0A0D12; --raised:#161D27; --sunk:#11161E;
   --ink:#F2F6FA; --body:#C6D2DE; --muted:#8D9BAB; --faint:#7A8593;
-  --rule:#1F2732; --rule-strong:#2E3945; --accent:#48D121; --accent-soft:#12220C;
+  --rule:#1F2732; --rule-strong:#2E3945; --accent:#F7743B; --accent-soft:#2A1509;
 }
 @media (prefers-color-scheme: light){
   :root:not([data-theme="dark"]){
     --paper:#FBFCFD; --raised:#FFFFFF; --sunk:#F0F3F6;
     --ink:#101720; --body:#2B3742; --muted:#58656F; --faint:#6A7681;
-    --rule:#DFE5EB; --rule-strong:#C4CED8; --accent:#357A22; --accent-soft:#EBF4E7;
+    --rule:#DFE5EB; --rule-strong:#C4CED8; --accent:#B8431A; --accent-soft:#FBEDE6;
   }
 }
 :root[data-theme="light"]{
   --paper:#FBFCFD; --raised:#FFFFFF; --sunk:#F0F3F6;
   --ink:#101720; --body:#2B3742; --muted:#58656F; --faint:#6A7681;
-  --rule:#DFE5EB; --rule-strong:#C4CED8; --accent:#357A22; --accent-soft:#EBF4E7;
+  --rule:#DFE5EB; --rule-strong:#C4CED8; --accent:#B8431A; --accent-soft:#FBEDE6;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--body);
@@ -35,9 +35,9 @@ body{margin:0;background:var(--paper);color:var(--body);
   font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
 .wrap{max-width:66ch;margin:0 auto;padding:0 26px}
 a{color:var(--accent)}
-h1,h2{font-family:"Cactus Classical Serif",Georgia,serif;color:var(--ink);margin:0;text-wrap:balance}
-h1{font-size:clamp(2.1rem,5.5vw,3rem);font-weight:400;line-height:1.08;letter-spacing:-.015em}
-h2{font-size:1.42rem;font-weight:400;line-height:1.25;margin:42px 0 -4px}
+h1,h2{font-family:Spectral,Georgia,serif;color:var(--ink);margin:0;text-wrap:balance}
+h1{font-size:clamp(2.1rem,5.5vw,3rem);font-weight:500;line-height:1.08;letter-spacing:-.015em}
+h2{font-size:1.42rem;font-weight:500;line-height:1.25;margin:42px 0 -4px}
 p{margin:20px 0}
 strong{color:var(--ink);font-weight:600}
 code{font-family:"IBM Plex Mono",monospace;font-size:.87em;background:var(--sunk);
@@ -56,7 +56,7 @@ header{padding:76px 0 0;border-bottom:1px solid var(--rule-strong);margin-bottom
 .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.7rem;font-weight:500;
   letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
 .eyebrow a{text-decoration:none;border-bottom:1px solid var(--rule-strong)}
-.standfirst{font-family:"Cactus Classical Serif",Georgia,serif;font-size:1.22rem;line-height:1.45;
+.standfirst{font-family:Spectral,Georgia,serif;font-size:1.22rem;line-height:1.45;
   color:var(--ink);border-left:3px solid var(--accent);padding:2px 0 2px 20px;margin:26px 0 34px}
 header .pad{padding-bottom:30px}
 footer{margin:44px 0 80px;padding-top:22px;border-top:1px solid var(--rule);
