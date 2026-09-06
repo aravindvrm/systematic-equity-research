@@ -514,6 +514,32 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       the phantom alpha from <em>t</em>&nbsp;=&nbsp;2.75 to 0.77. Remove the 2008 crash and there
       is nothing left to dodge.</p>
 
+    <p>A second confirmation removes the beta instead of the crash. If the diagnosis is right,
+      a book with no market exposure has no exposure to time, and its floor should fall to
+      nothing. Rebuilding the same stack as a long/short book whose ranking is orthogonalised
+      to beta &mdash; realised beta <code>0.008</code>, confirmed rather than assumed &mdash;
+      and recalibrating against 200 fresh draws:</p>
+
+    <div class="tscroll">
+      <table>
+        <caption>Alpha-<em>t</em> null floor by how much market exposure the construction carries</caption>
+        <thead><tr><th>Construction</th><th>Realised &beta;</th><th>Null mean</th><th>Null p95</th><th>Null max</th></tr></thead>
+        <tbody>
+          <tr><td>Long-only, vol-targeted</td><td>0.4&ndash;0.5</td><td>+2.75</td><td>+3.27</td><td>+3.45</td></tr>
+          <tr><td>Dollar-neutral long/short</td><td>0.53</td><td>&mdash;</td><td>&minus;0.37</td><td>+1.38</td></tr>
+          <tr><td>Beta-orthogonal long/short</td><td>0.008</td><td>&mdash;</td><td>&minus;0.60</td><td>+1.27</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The floor tracks the beta, not the signal. That is the mechanism tested rather than
+      inferred: it is the volatility overlay acting on a time-varying market exposure that
+      manufactures the alpha, and when there is no exposure to vary, there is no alpha to
+      manufacture. It also means the <em>t</em>&nbsp;&gt;&nbsp;2 and <em>t</em>&nbsp;&gt;&nbsp;3
+      conventions are not merely uncalibrated but uncalibrated <em>by a margin that depends on
+      the construction</em> &mdash; the same nominal bar is trivial on one stack and
+      unreachable on another.</p>
+
     <p class="pull">A t-statistic of 6 is not evidence of a business. The signal composite
       reached exactly that &mdash; and still lost to holding everything.</p>
   </div>
@@ -607,6 +633,13 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       regime it is in. A flexible learner will fit whichever sign the sample happens to contain.
       That is a well-specified description of 2009&ndash;2026 rather than an edge, and it still
       produces a worse portfolio than holding everything.</p>
+
+    <p>Removing the tilt confirms this directly. Orthogonalising the model's scores to beta
+      cross-sectionally before ranking &mdash; the practical form of the residual construction
+      in Blitz, Huij &amp; Martens &mdash; leaves a book that earns
+      <code>+3.16%</code> a year over 2015&ndash;2020 and <code>&minus;1.23%</code> over
+      2021&ndash;2026. The residual changes sign on extension. What the forest found was the
+      tilt.</p>
   </div>
 </section>
 
@@ -662,6 +695,16 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       (standard deviation of the negative subset rather than the RMS of the clipped series), and
       turnover was charged on target changes rather than realised drift. Sharpe, drawdown,
       volatility and CAGR all verified against <span class="mono">empyrical</span>.</p>
+
+    <p>The follow-up work described in section&nbsp;06 was therefore <strong>pre-registered</strong>:
+      the design, five numbered predictions and an explicit falsifier were written and committed
+      before the code existed. Two of the five predictions were wrong, and the falsifier fired
+      on a literal reading &mdash; the neutral book did clear its recalibrated null on the full
+      sample. Two arguments for dismissing that were tried and both failed on inspection, and
+      what actually settled it was splitting the sample, which the registered criterion had
+      never required. Registering predictions in advance did not prevent a bad criterion. It did
+      make the badness visible instead of negotiable.</p>
+
   </div>
 </section>
 
@@ -760,16 +803,21 @@ footer p{max-width:var(--measure);margin-bottom:10px}
         more to diversification than any forecast recovers.</dd></div>
       <div class="pair"><dt>Long-only</dt><dd>Costs roughly half the achievable information ratio
         (Clarke, de&nbsp;Silva &amp; Thorley). Applied to trend, it removes precisely the crisis
-        alpha the strategy is held for. For the cross-section, though, it is
-        <em>not</em> the binding constraint: lifting it does not help. A dollar-neutral long/short
-        book on the strongest signal, carrying general-collateral borrow at 50bp and no rebate on
-        short proceeds &mdash; the conservative retail case &mdash; scored Sharpe
-        <code>0.735</code> against a null maximum of <code>0.738</code>, so it too fails against
-        its own recalibrated floor. It also came out with a market beta of <code>0.53</code>
-        rather than zero: because the model's edge is a volatility tilt, the long leg holds
-        higher-beta names than the short leg, and the &ldquo;neutral&rdquo; book is largely a beta
-        bet wearing a hedge. Shorting relieves the transfer coefficient; it does not manufacture
-        the information coefficient that is actually missing.</dd></div>
+        alpha the strategy is held for. For the cross-section, though, it is <em>not</em> the
+        binding constraint, and this was tested rather than argued. Three long/short
+        constructions on the strongest signal, each carrying 50bp general-collateral borrow, no
+        rebate on short proceeds, margin interest and a Reg&nbsp;T cap &mdash; the conservative
+        retail case &mdash; and each scored against its own recalibrated 200-draw null:
+        <strong>dollar-neutral</strong> reached Sharpe <code>0.735</code> but realised a market
+        beta of <code>0.53</code>, so it was never neutral;
+        <strong>beta-scaled legs</strong> reached <code>0.560</code> at a realised beta of
+        <code>0.232</code>; and <strong>beta-orthogonal ranking</strong> reached
+        <code>0.394</code> at a realised beta of <code>0.008</code>. The pattern is monotone:
+        the more market exposure is removed, the less is left. What remains in the neutral book
+        earns <code>+3.16%</code> a year in 2015&ndash;2020 and <code>&minus;1.23%</code> in
+        2021&ndash;2026, so it does not survive its own sample being extended. Shorting relieves
+        the transfer coefficient; it does not supply the information coefficient that is
+        actually missing.</dd></div>
       <div class="pair"><dt>Construction</dt><dd>Truncating a ranking at the top 30% was the worst
         sizing rule tested &mdash; discarding magnitude and two thirds of the diversification at
         once. It was nonetheless the default for every test in this project until the last day.</dd></div>
@@ -829,6 +877,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
           <li>Bailey, D. &amp; L&oacute;pez de Prado, M. (2014). The deflated Sharpe ratio: correcting for selection bias, backtest overfitting and non-normality. <em>Journal of Portfolio Management</em> 40(5).</li>
           <li>Bailey, D., Borwein, J., L&oacute;pez de Prado, M. &amp; Zhu, Q. (2017). The probability of backtest overfitting. <em>Journal of Computational Finance</em> 20(4), 39&ndash;69. SSRN working paper 2326253 (2013).</li>
           <li>L&oacute;pez de Prado, M. (2018). <em>Advances in Financial Machine Learning</em>. Wiley.</li>
+          <li>Vasicek, O. (1973). A note on using cross-sectional information in Bayesian estimation of security betas. <em>Journal of Finance</em>. <span class="reftag">beta shrinkage</span></li>
           <li>Newey, W. &amp; West, K. (1987). A simple, positive semi-definite, heteroskedasticity and autocorrelation consistent covariance matrix. <em>Econometrica</em>.</li>
         </ol>
       </div>
@@ -839,6 +888,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
           <li>Fama, E. &amp; French, K. (1993). Common risk factors in the returns on stocks and bonds. <em>Journal of Financial Economics</em>.</li>
           <li>Carhart, M. (1997). On persistence in mutual fund performance. <em>Journal of Finance</em>.</li>
           <li>Fama, E. &amp; French, K. (2015). A five-factor asset pricing model. <em>Journal of Financial Economics</em>.</li>
+          <li>Blitz, D., Huij, J. &amp; Martens, M. (2011). Residual momentum. <em>Journal of Empirical Finance</em>. <span class="reftag">factor-neutral construction</span></li>
           <li>Gu, S., Kelly, B. &amp; Xiu, D. (2020). Empirical asset pricing via machine learning. <em>Review of Financial Studies</em>.</li>
         </ol>
       </div>
@@ -865,6 +915,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
         <ol start="26">
           <li>Chordia, T., Subrahmanyam, A. &amp; Tong, Q. (2014). Have capital market anomalies attenuated in the recent era of high liquidity and trading activity? <em>Journal of Accounting and Economics</em>.</li>
           <li>McLean, R. &amp; Pontiff, J. (2016). Does academic research destroy stock return predictability? <em>Journal of Finance</em>.</li>
+          <li>Novy-Marx, R. &amp; Velikov, M. (2022). Betting against betting against beta. <em>Journal of Financial Economics</em>. <span class="reftag">rank-weighting overstates beta-neutral results</span></li>
           <li>Hou, K., Xue, C. &amp; Zhang, L. (2020). Replicating anomalies. <em>Review of Financial Studies</em>.</li>
           <li>Chen, A. &amp; Zimmermann, T. (2022). Open source cross-sectional asset pricing. <em>Critical Finance Review</em>. Dataset: <span class="mono">openassetpricing.com</span></li>
         </ol>
@@ -888,6 +939,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
         <ol start="37">
           <li>Andersen, T., Bollerslev, T., Diebold, F. &amp; Labys, P. (2003). Modeling and forecasting realized volatility. <em>Econometrica</em>.</li>
           <li>Garman, M. &amp; Klass, M. (1980). On the estimation of security price volatilities from historical data. <em>Journal of Business</em>.</li>
+          <li>Hollstein, F., Prokopczuk, M. &amp; Simen, C. (2019). Estimating beta: forecast adjustments and the impact of stock characteristics. <em>Journal of Financial Markets</em>. <span class="reftag">daily, one-year, exponentially weighted</span></li>
           <li>Corwin, S. &amp; Schultz, P. (2012). A simple way to estimate bid-ask spreads from daily high and low prices. <em>Journal of Finance</em>.</li>
           <li>Abdi, F. &amp; Ranaldo, A. (2017). A simple estimation of bid-ask spreads from daily close, high, and low prices. <em>Review of Financial Studies</em>.</li>
         </ol>
