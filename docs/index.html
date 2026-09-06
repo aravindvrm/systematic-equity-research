@@ -223,6 +223,12 @@ tr.dim td{color:var(--faint)}
 }
 .pair dt{font-weight:600;color:var(--ink);font-size:.94rem}
 .pair dd{margin:0;font-size:.94rem;color:var(--body)}
+/* definitions in the body flow sit tighter and quieter than the colophon's */
+.terms{margin:4px 0}
+.terms .pair{padding:12px 0}
+.terms dt{font-size:.9rem}
+.terms dd{font-size:.9rem;color:var(--muted);max-width:62ch}
+.terms dd strong,.terms dd em{color:var(--body)}
 
 .srcref{
   font-family:"IBM Plex Mono",monospace;font-size:.86em;color:var(--accent);
@@ -322,6 +328,26 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 
     <p class="pull">The gap between what this universe offers and what a long-only book requires
       is arithmetic, not luck &mdash; and no amount of additional price-derived signal can close it.</p>
+
+    <dl class="pairs terms">
+      <div class="pair"><dt>Book</dt><dd>The set of positions actually held. A
+        <strong>long-only book</strong> can buy a stock or not hold it, but cannot short it, so
+        its only way to express a negative view is to own none.</dd></div>
+      <div class="pair"><dt>No-signal book</dt><dd>The benchmark used throughout. It holds the
+        <em>entire</em> universe &mdash; no ranking, no selection, no forecast &mdash; and is run
+        through the identical construction as every strategy tested: inverse-volatility weights, a
+        10% volatility target, monthly rebalancing, the same costs. It is what a signal has to beat
+        to be worth having, and all thirty-eight lost to it.</dd></div>
+      <div class="pair"><dt>Information coefficient</dt><dd>The cross-sectional correlation between
+        a forecast and the return that follows it &mdash; skill per bet, on a &minus;1 to +1 scale.
+        Real numbers are small: skilled institutional managers sustain roughly
+        <code>0.03</code>&ndash;<code>0.05</code>, and anything near <code>0.10</code> held over
+        decades would be exceptional. The three headline figures are all on this scale.</dd></div>
+      <div class="pair"><dt>Cash account</dt><dd>A retail brokerage account with no margin: no
+        shorting, no leverage, settled funds only. It is the constraint this study was conducted
+        under, and it is binding &mdash; it forces every book to be long-only, and it rules out the
+        one strategy that ultimately cleared the null.</dd></div>
+    </dl>
 
     <p>The organising framework is the Fundamental Law of Active Management (Grinold, 1989),
       extended for real-world constraints by Clarke, de&nbsp;Silva &amp; Thorley (2002):</p>
@@ -493,7 +519,8 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       thirds to three quarters of everything built here is factor exposure purchasable in an ETF.</p>
 
     <p>Notable individual outcomes. <strong>Post-earnings announcement drift</strong>, the most
-      replicated anomaly in finance, produced a 60-day decile spread of <code>0.06%</code> against
+      replicated anomaly in finance, produced a 60-day decile spread &mdash; the return gap between
+      the top and bottom tenth of stocks ranked on it &mdash; of <code>0.06%</code> against
       a documented 3&ndash;6% &mdash; not a weakened effect but an absent one. <strong>Book-to-market</strong>
       was the strongest single measurement in the project at IC <code>0.0448</code>, and still
       landed at the 85th percentile. And the <strong>7-signal composite ranked below its own
@@ -568,7 +595,9 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 
     <div class="rev" style="margin-top:14px">
       <div class="rev-row claim"><div class="rev-tag">Claimed</div><div class="rev-body">
-        <s>A genuine residual of +0.02 to +0.036 Sharpe survives the beta-matched control.</s>
+        <s>A genuine residual of +0.02 to +0.036 Sharpe survives the beta-matched control</s>
+        &mdash; a comparison against a passive book levered to the same average market exposure,
+        which isolates what a strategy adds beyond simply taking more or less market risk.
       </div></div>
       <div class="rev-row fix"><div class="rev-tag">Revised</div><div class="rev-body">
         That range <em>is</em> the noise floor. Random signals score +0.029 on the same control, which cannot represent a time-varying beta.
@@ -656,8 +685,12 @@ footer p{max-width:var(--measure);margin-bottom:10px}
         <text x="518" y="176" font-family="IBM Plex Mono, monospace" font-size="11"
               fill="var(--pass)" font-weight="600">+0.0435</text>
       </svg>
-      <p class="chart-note">Long/short trend is the only result in the project to land beyond the
-        maximum of 40 null draws. The long-only version, which is what a cash account permits,
+      <p class="chart-note">Each bar is the change in Sharpe ratio from blending a 20% sleeve of
+        the strategy into a conventional 60% equity / 40% bond portfolio &mdash; what the strategy
+        adds to a portfolio someone already holds, rather than how it performs alone. The null
+        distribution is the same measurement made on 40 random-sign strategies.
+        Long/short trend is the only result in the project to land beyond the
+        maximum of those 40 null draws. The long-only version, which is what a cash account permits,
         sits at the 48th percentile on standalone Sharpe &mdash; the null median.</p>
     </div>
 
@@ -720,7 +753,8 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       (<a class="srcref" href="https://github.com/aravindvrm/systematic-equity-research/blob/main/algo/edgar.py">algo/edgar.py</a>), 13F and fundamentals ingestion, an options collector running
       daily, and 35 regression tests pinning the specific bugs found
       (<a class="srcref" href="https://github.com/aravindvrm/systematic-equity-research/blob/main/tests/test_evaluation.py">tests/</a>). One constructs a zero-information
-      volatility-timing sleeve and asserts it still beats a naive beta-matched control &mdash;
+      volatility-timing sleeve &mdash; a sub-portfolio blended into a larger one &mdash; and
+      asserts it still beats a naive beta-matched control &mdash;
       pinning the exact illusion that produced two retracted conclusions.</p>
 
     <p class="pull">The literature cannot give you signals. It can stop you believing in ones you
