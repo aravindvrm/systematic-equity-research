@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#0A0D12">
+<meta name="author" content="aravindvrm">
 <meta name="description" content="Twelve signal families, thirty-eight strategies, and the arithmetic that explains why none of them worked.">
 <style>html{color-scheme:dark light}body{margin:0}img{max-width:100%}</style>
 <title>A Measured Ceiling</title>
@@ -206,6 +207,14 @@ tr.dim td{color:var(--faint)}
   font-size:.83rem;color:var(--muted);border-top:1px solid var(--rule);
   padding-top:16px;max-width:none;
 }
+
+.colophon{
+  border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule);
+  padding:30px 0 6px;
+}
+.colophon .pair dd{color:var(--muted);font-size:.88rem}
+.colophon a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--rule-strong)}
+.colophon a:hover,.colophon a:focus-visible{border-bottom-color:var(--accent)}
 
 footer{padding:44px 0 72px;color:var(--faint);font-size:.82rem}
 footer p{max-width:var(--measure);margin-bottom:10px}
@@ -697,6 +706,29 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 </div>
 
 <div class="wide">
+  <div class="colophon">
+    <dl class="pairs" style="border-top:none">
+      <div class="pair">
+        <dt>Author</dt>
+        <dd><a href="https://github.com/aravindvrm">aravindvrm</a>. Research direction,
+          methodology decisions and conclusions are the author's.</dd>
+      </div>
+      <div class="pair">
+        <dt>Method</dt>
+        <dd>Analysis code, backtests and drafting were produced in collaboration with
+          Claude (Anthropic) over a working session. Every result was re-run under the
+          controls described in section 02, and the four conclusions those controls
+          overturned are recorded in section 04. Errors are the author's.</dd>
+      </div>
+      <div class="pair">
+        <dt>Source</dt>
+        <dd><a href="https://github.com/aravindvrm/systematic-equity-research">github.com/aravindvrm/systematic-equity-research</a>
+          &mdash; code, data-ingestion scripts, notes and 35 regression tests. Commit history
+          carries per-commit co-authorship.</dd>
+      </div>
+    </dl>
+  </div>
+
   <footer>
     <p><strong>Caveats.</strong> The universe is current index membership carried backward, so every
       result is survivorship-biased and should be read as an upper bound. Fundamentals begin in
