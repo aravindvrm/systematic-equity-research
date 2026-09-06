@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0A0D12">
+<meta name="author" content="aravindvrm">
+<meta name="description" content="Every backtesting library verifies that your code runs. None tell you what a worthless strategy scores in your pipeline. That number is often large.">
+<title>What Does Nothing Score?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#0A0D12; --raised:#161D27; --sunk:#11161E;
+  --ink:#F2F6FA; --body:#C6D2DE; --muted:#8D9BAB; --faint:#7A8593;
+  --rule:#1F2732; --rule-strong:#2E3945; --accent:#79C0FF; --accent-soft:#0E1E2C;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --paper:#FBFCFD; --raised:#FFFFFF; --sunk:#F0F3F6;
+    --ink:#101720; --body:#2B3742; --muted:#58656F; --faint:#6A7681;
+    --rule:#DFE5EB; --rule-strong:#C4CED8; --accent:#1668A8; --accent-soft:#E7F1FA;
+  }
+}
+:root[data-theme="light"]{
+  --paper:#FBFCFD; --raised:#FFFFFF; --sunk:#F0F3F6;
+  --ink:#101720; --body:#2B3742; --muted:#58656F; --faint:#6A7681;
+  --rule:#DFE5EB; --rule-strong:#C4CED8; --accent:#1668A8; --accent-soft:#E7F1FA;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--body);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:66ch;margin:0 auto;padding:0 26px}
+a{color:var(--accent)}
+h1,h2{font-family:Newsreader,Georgia,serif;color:var(--ink);margin:0;text-wrap:balance}
+h1{font-size:clamp(2.1rem,5.5vw,3rem);font-weight:500;line-height:1.08;letter-spacing:-.015em}
+h2{font-size:1.42rem;font-weight:500;line-height:1.25;margin:42px 0 -4px}
+p{margin:20px 0}
+strong{color:var(--ink);font-weight:600}
+code{font-family:"IBM Plex Mono",monospace;font-size:.87em;background:var(--sunk);
+  padding:1px 5px;border-radius:3px;color:var(--ink)}
+pre.block{font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.6;
+  background:var(--sunk);border:1px solid var(--rule);color:var(--ink);
+  padding:16px 18px;overflow-x:auto;margin:24px 0;font-variant-numeric:tabular-nums}
+figure.fig{margin:30px 0;padding:0;border:1px solid var(--rule);background:var(--raised)}
+figure.fig svg{display:block;padding:16px 16px 4px}
+figure.fig figcaption{
+  font-size:.83rem;line-height:1.55;color:var(--muted);
+  padding:12px 18px 15px;border-top:1px solid var(--rule);margin-top:8px;
+}
+hr{border:none;border-top:1px solid var(--rule);margin:38px 0}
+header{padding:76px 0 0;border-bottom:1px solid var(--rule-strong);margin-bottom:8px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.7rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
+.eyebrow a{text-decoration:none;border-bottom:1px solid var(--rule-strong)}
+.standfirst{font-family:Newsreader,Georgia,serif;font-size:1.22rem;line-height:1.45;
+  color:var(--ink);border-left:3px solid var(--accent);padding:2px 0 2px 20px;margin:26px 0 34px}
+header .pad{padding-bottom:30px}
+footer{margin:44px 0 80px;padding-top:22px;border-top:1px solid var(--rule);
+  color:var(--faint);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="pad">
+      <p class="eyebrow"><a href="https://aravindvrm.github.io/">aravindvrm</a> &nbsp;/&nbsp; essay</p>
+      <h1>What Does Nothing Score?</h1>
+    </div>
+  </header>
+<!--BODY-->
+  <footer>
+    <p>Part of the <a href="https://aravindvrm.github.io/systematic-equity-research/">Systematic
+      Equity Research Framework</a>. Code and tests are
+      <a href="https://github.com/aravindvrm/systematic-equity-research">on GitHub</a>.</p>
+  </footer>
+</div>
+</body>
+</html>
