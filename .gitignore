@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------------------
+# CREDENTIALS — broadest patterns first. .env holds live Alpaca API keys, which
+# carry full trading authority and have no read-only variant.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.env
+**/.env
+**/.env.*
+!**/.env.example
+
+# VS Code Local History writes timestamped copies of every file it sees,
+# INCLUDING .env. Ignoring only ".env" does not catch ".history/.env_2026...".
+# This directory is the single most likely way credentials leak from this repo.
+.history/
+.vscode/
+*.pem
+*.key
+credentials.json
+secrets.*
+
+# ---------------------------------------------------------------------------
+# DATA — 3.4 GB of ingested SEC filings, price caches and option snapshots.
+# All of it is reproducible from the ingest scripts; none of it belongs in git.
+# Some of it (option chains) is also licensed market data.
+# ---------------------------------------------------------------------------
+data/
+!data/.gitkeep
+*.parquet
+*.zip
+*.txt.gz
+
+# ---------------------------------------------------------------------------
+# Environment and build
+# ---------------------------------------------------------------------------
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# ---------------------------------------------------------------------------
+# Run artifacts
+# ---------------------------------------------------------------------------
+logs/
+*.log
+!logs/.gitkeep
+
+# ---------------------------------------------------------------------------
+# macOS. This volume is exFAT, so AppleDouble sidecars ("._name") are written
+# for every file — 20,000+ of them appeared in site-packages alone.
+# ---------------------------------------------------------------------------
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
