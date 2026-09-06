@@ -229,6 +229,12 @@ tr.dim td{color:var(--faint)}
 .terms dt{font-size:.9rem}
 .terms dd{font-size:.9rem;color:var(--muted);max-width:62ch}
 .terms dd strong,.terms dd em{color:var(--body)}
+/* scope boundary: set apart from the argument, not a pull quote */
+.scope{
+  border:1px solid var(--rule);background:var(--sunk,var(--raised));
+  padding:16px 18px;font-size:.92rem;color:var(--muted);max-width:var(--measure);
+}
+.scope strong{color:var(--ink)}
 
 .srcref{
   font-family:"IBM Plex Mono",monospace;font-size:.86em;color:var(--accent);
@@ -283,8 +289,9 @@ footer p{max-width:var(--measure);margin-bottom:10px}
   <div class="wide masthead">
     <div class="eyebrow">Systematic equity research &middot; negative result</div>
     <h1>A Measured Ceiling</h1>
-    <p class="sub">Twelve signal families, thirty-eight strategies, and the arithmetic that
-      explains why none of them worked &mdash; plus the two things that did.</p>
+    <p class="sub">Can a retail trader with a small cash account and free data run a systematic
+      equity strategy worth the trouble? Twelve signal families, thirty-eight strategies, and the
+      arithmetic that explains why none of them worked &mdash; plus the two things that did.</p>
 
     <p class="author">
       <a href="https://aravindvrm.github.io/">aravindvrm</a>
@@ -320,8 +327,25 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 <section>
   <div class="shead"><span class="snum">01</span><h2>The finding</h2></div>
   <div class="flow">
-    <p>A systematic search for tradeable cross-sectional alpha in liquid US equities, conducted
-      under a cash-account constraint, produced no signal. That outcome is unsurprising. What
+    <p>The question here was practical rather than academic: whether a small retail cash
+      account, already traded profitably by hand, could hand any part of that work to a
+      systematic strategy. Not a fund's strategy &mdash; one reachable from where a retail
+      trader actually stands.</p>
+
+    <p>That position is specific, and every part of it binds. A <strong>cash account</strong>
+      means no shorting and no leverage, so every book must be long-only. <strong>Free data</strong>
+      means SEC filings, Yahoo prices and the Ken French library &mdash; no fundamentals vendor, no
+      tick data, no alternative sets. <strong>Liquid US large caps</strong> are what a small account
+      can trade without moving the price, and they are also the most heavily arbitraged segment in
+      existence. And <strong>small capital</strong> means fixed costs are not amortised away: a
+      $150/month data subscription is a different proposition at $30,000 than at $30&nbsp;million.</p>
+
+    <p>The honest prior was that this probably fails. What made it worth doing anyway is that
+      "probably fails" is not a number, and the failure mode of a retail systematic strategy is
+      not obviously the same as a fund's &mdash; different constraints could plausibly leave
+      different things on the table.</p>
+
+    <p>They do not, and the search produced no signal. That outcome is unsurprising. What
       makes it worth writing down is that the search also produced a <strong>quantified
       explanation</strong> for why, and a calibration procedure that turned every subsequent
       null from a disappointment into a prediction.</p>
@@ -406,6 +430,13 @@ footer p{max-width:var(--measure);margin-bottom:10px}
     effective breadth of 3.03 rather than 8. Adding arbitrarily many more converges to 0.0223 &mdash;
     the gap to 0.036 cannot be closed from within this feature space.</p>
 </div>
+
+    <p class="scope"><strong>What this does and does not show.</strong> The reachable set from
+      the position above is empty, and the arithmetic says why. It does not show that markets are
+      efficient, that cross-sectional signal does not exist, or that the funds harvesting it are
+      wrong. Shorting, leverage, paid data, a wider or less liquid universe, and a shorter holding
+      period are all outside this study, and each is a live route that the constraints here
+      foreclose. The result is a boundary on one position, not a claim about the market.</p>
 
     <p>The remainder of this document covers the methodology that made those numbers
       trustworthy, four claims that were retracted along the way, and the two strategies that
@@ -730,7 +761,8 @@ footer p{max-width:var(--measure);margin-bottom:10px}
         once. It was nonetheless the default for every test in this project until the last day.</dd></div>
       <div class="pair"><dt>Capital</dt><dd>Data costs are fixed; returns scale with capital. A
         $150/month subscription adding a genuine 2% annually breaks even at $90,000 invested.
-        Below that threshold, paid data buys precision in losing money.</dd></div>
+        Below that threshold, paid data buys precision in losing money &mdash; which is the
+        constraint that most sharply separates this position from a fund's.</dd></div>
     </dl>
   </div>
 </section>
