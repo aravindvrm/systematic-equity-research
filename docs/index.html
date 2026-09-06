@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Twelve signal families, thirty-eight strategies, and the arithmetic that explains why none of them worked.">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}</style>
+<title>A Measured Ceiling</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#FAFBFC; --raised:#FFFFFF; --sunk:#F1F4F7;
+  --ink:#131820; --body:#2C3742; --muted:#5C6874; --faint:#8894A2;
+  --rule:#DDE3EA; --rule-strong:#C3CDD8;
+  --accent:#1F4E79; --accent-soft:#E8EFF6;
+  --null:#B03A2E; --null-soft:#FBEDEB;
+  --pass:#2D6A4F; --pass-soft:#E9F2ED;
+  --measure:68ch;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1218; --raised:#141B23; --sunk:#101820;
+    --ink:#EEF2F6; --body:#C6D0DA; --muted:#8D9AA8; --faint:#63707E;
+    --rule:#232D38; --rule-strong:#33404D;
+    --accent:#7FB3DE; --accent-soft:#16232F;
+    --null:#E08578; --null-soft:#2A1917;
+    --pass:#7BBE9C; --pass-soft:#14231B;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1218; --raised:#141B23; --sunk:#101820;
+  --ink:#EEF2F6; --body:#C6D0DA; --muted:#8D9AA8; --faint:#63707E;
+  --rule:#232D38; --rule-strong:#33404D;
+  --accent:#7FB3DE; --accent-soft:#16232F;
+  --null:#E08578; --null-soft:#2A1917;
+  --pass:#7BBE9C; --pass-soft:#14231B;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--body);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.65; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--measure);margin:0 auto;padding:0 24px}
+.wide{max-width:1000px;margin:0 auto;padding:0 24px}
+
+h1,h2,h3{font-family:Newsreader,Georgia,serif;color:var(--ink);text-wrap:balance;margin:0}
+h1{font-size:clamp(2.3rem,5.5vw,3.4rem);font-weight:500;line-height:1.08;letter-spacing:-.015em}
+h2{font-size:1.75rem;font-weight:500;line-height:1.2;letter-spacing:-.01em}
+h3{font-size:1.12rem;font-weight:600;line-height:1.3}
+p{margin:0}
+a{color:var(--accent)}
+
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;font-size:.7rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+}
+
+/* ---------- masthead ---------- */
+header{border-bottom:1px solid var(--rule-strong);padding:72px 0 0}
+.masthead{display:flex;flex-direction:column;gap:20px;padding-bottom:44px}
+.sub{font-size:1.12rem;color:var(--muted);max-width:56ch}
+.byline{
+  display:flex;flex-wrap:wrap;gap:8px 22px;font-family:"IBM Plex Mono",monospace;
+  font-size:.74rem;color:var(--faint);padding-top:8px;
+  border-top:1px solid var(--rule);
+}
+
+/* ---------- headline figures ---------- */
+.figures{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong);
+  background:var(--sunk);
+}
+.fig{padding:22px 24px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:5px}
+.fig:last-child{border-right:none}
+.fig .n{
+  font-family:"IBM Plex Mono",monospace;font-size:1.6rem;font-weight:500;
+  color:var(--ink);font-variant-numeric:tabular-nums;line-height:1;
+}
+.fig .n.bad{color:var(--null)}
+.fig .l{font-size:.78rem;color:var(--muted);line-height:1.35}
+
+/* ---------- sections ---------- */
+section{padding:60px 0;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:none}
+.shead{display:flex;gap:16px;align-items:baseline;margin-bottom:26px}
+.snum{
+  font-family:"IBM Plex Mono",monospace;font-size:.8rem;font-weight:600;
+  color:var(--accent);padding-top:6px;flex:none;
+}
+.flow{display:flex;flex-direction:column;gap:18px}
+.flow p{max-width:var(--measure)}
+
+strong{color:var(--ink);font-weight:600}
+em{font-style:italic}
+code,.mono{font-family:"IBM Plex Mono",monospace;font-size:.88em;font-variant-numeric:tabular-nums}
+code{background:var(--sunk);padding:1px 5px;border-radius:3px;color:var(--ink)}
+
+/* ---------- pull statement ---------- */
+.pull{
+  border-left:3px solid var(--accent);padding:4px 0 4px 22px;
+  font-family:Newsreader,Georgia,serif;font-size:1.28rem;line-height:1.42;
+  color:var(--ink);max-width:60ch;
+}
+
+/* ---------- revision blocks ---------- */
+.rev{
+  background:var(--raised);border:1px solid var(--rule);
+  display:grid;grid-template-columns:1fr;
+}
+.rev-row{display:grid;grid-template-columns:88px 1fr;gap:0;border-bottom:1px solid var(--rule)}
+.rev-row:last-child{border-bottom:none}
+.rev-tag{
+  font-family:"IBM Plex Mono",monospace;font-size:.66rem;font-weight:600;
+  letter-spacing:.09em;text-transform:uppercase;padding:14px 12px;
+  border-right:1px solid var(--rule);display:flex;align-items:flex-start;
+}
+.rev-row.claim .rev-tag{color:var(--null);background:var(--null-soft)}
+.rev-row.fix .rev-tag{color:var(--pass);background:var(--pass-soft)}
+.rev-body{padding:14px 18px;font-size:.94rem}
+.rev-row.claim .rev-body{color:var(--muted)}
+.rev-row.fix .rev-body{color:var(--body)}
+.rev-row.claim .rev-body s{text-decoration-color:var(--null);text-decoration-thickness:1px}
+
+/* ---------- tables ---------- */
+.tscroll{overflow-x:auto;border:1px solid var(--rule);background:var(--raised)}
+table{border-collapse:collapse;width:100%;font-family:"IBM Plex Mono",monospace;font-size:.8rem}
+caption{
+  caption-side:top;text-align:left;padding:12px 16px;font-family:"IBM Plex Sans",sans-serif;
+  font-size:.8rem;color:var(--muted);border-bottom:1px solid var(--rule);background:var(--sunk);
+}
+th,td{padding:7px 14px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th{
+  font-size:.68rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--faint);border-bottom:1px solid var(--rule-strong);
+}
+td:first-child,th:first-child{text-align:left;font-family:"IBM Plex Sans",sans-serif}
+tbody tr{border-bottom:1px solid var(--rule)}
+tbody tr:last-child{border-bottom:none}
+tr.hi td{background:var(--accent-soft);color:var(--ink);font-weight:500}
+tr.dim td{color:var(--faint)}
+.v-pass{color:var(--pass);font-weight:600}
+.v-null{color:var(--null);font-weight:600}
+
+/* ---------- chart ---------- */
+.chart-frame{border:1px solid var(--rule);background:var(--raised);padding:20px 18px 12px}
+.chart-note{font-size:.78rem;color:var(--muted);padding-top:10px;border-top:1px solid var(--rule);margin-top:12px}
+
+/* ---------- two-col list ---------- */
+.pairs{display:grid;gap:0;border-top:1px solid var(--rule)}
+.pair{
+  display:grid;grid-template-columns:minmax(150px,210px) 1fr;gap:20px;
+  padding:15px 0;border-bottom:1px solid var(--rule);align-items:baseline;
+}
+.pair dt{font-weight:600;color:var(--ink);font-size:.94rem}
+.pair dd{margin:0;font-size:.94rem;color:var(--body)}
+
+/* ---------- paths ---------- */
+.paths{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.path{border:1px solid var(--rule);background:var(--raised);padding:20px;display:flex;flex-direction:column;gap:9px}
+.path.lead{border-color:var(--accent);border-width:1px 1px 1px 3px}
+.path h3{font-size:1rem}
+.path .verdict{
+  font-family:"IBM Plex Mono",monospace;font-size:.68rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.path .verdict.go{color:var(--pass)}
+.path .verdict.hold{color:var(--muted)}
+.path .verdict.stop{color:var(--null)}
+.path p{font-size:.9rem;color:var(--body)}
+
+footer{padding:44px 0 72px;color:var(--faint);font-size:.82rem}
+footer p{max-width:var(--measure);margin-bottom:10px}
+
+@media (max-width:620px){
+  .rev-row{grid-template-columns:1fr}
+  .rev-tag{border-right:none;border-bottom:1px solid var(--rule);padding:9px 14px}
+  .pair{grid-template-columns:1fr;gap:4px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+</head>
+<body>
+<header>
+  <div class="wide masthead">
+    <div class="eyebrow">Systematic equity research &middot; negative result</div>
+    <h1>A Measured Ceiling</h1>
+    <p class="sub">Twelve signal families, thirty-eight strategies, and the arithmetic that
+      explains why none of them worked &mdash; plus the two things that did.</p>
+    <div class="byline">
+      <span>Universe: 211 US large caps</span>
+      <span>Sample: 2005&ndash;2026</span>
+      <span>~4,700 lines / 35 tests</span>
+      <span>3.5 GB ingested</span>
+    </div>
+  </div>
+</header>
+
+<div class="figures">
+  <div class="fig"><div class="n">0.036</div><div class="l">Information coefficient required to break even</div></div>
+  <div class="fig"><div class="n">0.012</div><div class="l">Achievable on free price data</div></div>
+  <div class="fig"><div class="n bad">0.0223</div><div class="l">Hard ceiling from correlation structure</div></div>
+  <div class="fig"><div class="n bad">0 / 38</div><div class="l">Strategies clearing a calibrated null</div></div>
+</div>
+
+<div class="wide">
+
+<section>
+  <div class="shead"><span class="snum">01</span><h2>The finding</h2></div>
+  <div class="flow">
+    <p>A systematic search for tradeable cross-sectional alpha in liquid US equities, conducted
+      under a cash-account constraint, produced no signal. That outcome is unsurprising. What
+      makes it worth writing down is that the search also produced a <strong>quantified
+      explanation</strong> for why, and a calibration procedure that turned every subsequent
+      null from a disappointment into a prediction.</p>
+
+    <p class="pull">The gap between what this universe offers and what a long-only book requires
+      is arithmetic, not luck &mdash; and no amount of additional price-derived signal can close it.</p>
+
+    <p>Three numbers carry the argument. A synthetic forecast injected through the actual risk
+      stack needs an information coefficient near <code>0.036</code> to beat holding everything.
+      The best stable feature available from free price data measures <code>0.012</code>. And
+      because those features correlate with one another at &rho;&nbsp;=&nbsp;0.234, combining
+      arbitrarily many of them converges to <code>0.0223</code> &mdash; roughly 60% of the
+      requirement, approached asymptotically and never crossed.</p>
+
+    <p>The remainder of this document covers the methodology that made those numbers
+      trustworthy, four claims that were retracted along the way, and the two strategies that
+      did survive scrutiny &mdash; neither of which is alpha.</p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">02</span><h2>The control that changed everything</h2></div>
+  <div class="flow">
+    <p>Roughly a dozen families were tested and deflated individually before a basic question
+      got asked: <em>what does a signal containing no information score on these same tests?</em></p>
+
+    <p>The answer invalidated every prior conclusion. Forty random signals, routed through the
+      identical construction &mdash; same universe, same top-30% selection, same inverse-volatility
+      weighting, same 10% volatility target, same costs &mdash; produced this:</p>
+
+    <div class="tscroll">
+      <table>
+        <caption>Zero-information signals through the production stack, n = 40</caption>
+        <thead><tr><th>Metric</th><th>Mean</th><th>SD</th><th>p95</th><th>Max</th></tr></thead>
+        <tbody>
+          <tr><td>Fama-French 6 alpha <em>t</em>, 2005+</td><td>+2.75</td><td>0.36</td><td>+3.27</td><td>+3.45</td></tr>
+          <tr><td>Ferson-Schadt conditional <em>t</em></td><td>+2.77</td><td>0.49</td><td>+3.47</td><td>+3.61</td></tr>
+          <tr class="dim"><td>Same, 2015+ window only</td><td>+0.77</td><td>&mdash;</td><td>+1.36</td><td>&mdash;</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>A signal with <em>no information whatsoever</em> clears the conventional
+      <code>|t| &gt; 2</code> bar comfortably, and reaches the Harvey-Liu-Zhu
+      <code>|t| &gt; 3</code> threshold about one time in twenty.</p>
+
+    <p>The mechanism is the volatility-targeting overlay. It cuts market exposure when trailing
+      volatility rises &mdash; which is when the benchmark crashes &mdash; giving the book a
+      time-varying beta that a constant-beta factor model cannot represent. The unmodelled
+      timing surfaces as alpha. Ferson &amp; Schadt described this in 1996; the diagnosis was
+      reached here by accident, thirty years late.</p>
+
+    <p>The third row is the confirmation: moving the sample start from 2005 to 2015 collapses
+      the phantom alpha from <em>t</em>&nbsp;=&nbsp;2.75 to 0.77. Remove the 2008 crash and there
+      is nothing left to dodge.</p>
+
+    <p class="pull">A t-statistic of 6 is not evidence of a business. The signal composite
+      reached exactly that &mdash; and still lost to holding everything.</p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">03</span><h2>Results</h2></div>
+  <div class="flow">
+    <p>Thirty-eight strategies spanning every family, evaluated on one shared stack so a single
+      null floor applies to all. Ranked by percentile against that floor under the conditional
+      (Ferson-Schadt) model.</p>
+
+    <div class="tscroll">
+      <table>
+        <caption>Selected rows &mdash; full results in <span class="mono">reassess_all.csv</span></caption>
+        <thead>
+          <tr><th>Strategy</th><th>Sharpe</th><th>Alpha</th><th>Cond. <em>t</em></th><th>Percentile</th><th>R&sup2; vs FF6</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi"><td>No-signal book</td><td>1.02</td><td>3.31%</td><td>3.59</td><td>98%</td><td>0.75</td></tr>
+          <tr><td>Relative strength 126d</td><td>1.02</td><td>4.27%</td><td>3.41</td><td>92%</td><td>0.67</td></tr>
+          <tr><td>Correlation dispersion</td><td>1.06</td><td>3.79%</td><td>3.14</td><td>65%</td><td>0.66</td></tr>
+          <tr><td>Filing-text similarity</td><td>0.99</td><td>3.20%</td><td>3.00</td><td>62%</td><td>0.71</td></tr>
+          <tr><td>Volume shock</td><td>1.00</td><td>3.32%</td><td>2.89</td><td>57%</td><td>0.72</td></tr>
+          <tr><td>7-signal composite</td><td>0.82</td><td>2.38%</td><td>1.63</td><td class="v-null">2%</td><td>0.67</td></tr>
+          <tr><td>Post-earnings drift</td><td>0.88</td><td>1.95%</td><td>1.42</td><td class="v-null">0%</td><td>0.72</td></tr>
+          <tr><td>Insider net buying</td><td>0.38</td><td>&minus;1.31%</td><td>&minus;1.18</td><td class="v-null">0%</td><td>0.27</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>The no-signal book ranks first of thirty-eight.</strong> Two strategies cleared
+      the unconditional null against a chance expectation of 1.9; neither survived once beta was
+      allowed to vary. R&sup2; against Fama-French runs 0.66&ndash;0.75 for most rows &mdash; two
+      thirds to three quarters of everything built here is factor exposure purchasable in an ETF.</p>
+
+    <p>Notable individual outcomes. <strong>Post-earnings announcement drift</strong>, the most
+      replicated anomaly in finance, produced a 60-day decile spread of <code>0.06%</code> against
+      a documented 3&ndash;6% &mdash; not a weakened effect but an absent one. <strong>Book-to-market</strong>
+      was the strongest single measurement in the project at IC <code>0.0448</code>, and still
+      landed at the 85th percentile. And the <strong>7-signal composite ranked below its own
+      components</strong>, because averaging z-scores of signals correlated at 0.97 averages one
+      signal with itself and adds noise from the rest.</p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">04</span><h2>Retractions</h2></div>
+  <div class="flow">
+    <p>Four conclusions were stated with confidence and later overturned by a control that should
+      have run first. They are recorded because the pattern &mdash; announcing a finding at the
+      point it became interesting rather than the point it became controlled &mdash; is the most
+      transferable lesson here.</p>
+
+    <div class="rev">
+      <div class="rev-row claim"><div class="rev-tag">Claimed</div><div class="rev-body">
+        <s>A pairwise relative-value signal survives every structural check &mdash; monotone gate response, sector-neutral, coherent horizon profile, <em>t</em> = 2.45.</s>
+      </div></div>
+      <div class="rev-row fix"><div class="rev-tag">Revised</div><div class="rev-body">
+        Extending the sample from 7 to 20 years dropped <em>t</em> to 1.28 where a real effect predicts 4.1. Sample-specific artifact; every supporting result reversed.
+      </div></div>
+    </div>
+
+    <div class="rev" style="margin-top:14px">
+      <div class="rev-row claim"><div class="rev-tag">Claimed</div><div class="rev-body">
+        <s>A genuine residual of +0.02 to +0.036 Sharpe survives the beta-matched control.</s>
+      </div></div>
+      <div class="rev-row fix"><div class="rev-tag">Revised</div><div class="rev-body">
+        That range <em>is</em> the noise floor. Random signals score +0.029 on the same control, which cannot represent a time-varying beta.
+      </div></div>
+    </div>
+
+    <div class="rev" style="margin-top:14px">
+      <div class="rev-row claim"><div class="rev-tag">Claimed</div><div class="rev-body">
+        <s>Small caps fail because wider spreads cancel their larger premia &mdash; a 12&times; cost penalty.</s>
+      </div></div>
+      <div class="rev-row fix"><div class="rev-tag">Revised</div><div class="rev-body">
+        The 12&times; figure was invented. Corwin-Schultz and Abdi-Ranaldo measure 2.0&times;. Small caps still fail &mdash; from concentration cost in a high-idiosyncratic-vol universe, and a benchmark at Sharpe 0.11 not worth beating.
+      </div></div>
+    </div>
+
+    <div class="rev" style="margin-top:14px">
+      <div class="rev-row claim"><div class="rev-tag">Claimed</div><div class="rev-body">
+        <s>A turnover bug charged the benchmark nothing, tilting every comparison in this project.</s>
+      </div></div>
+      <div class="rev-row fix"><div class="rev-tag">Revised</div><div class="rev-body">
+        Real bug, measured impact 5.8bp/yr and 0.003 Sharpe. Immaterial. The claim preceded the measurement.
+      </div></div>
+    </div>
+
+    <p style="margin-top:6px">Two code defects were also found and fixed: Sortino ran 16% high
+      (standard deviation of the negative subset rather than the RMS of the clipped series), and
+      turnover was charged on target changes rather than realised drift. Sharpe, drawdown,
+      volatility and CAGR all verified against <span class="mono">empyrical</span>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">05</span><h2>What actually cleared</h2></div>
+  <div class="flow">
+    <p>Only after twelve families had failed was the correct literature consulted. The anomaly
+      literature catalogues effects that get arbitraged away. The <em>risk premia</em> literature
+      catalogues compensation for bearing risk somebody else wants shed &mdash; which persists,
+      because publication does not remove the underlying demand.</p>
+
+    <p>Two results came from that layer, and both are diversifiers rather than edges.</p>
+
+    <div class="chart-frame">
+      <svg viewBox="0 0 640 236" width="100%" height="236" role="img"
+           aria-label="Portfolio contribution to a 60/40 core at 20% allocation. The null distribution of 40 random-sign draws spans minus 0.0056 to plus 0.0241. Long-only trend reaches plus 0.0367, inside that range. Long/short trend reaches plus 0.0435, beyond the null maximum.">
+        <text x="0" y="13" font-family="IBM Plex Mono, monospace" font-size="10"
+              fill="var(--faint)" letter-spacing="1.2">CONTRIBUTION TO A 60/40 CORE AT 20% ALLOCATION</text>
+        <line x1="0" y1="28" x2="640" y2="28" stroke="var(--rule)" stroke-width="1" fill="none"/>
+
+        <!-- scale: x = 70 at -0.01, x = 560 at +0.05  ->  8166.7 px per unit -->
+        <line x1="70" y1="204" x2="580" y2="204" stroke="var(--rule-strong)" stroke-width="1" fill="none"/>
+        <line x1="152" y1="44" x2="152" y2="204" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 3" fill="none"/>
+        <g font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--faint)">
+          <text x="70"  y="224" text-anchor="middle">&minus;0.01</text>
+          <text x="152" y="224" text-anchor="middle">0.00</text>
+          <text x="233" y="224" text-anchor="middle">+0.01</text>
+          <text x="315" y="224" text-anchor="middle">+0.02</text>
+          <text x="397" y="224" text-anchor="middle">+0.03</text>
+          <text x="478" y="224" text-anchor="middle">+0.04</text>
+          <text x="560" y="224" text-anchor="middle">+0.05</text>
+        </g>
+
+        <!-- null band: mean -0.0056 (x=106) to max +0.0241 (x=349) -->
+        <text x="106" y="52" font-family="IBM Plex Sans, sans-serif" font-size="10.5"
+              fill="var(--null)">null distribution &mdash; 40 random-sign draws</text>
+        <rect x="106" y="60" width="243" height="32" fill="var(--null-soft)"
+              stroke="var(--null)" stroke-width="1"/>
+        <line x1="349" y1="56" x2="349" y2="96" stroke="var(--null)" stroke-width="2" fill="none"/>
+        <text x="349" y="110" font-family="IBM Plex Mono, monospace" font-size="10"
+              fill="var(--null)" text-anchor="middle">max +0.0241</text>
+
+        <!-- long-only trend: +0.0367 -> x = 451 -->
+        <text x="444" y="140" font-family="IBM Plex Sans, sans-serif" font-size="10.5"
+              fill="var(--muted)" text-anchor="end">Long-only trend &mdash; inside the null</text>
+        <line x1="451" y1="128" x2="451" y2="204" stroke="var(--muted)" stroke-width="1"
+              stroke-dasharray="3 3" fill="none"/>
+        <rect x="448" y="128" width="6" height="24" fill="var(--muted)"/>
+        <text x="459" y="140" font-family="IBM Plex Mono, monospace" font-size="10"
+              fill="var(--muted)">+0.0367</text>
+
+        <!-- long/short trend: +0.0435 -> x = 507 -->
+        <text x="500" y="176" font-family="IBM Plex Sans, sans-serif" font-size="11.5"
+              fill="var(--ink)" font-weight="600" text-anchor="end">Long/short trend</text>
+        <line x1="507" y1="162" x2="507" y2="204" stroke="var(--pass)" stroke-width="1.5" fill="none"/>
+        <rect x="503" y="162" width="8" height="28" fill="var(--pass)"/>
+        <text x="518" y="176" font-family="IBM Plex Mono, monospace" font-size="11"
+              fill="var(--pass)" font-weight="600">+0.0435</text>
+      </svg>
+      <p class="chart-note">Long/short trend is the only result in the project to land beyond the
+        maximum of 40 null draws. The long-only version, which is what a cash account permits,
+        sits at the 48th percentile on standalone Sharpe &mdash; the null median.</p>
+    </div>
+
+    <dl class="pairs">
+      <div class="pair"><dt>Volatility risk premium</dt><dd>Implied volatility exceeded subsequent
+        realised volatility <strong>84% of the time across four distinct eras</strong>
+        (4.85 / 3.34 / 3.16 / 3.77 pp, 1996&ndash;2026) with no downward trend. Unlike every anomaly
+        tested, it has not decayed. But CBOE's own benchmark indices underperform buy-and-hold
+        (PUT 8.48% vs SPX total return ~10.25%) and carry negative alpha beside a 60/40 core. A
+        risk transformation, not free money.</dd></div>
+      <div class="pair"><dt>Time-series trend</dt><dd>The only strategy with <strong>negative
+        correlation to the core</strong> (&minus;0.15), making money in two of three crises &mdash;
+        +6.2% through the GFC while SPY lost 55%. Fama-French alpha is 0.26% at <em>t</em> = 0.26,
+        so the entire case rests on the correlation, not on outperformance. And the version that
+        clears requires a margin account.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">06</span><h2>Binding constraints</h2></div>
+  <div class="flow">
+    <p>Free data was never what limited this. Four things were, and each was measured rather
+      than assumed.</p>
+
+    <dl class="pairs">
+      <div class="pair"><dt>Universe</dt><dd>Liquid US large caps are the most arbitraged equity
+        segment in existence. Chordia, Subrahmanyam &amp; Tong measured anomaly returns roughly
+        halving after decimalisation. Small caps are not an escape: correcting the cost assumption
+        made them <em>worse</em>, because concentration in a high-idiosyncratic-vol universe loses
+        more to diversification than any forecast recovers.</dd></div>
+      <div class="pair"><dt>Long-only</dt><dd>Costs roughly half the achievable information ratio
+        (Clarke, de&nbsp;Silva &amp; Thorley). Applied to trend, it removes precisely the crisis
+        alpha the strategy is held for.</dd></div>
+      <div class="pair"><dt>Construction</dt><dd>Truncating a ranking at the top 30% was the worst
+        sizing rule tested &mdash; discarding magnitude and two thirds of the diversification at
+        once. It was nonetheless the default for every test in this project until the last day.</dd></div>
+      <div class="pair"><dt>Capital</dt><dd>Data costs are fixed; returns scale with capital. A
+        $150/month subscription adding a genuine 2% annually breaks even at $90,000 invested.
+        Below that threshold, paid data buys precision in losing money.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">07</span><h2>Paths forward</h2></div>
+  <div class="flow">
+    <div class="paths">
+      <div class="path lead">
+        <span class="verdict go">Continue &mdash; no cost</span>
+        <h3>Single-name options</h3>
+        <p>The collector runs daily and the history is unrecoverable if stopped. Genuinely
+          orthogonal information, and the one place where the analysis machinery would apply to
+          new data rather than re-mining old. Testable in roughly a year.</p>
+      </div>
+      <div class="path lead">
+        <span class="verdict go">Already working</span>
+        <h3>The wheel, instrumented</h3>
+        <p>Premium harvesting rather than alpha, cash-account compatible, and already profitable
+          by hand. The open questions &mdash; strike selection, roll rules, entry on IV rank &mdash;
+          are tractable optimisation of something that works, not a search for something absent.</p>
+      </div>
+      <div class="path">
+        <span class="verdict hold">Conditional on account size</span>
+        <h3>Trend following</h3>
+        <p>The one result that cleared a null decisively, and the honest reason to consider a
+          margin account. Standalone Sharpe is only 0.40 &mdash; held for the negative correlation,
+          not the return. Buying it in ETF form may beat implementing it.</p>
+      </div>
+      <div class="path">
+        <span class="verdict stop">Closed</span>
+        <h3>Cross-sectional alpha</h3>
+        <p>The ceiling is arithmetic. More price features converge to 0.0223 against a requirement
+          of 0.036. Non-linear methods add 29%, not the 2&times; the literature reports, and the
+          best model was found to be learning a regime-specific inversion of the low-volatility
+          anomaly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">08</span><h2>What the work produced</h2></div>
+  <div class="flow">
+    <p>No tradeable signal. Two things of durable value instead.</p>
+
+    <p><strong>A calibration procedure.</strong> Run zero-information signals through the identical
+      pipeline and report a percentile. Every overlay &mdash; volatility targeting, inverse-vol
+      weighting, truncation, band rebalancing &mdash; must sit inside that control, because each
+      changes the return distribution independently of the signal. Conventional thresholds quoted
+      without this calibration are meaningless: on this stack, noise reaches
+      <em>t</em>&nbsp;=&nbsp;2.75.</p>
+
+    <p><strong>Infrastructure that is correct.</strong> A backtest engine tracking true holdings
+      drift, metrics verified against a reference implementation, EDGAR retrieval with the
+      pagination and primary-document traps solved, 13F and fundamentals ingestion, an options
+      collector running daily, and 35 regression tests pinning the specific bugs found. One test
+      constructs a zero-information volatility-timing sleeve and asserts it still beats a naive
+      control &mdash; pinning the exact illusion that produced two retracted conclusions.</p>
+
+    <p class="pull">The literature cannot give you signals. It can stop you believing in ones you
+      do not have &mdash; which, on this evidence, is the more valuable of the two.</p>
+  </div>
+</section>
+
+</div>
+
+<div class="wide">
+  <footer>
+    <p><strong>Caveats.</strong> The universe is current index membership carried backward, so every
+      result is survivorship-biased and should be read as an upper bound. Fundamentals begin in
+      2012 at full coverage due to the XBRL phase-in. Accruals could not be tested at 16% cash-flow
+      tag coverage. Spread estimators are biased upward in level; only their ratio is used.</p>
+    <p>Nothing here is investment advice. Figures are backtested research output on historical
+      data, not achieved returns.</p>
+  </footer>
+</div>
+</body>
+</html>
