@@ -569,12 +569,24 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       </table>
     </div>
 
-    <p>The universe is the index membership of today, carried backward to 2005. The companies that
-      failed and left it are not in it. So a book holding <em>everything</em> and forecasting
-      <em>nothing</em> beats a six-factor model by four and a half points a year at
-      <em>t</em>&nbsp;=&nbsp;5.79, while the actual market over the same window scores
-      <strong>&minus;0.40% at <em>t</em> = &minus;1.77</strong>. That gap is survivorship bias,
-      measured rather than listed as a caveat. Any long book drawn from this universe inherits it
+    <p>The universe is the index membership of today, carried backward to 2005, and that biases it
+      twice. The companies that failed and left the index are not in it &mdash; and the companies
+      that were <em>added</em> during the window are in it for the run-up that earned them their
+      place, which they had not yet earned at the start of the sample. So a book holding
+      <em>everything</em> and forecasting <em>nothing</em> beats a six-factor model by four and a
+      half points a year at <em>t</em>&nbsp;=&nbsp;5.79, while the actual market over the same
+      window scores <strong>&minus;0.40% at <em>t</em> = &minus;1.77</strong>. That gap is
+      survivorship bias, measured rather than listed as a caveat.</p>
+
+    <p>This is not a new result either, and the prior work is pointed. Brown, Goetzmann, Ibbotson
+      &amp; Ross showed in 1992 that a sample truncated by survivorship produces
+      <em>the appearance of predictability</em>, and that the effect can be large enough on its own
+      to account for the evidence then being offered for return predictability. That is this
+      section's finding, published thirty-four years earlier. Their mechanism runs through the
+      relationship between volatility and return in a truncated sample, which is also where the
+      random forest in section&nbsp;03 ends up &mdash; a volatility tilt that reverses the
+      documented low-volatility effect. Two of this project's results, arrived at separately,
+      are both downstream of one 1992 paper. Any long book drawn from this universe inherits it
       in proportion to its market exposure &mdash; which is precisely why volatility targeting
       <em>lowers</em> the floor rather than raising it. It cuts beta from 0.90 to 0.48, and takes
       part of the inherited bias out with it. Both the unconditional and conditional models live in
@@ -657,7 +669,10 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       chance expectation above &mdash; 5% of 38 is 1.9, and two cleared unconditionally &mdash;
       but a proper research-process null would randomise, re-run the entire battery, take the best
       result, and repeat until the distribution of that maximum is known (White, 2000; Hansen,
-      2005). That has not been run here, and it is the outstanding control on this document.
+      2005). Novy-Marx (2015) did exactly this for multi-signal strategies and found the
+      appropriate critical values run to several times the conventional ones &mdash; the closest
+      published relative of the floor measured here, reached from the selection side rather than
+      the construction side. That has not been run here, and it is the outstanding control on this document.
       Its absence cuts in a known direction: a family-wise correction raises the bar, so it can
       only reduce the count of strategies clearing it, never raise it. The
       <code>0 / 38</code> stands; what it would tighten is the reading of the two near-misses.</p>
@@ -981,6 +996,9 @@ footer p{max-width:var(--measure);margin-bottom:10px}
           <li>Bailey, D. &amp; L&oacute;pez de Prado, M. (2014). The deflated Sharpe ratio: correcting for selection bias, backtest overfitting and non-normality. <em>Journal of Portfolio Management</em> 40(5).</li>
           <li>Bailey, D., Borwein, J., L&oacute;pez de Prado, M. &amp; Zhu, Q. (2017). The probability of backtest overfitting. <em>Journal of Computational Finance</em> 20(4), 39&ndash;69. SSRN working paper 2326253 (2013).</li>
           <li>L&oacute;pez de Prado, M. (2018). <em>Advances in Financial Machine Learning</em>. Wiley.</li>
+          <li>Novy-Marx, R. (2015). Backtesting strategies based on multiple signals. <em>NBER Working Paper</em> 21329. <span class="reftag">closest prior work</span></li>
+          <li>Brown, S., Goetzmann, W., Ibbotson, R. &amp; Ross, S. (1992). Survivorship bias in performance studies. <em>Review of Financial Studies</em> 5(4), 553&ndash;580. <span class="reftag">survivorship manufactures predictability</span></li>
+          <li>Shumway, T. (1997). The delisting bias in CRSP data. <em>Journal of Finance</em> 52(1), 327&ndash;340.</li>
           <li>Vasicek, O. (1973). A note on using cross-sectional information in Bayesian estimation of security betas. <em>Journal of Finance</em>. <span class="reftag">beta shrinkage</span></li>
           <li>Newey, W. &amp; West, K. (1987). A simple, positive semi-definite, heteroskedasticity and autocorrelation consistent covariance matrix. <em>Econometrica</em>.</li>
         </ol>
