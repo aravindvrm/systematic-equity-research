@@ -343,7 +343,9 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       existence. And <strong>small capital</strong> means fixed costs are not amortised away: a
       $150/month data subscription is a different proposition at $30,000 than at $30&nbsp;million.</p>
 
-    <p>The honest prior was that this probably fails. What made it worth doing anyway is that
+    <p>The honest prior was that this probably fails &mdash; Barber &amp; Odean measured retail
+      accounts underperforming the market after costs, and Chague, De-Losso &amp; Giovannetti
+      found almost no day traders profitable over any sustained period. What made it worth doing anyway is that
       "probably fails" is not a number, and the failure mode of a retail systematic strategy is
       not obviously the same as a fund's &mdash; different constraints could plausibly leave
       different things on the table.</p>
@@ -899,7 +901,8 @@ footer p{max-width:var(--measure);margin-bottom:10px}
     <dl class="pairs">
       <div class="pair"><dt>Universe</dt><dd>Liquid US large caps are the most arbitraged equity
         segment in existence. Chordia, Subrahmanyam &amp; Tong measured anomaly returns roughly
-        halving after decimalisation. Small caps are not an escape: correcting the cost assumption
+        halving after decimalisation, and McLean &amp; Pontiff found published predictors decaying
+        by a further third or so once the paper describing them is in print. Small caps are not an escape: correcting the cost assumption
         made them <em>worse</em>, because concentration in a high-idiosyncratic-vol universe loses
         more to diversification than any forecast recovers.</dd></div>
       <div class="pair"><dt>Long-only</dt><dd>Costs roughly half the achievable information ratio
@@ -1004,8 +1007,6 @@ footer p{max-width:var(--measure);margin-bottom:10px}
           <li>Hou, K. (2007). Industry information diffusion and the lead-lag effect in stock returns. <em>Review of Financial Studies</em>.</li>
           <li>Cooper, M., Gulen, H. &amp; Schill, M. (2008). Asset growth and the cross-section of stock returns. <em>Journal of Finance</em>.</li>
           <li>Pontiff, J. &amp; Woodgate, A. (2008). Share issuance and cross-sectional returns. <em>Journal of Finance</em>.</li>
-          <li>Cremers, M. &amp; Weinbaum, D. (2010). Deviations from put-call parity and stock return predictability. <em>Journal of Financial and Quantitative Analysis</em>.</li>
-          <li>Xing, Y., Zhang, X. &amp; Zhao, R. (2010). What does the individual option volatility smirk tell us about future equity returns? <em>Journal of Financial and Quantitative Analysis</em>.</li>
           <li>Novy-Marx, R. (2013). The other side of value: the gross profitability premium. <em>Journal of Financial Economics</em>.</li>
           <li>Anton, M. &amp; Polk, C. (2014). Connected stocks. <em>Journal of Finance</em>. <span class="reftag">13F common ownership</span></li>
           <li>Cohen, L., Malloy, C. &amp; Nguyen, Q. (2020). Lazy prices. <em>Journal of Finance</em>. <span class="reftag">filing-text similarity</span></li>
@@ -1013,6 +1014,15 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       </div>
 
       <div class="refgroup">
+        <h3>Identified, not tested</h3>
+          <p class="refnote">Option-based predictors. The daily options collector has not yet
+            accumulated the history these need, so they are queued rather than evaluated &mdash;
+            listed here so the search space is visible, not implied.</p>
+        <ul>
+          <li>Cremers, M. &amp; Weinbaum, D. (2010). Deviations from put-call parity and stock return predictability. <em>Journal of Financial and Quantitative Analysis</em>.</li>
+          <li>Xing, Y., Zhang, X. &amp; Zhao, R. (2010). What does the individual option volatility smirk tell us about future equity returns? <em>Journal of Financial and Quantitative Analysis</em>.</li>
+        </ul>
+
         <h3>Decay and replication</h3>
         <ol start="26">
           <li>Chordia, T., Subrahmanyam, A. &amp; Tong, Q. (2014). Have capital market anomalies attenuated in the recent era of high liquidity and trading activity? <em>Journal of Accounting and Economics</em>.</li>
