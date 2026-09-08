@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0A0D12">
+<meta name="author" content="aravindvrm">
+<meta name="description" content="Every backtesting library verifies that your code runs. None tell you what a worthless strategy scores in your pipeline. That number is often large.">
+<title>Plausible and Wrong</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#0A0D12; --raised:#161D27; --sunk:#11161E;
+  --ink:#F2F6FA; --body:#C6D2DE; --muted:#8D9BAB; --faint:#7A8593;
+  --rule:#1F2732; --rule-strong:#2E3945; --accent:#79C0FF; --accent-soft:#0E1E2C;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --paper:#FBFCFD; --raised:#FFFFFF; --sunk:#F0F3F6;
+    --ink:#101720; --body:#2B3742; --muted:#58656F; --faint:#6A7681;
+    --rule:#DFE5EB; --rule-strong:#C4CED8; --accent:#1668A8; --accent-soft:#E7F1FA;
+  }
+}
+:root[data-theme="light"]{
+  --paper:#FBFCFD; --raised:#FFFFFF; --sunk:#F0F3F6;
+  --ink:#101720; --body:#2B3742; --muted:#58656F; --faint:#6A7681;
+  --rule:#DFE5EB; --rule-strong:#C4CED8; --accent:#1668A8; --accent-soft:#E7F1FA;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--body);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:66ch;margin:0 auto;padding:0 26px}
+a{color:var(--accent)}
+h1,h2{font-family:Spectral,Georgia,serif;color:var(--ink);margin:0;text-wrap:balance}
+h1{font-size:clamp(2.1rem,5.5vw,3rem);font-weight:500;line-height:1.08;letter-spacing:-.015em}
+h2{font-size:1.42rem;font-weight:500;line-height:1.25;margin:42px 0 -4px}
+p{margin:20px 0}
+strong{color:var(--ink);font-weight:600}
+code{font-family:"IBM Plex Mono",monospace;font-size:.87em;background:var(--sunk);
+  padding:1px 5px;border-radius:3px;color:var(--ink)}
+pre.block{font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.6;
+  background:var(--sunk);border:1px solid var(--rule);color:var(--ink);
+  padding:16px 18px;overflow-x:auto;margin:24px 0;font-variant-numeric:tabular-nums}
+figure.fig{margin:30px 0;padding:0;border:1px solid var(--rule);background:var(--raised)}
+figure.fig svg{display:block;padding:16px 16px 4px}
+figure.fig figcaption{
+  font-size:.83rem;line-height:1.55;color:var(--muted);
+  padding:12px 18px 15px;border-top:1px solid var(--rule);margin-top:8px;
+}
+hr{border:none;border-top:1px solid var(--rule);margin:38px 0}
+header{padding:76px 0 0;border-bottom:1px solid var(--rule-strong);margin-bottom:8px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.7rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
+.eyebrow a{text-decoration:none;border-bottom:1px solid var(--rule-strong)}
+
+.author{
+  display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
+  font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--muted);
+  margin:0;
+}
+.author a{
+  color:var(--ink);font-weight:500;text-decoration:none;
+  border-bottom:1px solid var(--rule-strong);transition:border-color .15s ease;
+}
+.author a:hover,.author a:focus-visible{border-bottom-color:var(--accent)}
+.author a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+/* separators are generated on the segment that FOLLOWS them, so a dot can
+   never be left dangling at the end of a wrapped line */
+.author > * + *::before{content:"\00B7";color:var(--faint);margin-right:9px}
+header .author{margin-top:14px}
+.standfirst{font-family:Spectral,Georgia,serif;font-size:1.22rem;line-height:1.45;
+  color:var(--ink);border-left:3px solid var(--accent);padding:2px 0 2px 20px;margin:26px 0 34px}
+header .pad{padding-bottom:30px}
+footer{margin:44px 0 80px;padding-top:22px;border-top:1px solid var(--rule);
+  color:var(--faint);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="pad">
+      <p class="eyebrow">Essay</p>
+      <h1>Plausible and Wrong</h1>
+      <p class="author">
+        <a href="https://aravindvrm.github.io/">aravindvrm</a>
+        <span>September 2026</span>
+      </p>
+    </div>
+  </header>
+<p class="standfirst">I wrote a quantitative research project with heavy LLM assistance, kept a record of every defect, and found that reading the output carefully caught none of them.</p>
+<hr>
+<p>The companion paper to this one has a colophon saying its analysis and drafting were produced in collaboration with Claude. That sentence is true and almost useless. It tells you nothing about what the collaboration consisted of, what went wrong, or what caught it.</p>
+<p>This is that detail. It is worth writing down because the project kept a record — every defect, when it appeared, and what found it — and the record contradicts the advice usually given about working this way.</p>
+<p>The headline: <strong>zero defects in this project were caught by reading the output carefully.</strong> Every single one was caught by a test, by recomputing a number, or by another person.</p>
+<h2>The failure mode is not what you are told to watch for</h2>
+<p>Hallucinated APIs and syntax errors are the standard warning, and they are not the problem. They fail immediately and loudly. An import that does not exist raises on the first run.</p>
+<p>The actual failure mode is <strong>confident, well-formed, and wrong</strong>, and it clusters in three places.</p>
+<p><strong>Numbers asserted rather than derived.</strong> The paper once claimed small caps fail because a 12× bid-ask spread penalty cancels their larger premia. The 12× was invented. Measured with two independent estimators, the ratio is 2.0×. The conclusion survived; the reasoning was fiction, and it was repeated for two days.</p>
+<p><strong>Mechanisms inferred from a plausible story.</strong> A coherent causal account, consistent with the literature and with three separate results, and backwards. More on this below — it is the case that matters.</p>
+<p><strong>Claims about work not examined.</strong> A résumé bullet described a segmentation pipeline feeding an image-editing model. Searching the repository&#x27;s full history for that work returned nothing: no Python at all, no segmentation code, in any commit.</p>
+<p>All three are the same defect. An output shaped exactly like a verified statement, produced without the verification. It reads like a conclusion because it is written like one.</p>
+<h2>What actually caught things</h2>
+<p>Here is the record. Every defect I logged, what it actually was, and what found it.</p>
+<div class="tscroll"><table><tbody>
+<tr><th>Defect</th><th>What it was</th><th>Caught by</th></tr>
+<tr><td>Null-floor mechanism</td><td>Volatility targeting blamed; ablation shows the opposite sign</td><td>A reader&#x27;s question</td></tr>
+<tr><td>Universe size</td><td>&quot;211 names&quot; against a filter that yields 199</td><td>Recomputing during unrelated work</td></tr>
+<tr><td>Small-cap cost penalty</td><td>12× asserted; 2.0× measured</td><td>Two independent estimators</td></tr>
+<tr><td>Turnover defect severity</td><td>&quot;Tilted every comparison&quot;; 5.8bp/yr</td><td>Measuring before publishing</td></tr>
+<tr><td>The drift guard itself</td><td>Passed while its own target bug was present</td><td>Breaking it on purpose</td></tr>
+<tr><td>Orphaned CSS, three times</td><td>Regex deletion left stranded declarations</td><td>Counting brace depth</td></tr>
+<tr><td>Chart coordinates</td><td>Series plotted against the wrong scale</td><td>Recomputing against the axis</td></tr>
+<tr><td>Two bibliography entries</td><td>Filed under &quot;Anomalies tested&quot;, never tested</td><td>Checking each citation against the code</td></tr>
+<tr><td>A résumé bullet</td><td>Described work absent from that repo&#x27;s entire history</td><td>Searching the history</td></tr>
+<tr><td>Three line and module counts</td><td>Stale or inflated by duplicate directories</td><td>Counting</td></tr>
+<tr><td>An equicorrelation caveat</td><td>Claimed a shortcut understated; it agrees to 3%</td><td>Computing the full spectrum</td></tr>
+<tr><td>—</td><td>—</td><td><strong>Reading it carefully: nothing</strong></td></tr>
+</tbody></table></div>
+<p>Ordered by hit rate, not by cleverness.</p>
+<p><strong>Recomputing from source.</strong> The highest-yield control by a wide margin. Three published figures had silently drifted from the code that produced them — a universe of &quot;211 names&quot; when the coverage filter yields 199, a line count, a module count. In all three the code was right and the prose was stale. Prose does not raise exceptions.</p>
+<p>That gap is now closed mechanically. A script derives every published number from its source and asserts the document still states it, in context, exiting non-zero if not:</p>
+<pre class="block">CLAIM                                        VALUE   STATUS
+null floor mean                              +2.75   ok
+IC asymptote                                0.0209   ok
+beta-orthogonal: realised beta                0.01   ok
+universe size                                  199   ok
+...
+All 30 derived claims appear in the documents, in context.</pre>
+<p><strong>Structural invariants, never greps.</strong> Cleaning up CSS with a regex left orphaned declarations three separate times. Grepping for the deleted selector found nothing each time — <em>because the surviving damage does not contain the thing you would search for.</em> Counting brace depth caught it immediately. The generalisation is worth stating plainly: <strong>to verify a removal, check a property that holds over the whole structure. Never search for the token you removed.</strong></p>
+<p><strong>Testing the control by breaking it.</strong> The drift-checking script above passed its first run while the exact bug it was written for was present in the document. It had searched for the value as a bare substring, and &quot;199&quot; occurs incidentally all over a long page. I only discovered this by deliberately reintroducing the bug to watch it fail — and it did not. A control that has never been observed to fail has not been tested.</p>
+<p><strong>Measuring before characterising.</strong> A turnover accounting defect was announced as having &quot;tilted every comparison in the project.&quot; Measured: 5.8 basis points a year, 0.003 Sharpe. Immaterial. The claim preceded the measurement by a full day.</p>
+<p><strong>Registering predictions before implementing.</strong> For one follow-up study the design, five numbered predictions and an explicit falsifier were written and committed before any code existed. Two predictions were wrong and the falsifier fired. Pre-registration did not prevent a bad criterion — the criterion omitted persistence, which is the very thing the project exists to check. It did make the badness visible instead of negotiable.</p>
+<h2>The one that got through</h2>
+<p>The paper&#x27;s central finding is that a strategy containing no information scores a Fama-French alpha t-statistic of 2.75 on this pipeline, which clears every significance bar in the literature. The paper explained that floor as an artifact of volatility targeting: the overlay cuts market exposure when volatility rises, giving the book a time-varying beta that a constant-beta factor model cannot represent, so the unmodelled timing surfaces as alpha.</p>
+<p>That explanation was excellent. It was consistent with a real, published effect. It was consistent with the drawdown figure, since the overlay does halve the 2008 loss. It was consistent with a robustness check on a later sample window. It was consistent with a market-neutral result showing the floor collapse when beta was removed.</p>
+<p>It was also wrong.</p>
+<p>It survived every control the project had. What refuted it was a question from the first person to read the thing critically: what does the floor look like with the overlay simply switched off? Same universe, same ranking, same weighting, same costs, two hundred null draws in each arm.</p>
+<pre class="block">Alpha-t null floor, identical stack
+
+  with 10% volatility target      +2.66
+  no overlay at all               +2.94</pre>
+<p>Removing the overlay makes the floor <em>worse</em>. The thing I had spent the project blaming was quietly reducing the problem.</p>
+<p>The real cause is survivorship in the universe — index membership as it stands today, carried backward, so the companies that failed and left are absent while the companies added are present for the run-up that earned them their place. A book holding all of them and forecasting nothing beats a six-factor model by 4.53% a year at t = 5.79, while the market itself over the same window returns a negative alpha. Every long book inherits that in proportion to its market exposure, and volatility targeting cuts exposure — which is exactly why removing it raises the floor.</p>
+<p>Brown, Goetzmann, Ibbotson and Ross published this in 1992: a sample truncated by survivorship produces the appearance of predictability, strongly enough to account for the evidence then being offered for return predictability. I had it in a caveats section the whole time, listed as a limitation the way everyone lists it, rather than measured as an effect.</p>
+<h2>Why that one got through</h2>
+<p>Not carelessness. The floor had been calibrated forty different ways, and every calibration varied the signal while holding the universe fixed.</p>
+<p><strong>A calibration procedure only covers the choices you thought to vary.</strong> Mine could not have found a defect in the universe, because the universe was never a variable. That is not an oversight to be fixed by more diligence; it is a permanent property of controls. Whatever you hold constant is invisible to your own checks, and you cannot enumerate what you are holding constant, because the whole problem is that you are not thinking about it.</p>
+<p>The only remedy is someone outside the loop. That is a strange thing to conclude about a workflow built for working alone faster, and I think it is the most important thing in this piece.</p>
+<h2>What did not work</h2>
+<p><strong>Reading carefully.</strong> Zero for the project. Every defect was caught by a test, a recomputation, or another person.</p>
+<p><strong>Confidence.</strong> There is no relationship between how settled a claim felt and whether it held. The three most confidently stated claims in the project — the 12× penalty, the turnover characterisation, the volatility-targeting mechanism — are all in the list of things that turned out to be wrong. If anything, the correlation runs the wrong way: a claim gets stated confidently when it fits a story, and fitting a story is exactly what a plausible-and-wrong output does.</p>
+<p><strong>Citing without checking.</strong> Two references sat in a bibliography section titled &quot;Anomalies tested&quot; having never been tested. Two more were listed and used nowhere. Checking each citation against the code took twenty minutes and should have happened before publishing, not after.</p>
+<h2>The rules I would keep</h2>
+<ol>
+<li>Derive every published number from something the code can recompute, then assert the document contains it. Automate the assertion.</li>
+<li>Verify a removal with a structural invariant, never by searching for the removed token.</li>
+<li>Break the control on purpose. If it does not fail, it does not work.</li>
+<li>Measure a defect&#x27;s impact before describing its severity.</li>
+<li>Register predictions and a falsifier before implementing. Score them afterwards, in public, including the misses.</li>
+<li>Treat &quot;this reads plausibly&quot; as carrying no evidential weight whatsoever.</li>
+<li>Do not describe work you have not opened.</li>
+</ol>
+<p>None of these are about prompting. They are ordinary engineering controls, and the reason they matter more here is throughput: the volume of plausible output goes up, the cost of checking each piece does not, and the gap between those two is where the defects live.</p>
+<p>The failure mode of AI-accelerated development is code that reads well and computes the wrong thing. The failure mode of backtesting is a result that looks credible and means nothing. <strong>They are the same failure mode</strong>, and one discipline answers both.</p>
+<hr>
+<p class="standfirst">The project, its tests, and the drift-checking script are <a href="https://github.com/aravindvrm/systematic-equity-research">on GitHub</a>. The research this describes is <a href="https://aravindvrm.github.io/systematic-equity-research/">here</a>, and the companion essay on calibration is <a href="https://aravindvrm.github.io/systematic-equity-research/null-floor.html">here</a>. Written in collaboration with Claude (Anthropic), which is the point; conclusions and errors are mine.</p>
+  <footer>
+    <p>Part of the <a href="https://aravindvrm.github.io/systematic-equity-research/">Systematic
+      Equity Research Framework</a>. Code and tests are
+      <a href="https://github.com/aravindvrm/systematic-equity-research">on GitHub</a>.</p>
+  </footer>
+</div>
+</body>
+</html>

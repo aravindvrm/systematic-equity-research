@@ -138,6 +138,7 @@ def md_to_html(md: str) -> str:
         return re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', t)
 
     out, in_code, buf = [], False, []
+    in_table, in_list = False, None
     for ln in md.split("\n"):
         if ln.startswith("```"):
             if in_code:
@@ -150,6 +151,39 @@ def md_to_html(md: str) -> str:
             buf.append(ln)
             continue
         s = ln.strip()
+
+        # --- tables: | a | b |  with a |---|---| separator row
+        if s.startswith("|") and s.endswith("|"):
+            cells = [c.strip() for c in s.strip("|").split("|")]
+            if all(set(c) <= set("-: ") and c for c in cells):
+                continue                                   # separator row
+            tag = "th" if not in_table else "td"
+            if not in_table:
+                out.append('<div class="tscroll"><table><tbody>')
+                in_table = True
+            row = "".join(f"<{tag}>{inline(c)}</{tag}>" for c in cells)
+            out.append(f"<tr>{row}</tr>")
+            continue
+        if in_table:
+            out.append("</tbody></table></div>")
+            in_table = False
+
+        # --- lists
+        m_ul = re.match(r"^[-*]\s+(.*)$", s)
+        m_ol = re.match(r"^(\d+)\.\s+(.*)$", s)
+        if m_ul or m_ol:
+            want = "ul" if m_ul else "ol"
+            if in_list != want:
+                if in_list:
+                    out.append(f"</{in_list}>")
+                out.append(f"<{want}>")
+                in_list = want
+            out.append(f"<li>{inline((m_ul or m_ol).group(1 if m_ul else 2))}</li>")
+            continue
+        if in_list:
+            out.append(f"</{in_list}>")
+            in_list = None
+
         if not s:
             continue
         if s == "---":
@@ -162,23 +196,56 @@ def md_to_html(md: str) -> str:
             out.append(f'<p class="standfirst">{inline(s[1:-1])}</p>')
         else:
             out.append(f"<p>{inline(s)}</p>")
+    if in_table:
+        out.append("</tbody></table></div>")
+    if in_list:
+        out.append(f"</{in_list}>")
     return "\n".join(out)
 
 
 SHELL = (ROOT / "research/essay_shell.html").read_text()
 
-body = md_to_html((ROOT / "writing/what-does-nothing-score.md").read_text())
-# Figures attach to anchor sentences so the markdown needs no placeholders.
-anchors = [
-    ("<p>A signal containing <strong>nothing</strong> clears the conventional", method_diagram()),
-    ("<p>Half the 2008 loss avoided, by a strategy that knows nothing.", drawdown_figure()),
-]
-for anchor, fig in anchors:
-    if anchor not in body:
-        raise SystemExit(f"anchor not found, figure would be dropped silently:\n  {anchor[:70]}")
-    body = body.replace(anchor, fig + "\n" + anchor)
+# Each essay: source markdown, output page, title, and any figures that attach
+# to an anchor sentence. Anchors mean the markdown carries no placeholders, and
+# a missing anchor is fatal rather than silently dropping the figure.
+ESSAYS = {
+    "null-floor": {
+        "src": "writing/what-does-nothing-score.md",
+        "out": "docs/null-floor.html",
+        "title": "What Does Nothing Score?",
+        "figures": [
+            ("<p>A signal containing <strong>nothing</strong> clears the conventional",
+             method_diagram),
+            ("<p>Half the 2008 loss avoided, by a strategy that knows nothing.",
+             drawdown_figure),
+        ],
+    },
+    "method": {
+        "src": "writing/plausible-and-wrong.md",
+        "out": "docs/method.html",
+        "title": "Plausible and Wrong",
+        "figures": [],
+    },
+}
 
-out = SHELL.replace("<!--BODY-->", body)
-(ROOT / "docs/null-floor.html").write_text(out)
-print(f"docs/null-floor.html rebuilt: {len(out):,} bytes, "
-      f"{out.count('<figure')} figures, {out.count('<h2')} sections")
+import sys
+names = sys.argv[1:] or list(ESSAYS)
+for name in names:
+    if name not in ESSAYS:
+        raise SystemExit(f"unknown essay {name!r}; known: {', '.join(ESSAYS)}")
+    cfg = ESSAYS[name]
+    src = ROOT / cfg["src"]
+    if not src.exists():
+        print(f"  skipping {name}: {cfg['src']} not written yet")
+        continue
+    body = md_to_html(src.read_text())
+    for anchor, fig in cfg["figures"]:
+        if anchor not in body:
+            raise SystemExit(f"anchor not found, figure would be dropped silently:\n  {anchor[:70]}")
+        body = body.replace(anchor, fig() + "\n" + anchor)
+    out = SHELL.replace("<!--BODY-->", body)
+    out = out.replace("<title>What Does Nothing Score?</title>", f"<title>{cfg['title']}</title>")
+    out = out.replace("<h1>What Does Nothing Score?</h1>", f"<h1>{cfg['title']}</h1>")
+    (ROOT / cfg["out"]).write_text(out)
+    print(f"{cfg['out']} rebuilt: {len(out):,} bytes, "
+          f"{out.count('<figure')} figures, {out.count('<h2')} sections")
