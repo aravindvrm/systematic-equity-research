@@ -100,6 +100,28 @@ for arm, lbl in (("with vol target", "ablation null, overlay on"),
         claim(lbl, f"+{float(ab[arm]['null_t_mean']):.2f}", r"<td>{v}</td>",
               f"voltarget_ablation_null.csv {arm}")
 
+# the construction gradient in section 03 -- every cell derived, none transcribed
+with open(ROOT / "results/beta_neutral_n200.csv") as fh:
+    bn = {r["name"]: r for r in csv.DictReader(fh)}
+GRID = [("dollar-neutral (reproduce)", "dollar-neutral"),
+        ("beta-neutral (A)", "beta-scaled legs"),
+        ("beta-orthogonal (B)", "beta-orthogonal")]
+for key, lbl in GRID:
+    if key not in bn:
+        continue
+    claim(f"{lbl}: realised beta", f"{float(bn[key]['beta_realised']):.2f}",
+          r"<td>{v}</td>", f"beta_neutral_n200.csv {key}")
+    claim(f"{lbl}: null alpha-t p95", f"&minus;{abs(float(bn[key]['alpha_t_null_p95'])):.2f}",
+          r"<td>{v}</td>", f"beta_neutral_n200.csv {key}")
+    claim(f"{lbl}: null alpha-t max", f"+{float(bn[key]['alpha_t_null_max']):.2f}",
+          r"<td>{v}</td>", f"beta_neutral_n200.csv {key}")
+for arm, lbl in (("with vol target", "long-only vol-targeted"), ("no overlay", "long-only no overlay")):
+    if arm in ab:
+        claim(f"{lbl}: null p95", f"+{float(ab[arm]['null_t_p95']):.2f}",
+              r"<td>{v}</td>", f"voltarget_ablation_null.csv {arm}")
+        claim(f"{lbl}: null max", f"+{float(ab[arm]['null_t_max']):.2f}",
+              r"<td>{v}</td>", f"voltarget_ablation_null.csv {arm}")
+
 loc = subprocess.run("find algo -name '*.py' | xargs wc -l | tail -1 | awk '{print $1}'",
                      shell=True, cwd=ROOT, capture_output=True, text=True).stdout.strip()
 if loc.isdigit():

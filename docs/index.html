@@ -8,7 +8,7 @@
 <meta name="author" content="aravindvrm">
 <meta name="description" content="Twelve signal families, thirty-eight strategies, and the arithmetic that explains why none of them worked.">
 <style>html{color-scheme:dark light}body{margin:0}img{max-width:100%}</style>
-<title>A Measured Ceiling</title>
+<title>A Measured Floor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -288,7 +288,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 <header>
   <div class="wide masthead">
     <p class="eyebrow">Whitepaper</p>
-    <h1>A Measured Ceiling</h1>
+    <h1>A Measured Floor</h1>
     <p class="sub">A strategy containing no information scores a Fama-French alpha
       <em>t</em>&nbsp;of&nbsp;2.75 on this pipeline &mdash; clearing every significance bar in the
       literature while forecasting nothing. Twelve signal families and thirty-eight strategies,
@@ -456,7 +456,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       efficient, that cross-sectional signal does not exist, or that the funds harvesting it are
       wrong. Relaxing the cash constraint was tested rather than assumed, twice: a dollar-neutral
       long/short book on the strongest signal, which failed, and long/short trend, which is the one
-      result in the project that cleared and is reported in section&nbsp;05. Paid data, a wider or
+      result in the project that cleared and is reported in section&nbsp;06. Paid data, a wider or
       less liquid universe, and shorter holding periods are genuinely untested, and each is a live
       route these constraints foreclose. The result is a boundary on one position, not a claim
       about the market.</p>
@@ -584,7 +584,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       to account for the evidence then being offered for return predictability. That is this
       section's finding, published thirty-four years earlier. Their mechanism runs through the
       relationship between volatility and return in a truncated sample, which is also where the
-      random forest in section&nbsp;03 ends up &mdash; a volatility tilt that reverses the
+      random forest in section&nbsp;04 ends up &mdash; a volatility tilt that reverses the
       documented low-volatility effect. Two of this project's results, arrived at separately,
       are both downstream of one 1992 paper. Any long book drawn from this universe inherits it
       in proportion to its market exposure &mdash; which is precisely why volatility targeting
@@ -599,27 +599,14 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       simpler reading is that a decade of survivor drift compounds into less than two decades of
       it.</p>
 
-    <p>Removing the market exposure entirely settles it. Rebuilding the same stack as a long/short
-      book whose ranking is orthogonalised to beta &mdash; realised beta <code>0.008</code>,
-      confirmed rather than assumed &mdash; and recalibrating against 200 fresh draws:</p>
+    <p>If that reading is right, a book carrying no net exposure to this universe should inherit
+      none of its survivorship, and its floor should fall to nothing. That requires shorting, which
+      the cash-account constraint forbids &mdash; so it is tested in section&nbsp;03 by lifting the
+      constraint deliberately rather than by assuming what would happen. It does fall, to a 95th
+      percentile below zero, and the full gradient from fully-exposed to neutral is tabulated
+      there.</p>
 
-    <div class="tscroll">
-      <table>
-        <caption>Alpha-<em>t</em> null floor by how much market exposure the construction carries</caption>
-        <thead><tr><th>Construction</th><th>Realised &beta;</th><th>Null mean</th><th>Null p95</th><th>Null max</th></tr></thead>
-        <tbody>
-          <tr><td>Long-only, vol-targeted</td><td>0.4&ndash;0.5</td><td>+2.75</td><td>+3.27</td><td>+3.45</td></tr>
-          <tr><td>Dollar-neutral long/short</td><td>0.53</td><td>&mdash;</td><td>&minus;0.37</td><td>+1.38</td></tr>
-          <tr><td>Beta-orthogonal long/short</td><td>0.008</td><td>&mdash;</td><td>&minus;0.60</td><td>+1.27</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p>The floor tracks market exposure, not the overlay and not the signal. A book with no net
-      exposure to this universe inherits none of its survivorship, and its floor falls below zero.
-      A fully-exposed book inherits all of it. The overlay sits in between, which is why it moves
-      the number a little and in the direction opposite to the one this paper claimed for most of
-      its life. It also means the <em>t</em>&nbsp;&gt;&nbsp;2 and <em>t</em>&nbsp;&gt;&nbsp;3
+    <p>The floor tracks market exposure, not the overlay and not the signal. It also means the <em>t</em>&nbsp;&gt;&nbsp;2 and <em>t</em>&nbsp;&gt;&nbsp;3
       conventions are not merely uncalibrated but uncalibrated <em>by a margin that depends on
       the construction</em> &mdash; the same nominal bar is trivial on one stack and
       unreachable on another.</p>
@@ -630,7 +617,101 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 </section>
 
 <section>
-  <div class="shead"><span class="snum">03</span><h2>Results</h2></div>
+  <div class="shead"><span class="snum">03</span><h2>Lifting the constraint</h2></div>
+  <div class="flow">
+    <p>Everything above holds market exposure fixed and varies the signal. The results run the
+      other way &mdash; the floor moved when the construction changed and never when the signal
+      did &mdash; so the obvious next test is to vary the construction as far as it will go. The
+      furthest it goes is a book with no net market exposure at all, which requires shorting and
+      a margin account, and is therefore outside the position this study was conducted from. It is
+      tested anyway, because the question of what the floor is made of does not care what account
+      the author holds.</p>
+
+    <p>The design was <strong>written and committed before the code existed</strong>, with five
+      numbered predictions and an explicit falsifier
+      (<a class="srcref" href="https://github.com/aravindvrm/systematic-equity-research/blob/main/notes/Beta-Neutral%20Pre-Registration.md">notes/Beta-Neutral Pre-Registration.md</a>).
+      That was a direct response to the pattern in section&nbsp;05: conclusions here had a habit
+      of being reported at the point they became interesting. Its choices are taken from the
+      literature rather than invented &mdash; betas estimated from daily returns over a trailing
+      year, exponentially weighted and shrunk toward one (Vasicek, 1973; Hollstein, Prokopczuk
+      &amp; Simen, 2019); legs scaled by their own portfolio beta (Frazzini &amp; Pedersen, 2014);
+      and betas aggregated on held weights rather than rank weights, because Novy-Marx &amp;
+      Velikov show the latter overstates exactly this kind of result.</p>
+
+    <p>Costs are the conservative retail case throughout, not the institutional one: general
+      collateral borrow at 50bp accrued daily on the short notional, <em>no</em> rebate on short
+      proceeds, margin interest on the debit balance, and a Reg&nbsp;T cap scaling the book down
+      whenever gross exposure would exceed 2:1. Turnover runs about 23&times; a year in every arm.</p>
+
+    <div class="tscroll">
+      <table>
+        <caption>What each construction does to the evidence &mdash; 200 null draws per row, identical universe, ranking, truncation, weighting, schedule and costs</caption>
+        <thead><tr><th>Construction</th><th>Realised &beta;</th><th>Null alpha-<em>t</em> p95</th><th>Null max</th><th>Cash account</th></tr></thead>
+        <tbody>
+          <tr><td>Long-only, inverse-vol, 10% vol target</td><td>0.45</td><td>+3.38</td><td>+3.57</td><td>yes</td></tr>
+          <tr><td>Long-only, inverse-vol, no overlay</td><td>0.88</td><td>+3.82</td><td>+4.81</td><td>yes</td></tr>
+          <tr><td>Dollar-neutral long/short</td><td>0.53</td><td>&minus;0.37</td><td>+1.38</td><td>no &mdash; margin</td></tr>
+          <tr><td>Long/short, legs scaled by beta</td><td>0.23</td><td>&minus;0.65</td><td>+1.41</td><td>no &mdash; margin</td></tr>
+          <tr><td>Long/short, ranking orthogonalised to beta</td><td>0.01</td><td>&minus;0.60</td><td>+1.27</td><td>no &mdash; margin</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="pull">The floor is a function of market exposure and nothing else. It runs from
+      <em>t</em>&nbsp;=&nbsp;+3.82 at &beta;&nbsp;=&nbsp;0.88 to &minus;0.60 at
+      &beta;&nbsp;=&nbsp;0.01, monotonically, while the signal is held constant throughout.</p>
+
+    <p>Two things in that table are worth separating. <strong>Dollar-neutral is not
+      beta-neutral.</strong> Equal dollars long and short realised a beta of 0.53, because the
+      strongest signal is a volatility tilt and its long leg simply holds higher-beta names than
+      its short leg &mdash; a book that looks hedged and is not. Scaling the legs by their
+      estimated betas targets zero and realises 0.23, and that gap is the ex-ante versus realised
+      problem the beta-forecasting literature describes; worse, it is regime-dependent, drifting
+      from 0.09 in 2015&ndash;2020 to 0.42 in 2021&ndash;2026. Only removing the tilt from the
+      <em>ranking</em> holds neutrality across both halves.</p>
+
+    <p>And the signal does not survive the treatment. As exposure comes out, so does the result:
+      Sharpe falls <code>0.735</code> &rarr; <code>0.560</code> &rarr; <code>0.394</code> and the
+      Fama-French alpha <em>t</em> falls <code>2.19</code> &rarr; <code>1.96</code> &rarr;
+      <code>0.94</code>. What remained at the end sat at the 99th percentile of its own
+      recalibrated null, which met the registered falsifier on a literal reading &mdash; two
+      attempts to argue that away failed, and raising the null from 40 to 200 draws firmed it up
+      rather than dissolving it. What settled it was splitting the sample:</p>
+
+    <div class="tscroll">
+      <table>
+        <caption>The beta-orthogonal residual, by period</caption>
+        <thead><tr><th>Window</th><th>Sharpe</th><th>Alpha (ann.)</th><th>Alpha <em>t</em></th><th>Realised &beta;</th></tr></thead>
+        <tbody>
+          <tr><td>2015&ndash;2020</td><td>0.516</td><td>+3.16%</td><td>0.95</td><td>0.002</td></tr>
+          <tr><td>2021&ndash;2026</td><td>0.272</td><td>&minus;1.23%</td><td>&minus;0.34</td><td>0.016</td></tr>
+          <tr class="dim"><td>full sample</td><td>0.394</td><td>+2.34%</td><td>0.94</td><td>0.008</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The residual is entirely first-half and changes sign on extension &mdash; the signature of
+      the relative-value signal already retracted in section&nbsp;05. Two of the five registered
+      predictions were wrong and the falsifier fired, all of which is recorded in
+      <a class="srcref" href="https://github.com/aravindvrm/systematic-equity-research/blob/main/notes/Beta-Neutral%20Result.md">notes/Beta-Neutral Result.md</a>
+      against the predictions as written. The criterion's omission was persistence: it asked
+      whether the residual beat noise on one sample, which is the question this project exists to
+      show is insufficient. <strong>Pre-registration did not prevent a bad criterion. It made the
+      badness visible instead of negotiable.</strong></p>
+
+    <p>So lifting the constraint does not change the answer for the cross-section. Shorting
+      roughly doubles the transfer coefficient and buys real diversification, but it supplies no
+      information coefficient, and information is what was missing. It does change the
+      <em>measurement</em>: a neutral book is the only construction here whose null floor sits
+      where convention assumes it does.
+      (<a class="srcref" href="https://github.com/aravindvrm/systematic-equity-research/blob/main/research/beta_neutral.py">research/beta_neutral.py</a>,
+      <a class="srcref" href="https://github.com/aravindvrm/systematic-equity-research/blob/main/research/beta_neutral_stability.py">beta_neutral_stability.py</a>,
+      <a class="srcref" href="https://github.com/aravindvrm/systematic-equity-research/blob/main/research/market_neutral.py">market_neutral.py</a>)</p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">04</span><h2>Results</h2></div>
   <div class="flow">
     <p>Thirty-eight strategies spanning every family, evaluated on one shared stack so a single
       null floor applies to all. Ranked by percentile against that floor under the conditional
@@ -745,7 +826,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 </section>
 
 <section>
-  <div class="shead"><span class="snum">04</span><h2>What the controls overturned</h2></div>
+  <div class="shead"><span class="snum">05</span><h2>What the controls overturned</h2></div>
   <div class="flow">
     <p>Five conclusions were reached and held with confidence during the work, then overturned by
       a control that should have run first. Four never left the notebook &mdash; the calibration
@@ -814,7 +895,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       turnover was charged on target changes rather than realised drift. Sharpe, drawdown,
       volatility and CAGR all verified against <span class="mono">empyrical</span>.</p>
 
-    <p>The follow-up work described in section&nbsp;06 was therefore <strong>pre-registered</strong>:
+    <p>The follow-up work described in section&nbsp;03 was therefore <strong>pre-registered</strong>:
       the design, five numbered predictions and an explicit falsifier were written and committed
       before the code existed. Two of the five predictions were wrong, and the falsifier fired
       on a literal reading &mdash; the neutral book did clear its recalibrated null on the full
@@ -827,7 +908,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 </section>
 
 <section>
-  <div class="shead"><span class="snum">05</span><h2>What actually cleared</h2></div>
+  <div class="shead"><span class="snum">06</span><h2>What actually cleared</h2></div>
   <div class="flow">
     <p>Only after twelve families had failed was the correct literature consulted. The anomaly
       literature catalogues effects that get arbitraged away. The <em>risk premia</em> literature
@@ -908,7 +989,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 </section>
 
 <section>
-  <div class="shead"><span class="snum">06</span><h2>Binding constraints</h2></div>
+  <div class="shead"><span class="snum">07</span><h2>Binding constraints</h2></div>
   <div class="flow">
     <p>Free data was never what limited this. Four things were, and each was measured rather
       than assumed.</p>
@@ -949,7 +1030,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 </section>
 
 <section>
-  <div class="shead"><span class="snum">07</span><h2>What the work produced</h2></div>
+  <div class="shead"><span class="snum">08</span><h2>What the work produced</h2></div>
   <div class="flow">
     <p>No tradeable signal. Two things of durable value instead.</p>
 
@@ -976,7 +1057,7 @@ footer p{max-width:var(--measure);margin-bottom:10px}
 </section>
 
 <section>
-  <div class="shead"><span class="snum">08</span><h2>References</h2></div>
+  <div class="shead"><span class="snum">09</span><h2>References</h2></div>
   <div class="flow">
     <p>Works this study relied on, grouped by the role they played rather than
       alphabetically &mdash; the grouping is itself part of the argument, since the
@@ -1105,8 +1186,8 @@ footer p{max-width:var(--measure);margin-bottom:10px}
         <dt>Method</dt>
         <dd>Analysis code, backtests and drafting were produced in collaboration with
           Claude (Anthropic) over a working session. Every result was re-run under the
-          controls described in section 02, and the four conclusions those controls
-          overturned are recorded in section 04. Errors are the author's.</dd>
+          controls described in section 02, and the five conclusions those controls
+          overturned are recorded in section 05. Errors are the author's.</dd>
       </div>
       <div class="pair">
         <dt>Source</dt>
