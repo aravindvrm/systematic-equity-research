@@ -403,52 +403,88 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       result; it does not produce it.</p>
 
     <p>Three numbers follow. Beating a no-signal book requires an information coefficient near
-      <code>0.036</code>. The best stable feature available from free price data measures
-      <code>0.012</code>, and the eight tested average <code>0.0108</code>. Because those features
-      correlate with one another at &rho;&nbsp;=&nbsp;0.234, combining arbitrarily many of them
-      converges on <code>0.0108 / &radic;0.234 = 0.0223</code> &mdash; roughly 60% of the
-      requirement, approached asymptotically and never crossed.</p>
+      <code>0.036</code>. The best individually stable feature &mdash; twelve-month momentum,
+      positive in both halves of the sample &mdash; measures <code>0.0144</code> over the full
+      period and <code>0.0117</code> in its weaker half, and the eight tested average
+      <code>0.0101</code>. Because those features correlate with one another at
+      &rho;&nbsp;=&nbsp;0.233, combining arbitrarily many of them converges on
+      <code>0.0101 / &radic;0.233 = 0.0209</code> &mdash; under 60% of the requirement,
+      approached asymptotically and never crossed.</p>
 
-    <p class="scope">The asymptote is computed from the <em>mean</em> individual IC across the eight
-      signals, not the best one, since it describes what a large combination of comparable signals
-      converges to rather than what the strongest single signal achieves. It also assumes the
-      idealised equicorrelation case &mdash; equally skilled signals sharing one pairwise
-      correlation. That is a simplification of the measured covariance structure, so read
-      <code>0.0223</code> as the asymptote implied by the average signal and the average
-      correlation, not as a bound derived from the full covariance matrix.</p>
+    <p>The asymptote uses the <em>mean</em> individual IC, not the best, since it describes what a
+      large combination of comparable signals converges to rather than what the strongest single
+      one achieves. It also assumes equicorrelation &mdash; equally skilled signals sharing one
+      pairwise correlation &mdash; which replaces a correlation matrix with a single number. That
+      is a simplification in three places, so it was checked against the matrix itself rather than
+      defended.</p>
+
+    <div class="tscroll">
+      <table>
+        <caption>Eigenvalue spectrum of the eight signals' daily IC series &mdash; eigenvalues sum to 8; eight independent signals would give 1.00 each</caption>
+        <thead><tr><th>Component</th><th>Eigenvalue</th><th>Cumulative variance</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td>PC1</td><td>3.895</td><td>48.7%</td><td>the momentum bloc</td></tr>
+          <tr><td>PC2</td><td>2.076</td><td>74.6%</td><td>the short-horizon bloc</td></tr>
+          <tr><td>PC3</td><td>0.977</td><td>86.8%</td><td>&mdash;</td></tr>
+          <tr><td>PC4</td><td>0.707</td><td>95.7%</td><td>&mdash;</td></tr>
+          <tr class="dim"><td>PC5&ndash;PC7</td><td>0.217, 0.112, 0.015</td><td>100.0%</td><td>&mdash;</td></tr>
+          <tr class="dim"><td>PC8</td><td>0.000</td><td>100.0%</td><td>an exact duplicate</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Two directions carry three quarters of the variation. The eighth eigenvalue is
+      <em>exactly zero</em>, which is the matrix reporting that two of the eight are the same
+      signal: <code>mom_252</code> and <code>rel_strength_252</code> correlate at
+      <code>1.000</code>, so the eight price signals are seven. The blocs are visible in the
+      matrix too &mdash; the four momentum measures correlate 0.88 to 1.00 with one another, the
+      three short-horizon measures 0.30 to 0.69, and volume shock is effectively independent of
+      everything at |&rho;|&nbsp;&le;&nbsp;0.11.</p>
+
+    <p>The shortcut survives the check. Effective breadth from the spectrum &mdash; the
+      participation ratio <code>(&Sigma;&lambda;)&sup2;/&Sigma;&lambda;&sup2;</code> &mdash; is
+      <code>3.05</code>, against <code>3.04</code> from <code>k/(1+(k&minus;1)&rho;)</code>. And
+      combining the seven distinct signals with <em>optimal</em> weights rather than equal ones,
+      using the true matrix, reaches <code>&radic;(c&prime;R&#8315;&sup1;c) = 0.0206</code>
+      &mdash; better than the <code>0.0176</code> equal weighting achieves, and still just under
+      the <code>0.0209</code> asymptote. Weighting the same signals more cleverly does not close
+      the gap to 0.036; it recovers about a fifth of the way there and stops.
+      (<a class="srcref" href="https://github.com/aravindvrm/systematic-equity-research/blob/main/research/spectrum.py">research/spectrum.py</a>)</p>
 
 <div class="chart-frame">
-  <svg viewBox="0 0 640 250" width="100%" height="250" role="img"
-       aria-label="Combined information coefficient as signals are added. The curve rises from 0.0108 with one signal and flattens at 0.0223, never reaching the 0.036 required to break even.">
+  <svg viewBox="0 0 640 250" role="img"
+       aria-label="Combined information coefficient as signals are added. The curve rises from 0.0101 with one signal and flattens at 0.0209, never reaching the 0.036 required to break even.">
     <text x="0" y="12" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--faint)" letter-spacing="1.2">COMBINED IC AS SIGNALS ARE ADDED, AT THE MEASURED CORRELATION</text>
-    <line x1="58" y1="206.0" x2="496" y2="206.0" stroke="var(--rule-strong)" stroke-width="1" fill="none"/>
-    <line x1="58" y1="34" x2="58" y2="206.0" stroke="var(--rule-strong)" stroke-width="1" fill="none"/>
+    <line x1="58.0" y1="206.0" x2="496.0" y2="206.0" stroke="var(--rule-strong)" stroke-width="1" fill="none"/>
+    <line x1="58.0" y1="34.0" x2="58.0" y2="206.0" stroke="var(--rule-strong)" stroke-width="1" fill="none"/>
     <g font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--faint)">
-      <text x="50" y="37.0" text-anchor="end">0.04</text>
-      <text x="50" y="80.0" text-anchor="end">0.03</text>
-      <text x="50" y="123.0" text-anchor="end">0.02</text>
-      <text x="50" y="166.0" text-anchor="end">0.01</text>
+      <text x="50" y="56.1" text-anchor="end">0.04</text>
+      <text x="50" y="94.3" text-anchor="end">0.03</text>
+      <text x="50" y="132.6" text-anchor="end">0.02</text>
+      <text x="50" y="170.8" text-anchor="end">0.01</text>
       <text x="58.0" y="222.0" text-anchor="middle">1</text>
-      <text x="162.2" y="222.0" text-anchor="middle">25</text>
-      <text x="270.8" y="222.0" text-anchor="middle">50</text>
-      <text x="379.4" y="222.0" text-anchor="middle">75</text>
-      <text x="488.0" y="222.0" text-anchor="middle">100</text>
+      <text x="164.2" y="222.0" text-anchor="middle">25</text>
+      <text x="274.8" y="222.0" text-anchor="middle">50</text>
+      <text x="385.4" y="222.0" text-anchor="middle">75</text>
+      <text x="496.0" y="222.0" text-anchor="middle">100</text>
       <text x="273.0" y="238.0" text-anchor="middle" fill="var(--muted)">number of signals combined</text>
     </g>
-    <line x1="58" y1="51.2" x2="496" y2="51.2" stroke="var(--null)" stroke-width="1.5" stroke-dasharray="5 3" fill="none"/>
-    <text x="502" y="48.2" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="var(--null)" font-weight="600">required 0.036</text>
-    <text x="502" y="62.2" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="var(--muted)">to beat holding all</text>
-    <line x1="58" y1="110.0" x2="496" y2="110.0" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 3" fill="none"/>
-    <text x="502" y="107.0" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="var(--ink)" font-weight="600">ceiling 0.0223</text>
-    <text x="502" y="121.0" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">k &#8594; &#8734;</text>
-    <polyline points="58.0,159.6 62.3,146.9 66.7,139.6 71.0,134.8 75.4,131.4 79.7,128.8 84.1,126.8 88.4,125.1 92.7,123.8 97.1,122.7 101.4,121.7 105.8,120.9 110.1,120.2 114.5,119.6 118.8,119.0 123.2,118.5 127.5,118.1 131.8,117.7 136.2,117.3 140.5,117.0 144.9,116.7 149.2,116.4 153.6,116.2 157.9,115.9 162.2,115.7 166.6,115.5 170.9,115.3 175.3,115.2 179.6,115.0 184.0,114.8 188.3,114.7 192.6,114.6 197.0,114.4 201.3,114.3 205.7,114.2 210.0,114.1 214.4,114.0 218.7,113.9 223.1,113.8 227.4,113.7 231.7,113.6 236.1,113.5 240.4,113.5 244.8,113.4 249.1,113.3 253.5,113.2 257.8,113.2 262.1,113.1 266.5,113.1 270.8,113.0 275.2,112.9 279.5,112.9 283.9,112.8 288.2,112.8 292.5,112.7 296.9,112.7 301.2,112.6 305.6,112.6 309.9,112.6 314.3,112.5 318.6,112.5 322.9,112.4 327.3,112.4 331.6,112.4 336.0,112.3 340.3,112.3 344.7,112.3 349.0,112.2 353.4,112.2 357.7,112.2 362.0,112.1 366.4,112.1 370.7,112.1 375.1,112.1 379.4,112.0 383.8,112.0 388.1,112.0 392.4,112.0 396.8,111.9 401.1,111.9 405.5,111.9 409.8,111.9 414.2,111.8 418.5,111.8 422.8,111.8 427.2,111.8 431.5,111.8 435.9,111.7 440.2,111.7 444.6,111.7 448.9,111.7 453.3,111.7 457.6,111.6 461.9,111.6 466.3,111.6 470.6,111.6 475.0,111.6 479.3,111.6 483.7,111.5 488.0,111.5" fill="none" stroke="var(--accent)" stroke-width="2"/>
-    <circle cx="88.4" cy="125.1" r="3.5" fill="var(--accent)"/>
-    <text x="97.4" y="139.1" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="var(--muted)">8 signals tested &#8594; 0.0188</text>
+    <line x1="58.0" y1="68.4" x2="496.0" y2="68.4" stroke="var(--null)" stroke-width="1.5" stroke-dasharray="5 3" fill="none"/>
+    <text x="502" y="65.4" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="var(--null)" font-weight="600">required 0.036</text>
+    <text x="502" y="79.4" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="var(--muted)">to beat holding all</text>
+    <line x1="58.0" y1="126.0" x2="496.0" y2="126.0" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 3" fill="none"/>
+    <text x="502" y="123.0" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="var(--ink)" font-weight="600">asymptote 0.0209</text>
+    <text x="502" y="137.0" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">k &#8594; &#8734;</text>
+    <polyline points="58.0,167.4 62.4,156.8 66.8,150.8 71.3,146.8 75.7,143.9 80.1,141.7 84.5,140.0 89.0,138.7 93.4,137.6 97.8,136.6 102.2,135.8 106.7,135.2 111.1,134.6 115.5,134.0 119.9,133.6 124.4,133.2 128.8,132.8 133.2,132.5 137.6,132.2 142.1,131.9 146.5,131.6 150.9,131.4 155.3,131.2 159.8,131.0 164.2,130.8 168.6,130.7 173.0,130.5 177.5,130.3 181.9,130.2 186.3,130.1 190.7,130.0 195.2,129.8 199.6,129.7 204.0,129.6 208.4,129.5 212.8,129.4 217.3,129.4 221.7,129.3 226.1,129.2 230.5,129.1 235.0,129.1 239.4,129.0 243.8,128.9 248.2,128.9 252.7,128.8 257.1,128.7 261.5,128.7 265.9,128.6 270.4,128.6 274.8,128.5 279.2,128.5 283.6,128.4 288.1,128.4 292.5,128.4 296.9,128.3 301.3,128.3 305.8,128.2 310.2,128.2 314.6,128.2 319.0,128.1 323.5,128.1 327.9,128.1 332.3,128.0 336.7,128.0 341.2,128.0 345.6,127.9 350.0,127.9 354.4,127.9 358.8,127.9 363.3,127.8 367.7,127.8 372.1,127.8 376.5,127.8 381.0,127.7 385.4,127.7 389.8,127.7 394.2,127.7 398.7,127.7 403.1,127.6 407.5,127.6 411.9,127.6 416.4,127.6 420.8,127.6 425.2,127.5 429.6,127.5 434.1,127.5 438.5,127.5 442.9,127.5 447.3,127.5 451.8,127.4 456.2,127.4 460.6,127.4 465.0,127.4 469.5,127.4 473.9,127.4 478.3,127.4 482.7,127.3 487.2,127.3 491.6,127.3 496.0,127.3" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <circle cx="89.0" cy="138.7" r="3.5" fill="var(--accent)"/>
+    <text x="98.0" y="152.7" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="var(--muted)">8 signals tested &#8594; 0.0176</text>
   </svg>
-  <p class="chart-note">Eight price signals correlate at &rho;&nbsp;=&nbsp;0.234, so they contribute an
-    effective breadth of 3.03 rather than 8. At their mean individual IC of 0.0108, adding
-    arbitrarily many more converges to 0.0108&nbsp;/&nbsp;&radic;0.234 = 0.0223 &mdash; the gap to
-    0.036 does not close from within this feature space.</p>
+  <p class="chart-note">Eight price signals correlate at &rho;&nbsp;=&nbsp;0.233, so they contribute an
+    effective breadth of 3.04 rather than 8 &mdash; 3.05 by the eigenvalue spectrum, which agrees.
+    At their mean individual IC of 0.0101, adding arbitrarily many more converges to
+    0.0101&nbsp;/&nbsp;&radic;0.233 = 0.0209 &mdash; the gap to 0.036 does not close from within
+    this feature space. Curve generated by
+    <a class="srcref" href="https://github.com/aravindvrm/systematic-equity-research/blob/main/research/make_figures.py">research/make_figures.py</a>.</p>
 </div>
 
     <p class="scope"><strong>What this does and does not show.</strong> The reachable set from
@@ -768,8 +804,9 @@ footer p{max-width:var(--measure);margin-bottom:10px}
       components</strong>. Averaging z-scores of signals correlated at 0.97 averages one signal
       with itself while adding the others' noise &mdash; and in the terms above, correlated
       signals contribute no <strong>independent bets</strong>. Measured directly: eight signals
-      with a mean pairwise IC correlation of 0.234 amount to an effective breadth of
-      <strong>3.03</strong>, not eight. The denominator of &radic;BR barely moves while the noise
+      with a mean pairwise IC correlation of 0.233 amount to an effective breadth of
+      <strong>3.04</strong>, not eight &mdash; and two of the eight are the same signal
+      measured twice. The denominator of &radic;BR barely moves while the noise
       floor rises, so the blend lands below its own inputs.</p>
 
     <h3 style="margin-top:14px">Non-linear methods</h3>

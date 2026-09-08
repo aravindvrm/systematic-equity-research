@@ -122,6 +122,29 @@ for arm, lbl in (("with vol target", "long-only vol-targeted"), ("no overlay", "
         claim(f"{lbl}: null max", f"+{float(ab[arm]['null_t_max']):.2f}",
               r"<td>{v}</td>", f"voltarget_ablation_null.csv {arm}")
 
+# the eigenvalue spectrum in section 01
+import csv as _csv
+spec_path = ROOT / "results/signal_ic_spectrum.csv"
+if spec_path.exists():
+    with open(spec_path) as fh:
+        evs = [float(r["eigenvalue"]) for r in _csv.DictReader(fh)]
+    for i, ev in enumerate(evs[:2], 1):
+        claim(f"PC{i} eigenvalue", f"{ev:.3f}", r"<td>PC" + str(i) + r"</td><td>{v}</td>",
+              "signal_ic_spectrum.csv")
+
+corr_path = ROOT / "results/signal_ic_correlation.csv"
+if corr_path.exists():
+    import itertools
+    with open(corr_path) as fh:
+        rdr = list(_csv.reader(fh))
+    hdr, body = rdr[0][1:], rdr[1:]
+    mat = {r[0]: dict(zip(hdr, [float(x) for x in r[1:]])) for r in body}
+    dup = max(((a, b, mat[a][b]) for a, b in itertools.combinations(hdr, 2)),
+              key=lambda x: abs(x[2]))
+    claim("duplicate-pair correlation", f"{dup[2]:.3f}",
+          r"correlate at\s+<code>{v}</code>",
+          f"signal_ic_correlation.csv {dup[0]}/{dup[1]}")
+
 loc = subprocess.run("find algo -name '*.py' | xargs wc -l | tail -1 | awk '{print $1}'",
                      shell=True, cwd=ROOT, capture_output=True, text=True).stdout.strip()
 if loc.isdigit():

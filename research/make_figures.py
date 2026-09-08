@@ -8,6 +8,7 @@ Three datasets:
                         with the real strategies placed against it
 """
 import json
+import pathlib
 import warnings
 
 import numpy as np
@@ -20,7 +21,9 @@ from algo.costs import IBKR_US_EQUITY
 out = {}
 
 # ---- 1. IC convergence -------------------------------------------------------
-c, rho = 0.0108, 0.234          # measured: mean individual IC, mean pairwise IC corr
+c, rho = 0.0101, 0.233          # measured on the BATTERY universe (199 names) by
+                                # research/spectrum.py -- mean individual IC, mean
+                                # pairwise correlation of the daily IC series
 ks = list(range(1, 101))
 out["ic_curve"] = [{"k": k, "ic": c * np.sqrt(k) / np.sqrt(1 + (k - 1) * rho)} for k in ks]
 out["ic_asymptote"] = c / np.sqrt(rho)
@@ -71,6 +74,52 @@ out["strategies"] = [
 ]
 print(f"3. null floor: {len(out['strategies'])} strategies placed against "
       f"mean {out['null']['mean']}, p95 {out['null']['p95']}")
+
+
+# ---------------------------------------------------------------- IC curve SVG
+# The chart used to be hand-transcribed from these numbers into docs/index.html,
+# and its coordinates were wrong once already. Generate it instead.
+def ic_curve_svg(c, rho, required=0.036, kmax=100, k_tested=8):
+    import math
+    W, H = 640, 250
+    x0, x1, ytop, ybot = 58.0, 496.0, 34.0, 206.0
+    ymax_val = 0.045
+    def X(k):  return x0 + (k - 1) / (kmax - 1) * (x1 - x0)
+    def Y(v):  return ybot - (v / ymax_val) * (ybot - ytop)
+    def ic(k): return c * math.sqrt(k) / math.sqrt(1 + (k - 1) * rho)
+
+    asym = c / math.sqrt(rho)
+    tested = ic(k_tested)
+    pts = " ".join(f"{X(k):.1f},{Y(ic(k)):.1f}" for k in range(1, kmax + 1))
+    ticks = "".join(
+        f'\n      <text x="{X(k):.1f}" y="222.0" text-anchor="middle">{k}</text>'
+        for k in (1, 25, 50, 75, 100))
+    grid = "".join(
+        f'\n      <text x="50" y="{Y(v)+3:.1f}" text-anchor="end">{v:.2f}</text>'
+        for v in (0.04, 0.03, 0.02, 0.01))
+    return f"""<svg viewBox="0 0 {W} {H}" role="img"
+       aria-label="Combined information coefficient as signals are added. The curve rises from {c:.4f} with one signal and flattens at {asym:.4f}, never reaching the {required:.3f} required to break even.">
+    <text x="0" y="12" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--faint)" letter-spacing="1.2">COMBINED IC AS SIGNALS ARE ADDED, AT THE MEASURED CORRELATION</text>
+    <line x1="{x0}" y1="{ybot}" x2="{x1}" y2="{ybot}" stroke="var(--rule-strong)" stroke-width="1" fill="none"/>
+    <line x1="{x0}" y1="{ytop}" x2="{x0}" y2="{ybot}" stroke="var(--rule-strong)" stroke-width="1" fill="none"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--faint)">{grid}{ticks}
+      <text x="273.0" y="238.0" text-anchor="middle" fill="var(--muted)">number of signals combined</text>
+    </g>
+    <line x1="{x0}" y1="{Y(required):.1f}" x2="{x1}" y2="{Y(required):.1f}" stroke="var(--null)" stroke-width="1.5" stroke-dasharray="5 3" fill="none"/>
+    <text x="502" y="{Y(required)-3:.1f}" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="var(--null)" font-weight="600">required {required:.3f}</text>
+    <text x="502" y="{Y(required)+11:.1f}" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="var(--muted)">to beat holding all</text>
+    <line x1="{x0}" y1="{Y(asym):.1f}" x2="{x1}" y2="{Y(asym):.1f}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 3" fill="none"/>
+    <text x="502" y="{Y(asym)-3:.1f}" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="var(--ink)" font-weight="600">asymptote {asym:.4f}</text>
+    <text x="502" y="{Y(asym)+11:.1f}" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">k &#8594; &#8734;</text>
+    <polyline points="{pts}" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <circle cx="{X(k_tested):.1f}" cy="{Y(tested):.1f}" r="3.5" fill="var(--accent)"/>
+    <text x="{X(k_tested)+9:.1f}" y="{Y(tested)+14:.1f}" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="var(--muted)">{k_tested} signals tested &#8594; {tested:.4f}</text>
+  </svg>"""
+
+_svg = ic_curve_svg(c, rho)
+pathlib.Path("results/fig_ic_curve.svg").write_text(_svg)
+print(f"written: results/fig_ic_curve.svg  (asymptote {c/ (rho ** 0.5):.4f}, "
+      f"8-signal {c * (8 ** 0.5) / ((1 + 7 * rho) ** 0.5):.4f})")
 
 pathlib_out = "results/figure_data.json"
 with open(pathlib_out, "w") as f:
