@@ -18,7 +18,7 @@ that catch it are mechanical.* Everything below is evidence for or against that.
   edits, and web search. No copy-paste loop.
 - **One repository, everything committed.** Analysis scripts, notes, results
   CSVs, the published HTML. Nothing lives only in a chat log.
-- **`research/` is one script per question.** ~90 of them. Each is disposable
+- **`research/` is one script per question.** 100 of them. Each is disposable
   and self-documenting; the reusable parts get promoted to `algo/`.
 - **`algo/` is the library and carries the tests.** 35 of them, each pinning a
   specific defect that actually occurred.
