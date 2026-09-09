@@ -153,7 +153,7 @@ The other half of this is a test suite, and it is deliberately not a code-covera
 
 ## Why this matters more with AI assistance
 
-This codebase was written with heavy LLM assistance, and I think that makes the harness more important rather than less.
+This codebase was written with heavy LLM assistance, and I think that makes the test harness more important rather than less.
 
 The failure mode of AI-accelerated development is code that reads plausibly and computes the wrong thing. The failure mode of backtesting is a result that looks plausible and means nothing. **These are the same failure mode**, and a test suite that verifies financial logic rather than execution answers both at once.
 
@@ -171,7 +171,7 @@ If you run backtests, or A/B tests, or any experiment where you built the measur
 
 **Recalibrate per window.** The floor moved from 2.75 to 0.77 by changing a start date.
 
-The uncomfortable part is that the null floor takes about ten minutes to run. I built it twelfth instead of first, and every conclusion before it was uncalibrated. It should be the first thing in the harness, not the last thing you think of.
+The uncomfortable part is that the null floor takes about ten minutes to run. I built it twelfth instead of first, and every conclusion before it was uncalibrated. It should be the first thing in the pipeline, not the last thing you think of.
 
 ---
 

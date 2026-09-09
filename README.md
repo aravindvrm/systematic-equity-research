@@ -1,6 +1,6 @@
 # Systematic Equity Research Framework
 
-A modular harness for ingesting financial data, building cross-sectional signals,
+A modular pipeline for ingesting financial data, building cross-sectional signals,
 and — the part most backtesting code omits — **establishing whether a result is
 distinguishable from noise.**
 

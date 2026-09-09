@@ -229,7 +229,7 @@ footer{margin:44px 0 80px;padding-top:22px;border-top:1px solid var(--rule);
 <p><strong>De-risking is not skill.</strong> A &quot;strategy&quot; that is simply 60% of the benchmark plus cash must score approximately zero genuine gain — <em>while still raising naive standalone Sharpe</em>. The second clause is the whole point.</p>
 <p><strong>The framework cannot manufacture alpha.</strong> A sleeve that <em>is</em> the benchmark must contribute exactly zero. If that ever returns a positive number, the evaluation is producing alpha from nothing and every result downstream is void.</p>
 <h2>Why this matters more with AI assistance</h2>
-<p>This codebase was written with heavy LLM assistance, and I think that makes the harness more important rather than less.</p>
+<p>This codebase was written with heavy LLM assistance, and I think that makes the test harness more important rather than less.</p>
 <p>The failure mode of AI-accelerated development is code that reads plausibly and computes the wrong thing. The failure mode of backtesting is a result that looks plausible and means nothing. <strong>These are the same failure mode</strong>, and a test suite that verifies financial logic rather than execution answers both at once.</p>
 <p>Every defect the suite pins was found by a test, not by reading. The Sortino implementation that ran 16% high, the turnover charged on target changes rather than realised drift, a cache refresh that silently overwrote years of history with one month, a <code>pd.NA</code> that promoted frames to object dtype and surfaced as an unrelated error in scipy. All plausible-looking. None caught by inspection.</p>
 <h2>What to take from this</h2>
@@ -238,7 +238,7 @@ footer{margin:44px 0 80px;padding-top:22px;border-top:1px solid var(--rule);
 <p><strong>Every overlay is part of the strategy.</strong> Volatility targeting, position weighting, top-k truncation, rebalancing bands. Each changes the return distribution independently of your signal, and any one left outside the control will be attributed to the signal.</p>
 <p><strong>A large t-statistic is not evidence of a business.</strong> Mine was 6 and it lost money.</p>
 <p><strong>Recalibrate per window.</strong> The floor moved from 2.75 to 0.77 by changing a start date.</p>
-<p>The uncomfortable part is that the null floor takes about ten minutes to run. I built it twelfth instead of first, and every conclusion before it was uncalibrated. It should be the first thing in the harness, not the last thing you think of.</p>
+<p>The uncomfortable part is that the null floor takes about ten minutes to run. I built it twelfth instead of first, and every conclusion before it was uncalibrated. It should be the first thing in the pipeline, not the last thing you think of.</p>
 <hr>
 <p class="standfirst">The framework, the tests, and the full negative result are <a href="https://github.com/aravindvrm/systematic-equity-research">on GitHub</a>. The whitepaper is <a href="https://aravindvrm.github.io/systematic-equity-research/">here</a>. Analysis code and drafting were produced in collaboration with Claude (Anthropic); conclusions and errors are mine.</p>
   <footer>
